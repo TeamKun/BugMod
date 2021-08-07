@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "bugmod",
+  "version": "${version}",
+
+  "name": "Bug Mod",
+  "description": "バグるmod",
+  "authors": [
+    "POne0301"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/bugmod/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.kunmc.lab.bugmod.BugMod"
+    ]
+  },
+  "mixins": [
+    "modid.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}

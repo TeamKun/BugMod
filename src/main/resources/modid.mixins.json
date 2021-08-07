@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.kunmc.lab.bugmod.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  ],
+  "client": [
+    "BugModMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
