@@ -6,7 +6,10 @@
   "mixins": [
   ],
   "client": [
-    "BugModMixin"
+    "InGameHudMixin"
+  ],
+  "server": [
+    "PlayerEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

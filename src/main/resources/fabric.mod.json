@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "Bug Mod",
-  "description": "バグるmod",
+  "description": "世界がバグるmod",
   "authors": [
     "POne0301"
   ],
@@ -23,7 +23,7 @@
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "bugmod.mixins.json"
   ],
 
   "depends": {

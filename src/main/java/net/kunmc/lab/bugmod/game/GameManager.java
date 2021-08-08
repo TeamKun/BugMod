@@ -1,22 +1,20 @@
 package net.kunmc.lab.bugmod.game;
 
-import net.minecraft.client.RunArgs;
-
 public class GameManager {
     // 画面が赤くなる
-    private static int redScreenLevel;
+    public static int redScreenLevel;
     // 文字化けする
-    private static int garbledCharLevel;
+    public static int garbledCharLevel;
     // 画面が壊れる
-    private static int breakScreenLevel;
+    public static int breakScreenLevel;
     // テクスチャがバグる
-    private static int breakTextureLevel;
+    public static int breakTextureLevel;
     // スキンがバグる
-    private static int breakSkinLevel;
+    public static int breakSkinLevel;
     // 音がバグる
-    private static int helpSoundLevel;
+    public static int helpSoundLevel;
     // 虫が走る
-    private static int bugRunLevel;
+    public static int bugRunLevel;
 
     // Gameの実行・停止状態の管理用
     public static GameMode runningMode;
@@ -50,7 +48,6 @@ public class GameManager {
                 break;
         }
     }
-
 
     public enum GameMode {
         // 開始前状態

@@ -1,19 +1,22 @@
 package net.kunmc.lab.bugmod;
 
-import com.mojang.brigadier.CommandDispatcher;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.kunmc.lab.bugmod.command.BugCommand;
-import net.minecraft.command.argument.BrigadierArgumentTypes;
-import net.minecraft.server.command.ServerCommandSource;
+import net.kunmc.lab.bugmod.event.PlayerEvent;
+import net.minecraft.util.Identifier;
 
 public class BugMod implements ModInitializer {
+	public static final String ID = "bugmod";
+
+	public static Identifier identifier(String path) {
+		return new Identifier(ID, path);
+	}
+
 	@Override
 	public void onInitialize() {
-		// This code runs as soon as Minecraft is in a mod-load-ready state.
-		// However, some things (like resources) may still be uninitialized.
-		// Proceed with mild caution.
         BugCommand.register();
+		PlayerEvent.register();
 
 		System.out.println("Hello Fabric world!");
 	}
