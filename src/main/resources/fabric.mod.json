@@ -20,6 +20,9 @@
   "entrypoints": {
     "main": [
       "net.kunmc.lab.bugmod.BugMod"
+    ],
+    "client": [
+      "net.kunmc.lab.bugmod.BugModClient"
     ]
   },
   "mixins": [

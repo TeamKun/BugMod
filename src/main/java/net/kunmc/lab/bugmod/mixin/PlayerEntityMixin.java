@@ -12,6 +12,5 @@ public class PlayerEntityMixin {
     @Inject(at = @At("TAIL"), method = "onDeath", cancellable = true)
     public void hookDeath(CallbackInfo info) {
         GameManager.breakScreenLevel += 1;
-        System.out.println(GameManager.breakScreenLevel);
     }
 }

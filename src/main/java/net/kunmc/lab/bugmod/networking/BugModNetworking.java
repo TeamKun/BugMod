@@ -1,8 +1,16 @@
 package net.kunmc.lab.bugmod.networking;
 
 import net.kunmc.lab.bugmod.BugMod;
+import net.kunmc.lab.bugmod.game.GameManager;
 import net.minecraft.util.Identifier;
 
 public class BugModNetworking {
-    public static Identifier RED_SCREEN_LEVEL = BugMod.identifier("redScreenLevel");
+    private static final String ID = "bugmod";
+    public static Identifier identifierFactory(String name) {
+        switch (name) {
+            case GameManager.redScreenName:
+                return new Identifier(ID, GameManager.redScreenName);
+        }
+        return null;
+    }
 }

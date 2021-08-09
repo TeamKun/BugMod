@@ -1,6 +1,16 @@
 package net.kunmc.lab.bugmod.game;
 
+import net.kunmc.lab.bugmod.networking.ServerNetworking;
+
 public class GameManager {
+    public static final String redScreenName = "redscreen";
+    public static final String garbledCharName = "garbledchar";
+    public static final String breakScreenName = "breakscreen";
+    public static final String breakTextureName = "breaktexture";
+    public static final String breakSkinName = "breakskin";
+    public static final String helpSoundName = "helpsound";
+    public static final String bugRunName = "bugrun";
+
     // 画面が赤くなる
     public static int redScreenLevel;
     // 文字化けする
@@ -47,6 +57,21 @@ public class GameManager {
                 }
                 break;
         }
+    }
+
+    public static void updateLevel(String name, int level){
+        switch (name){
+            case redScreenName:
+                if (isUpdatedLevel(GameManager.redScreenLevel, level)){
+                    GameManager.redScreenLevel = level;
+                    ServerNetworking.sendRedScreenLevel();
+                }
+                break;
+        }
+    }
+
+    private static boolean isUpdatedLevel(int currentLevel, int level){
+        return currentLevel < level;
     }
 
     public enum GameMode {

@@ -18,10 +18,8 @@ public class BugModHUD {
         // See: https://qiita.com/konifar/items/106731d8a35303606597
         // int alphaColor = ((int)(transparency * 255) << 24) & 0xFF000000 | color;
         int alphaColor = 0xCC2f0000;
-        System.out.println(GameManager.redScreenLevel);
         if (GameManager.redScreenLevel > 1) {
             DrawableHelper.fill(matrices, 0, 0, 1000, 1000, alphaColor);
         }
-        ClientPlayNetworking.registerGlobalReceiver(,);
     }
 }

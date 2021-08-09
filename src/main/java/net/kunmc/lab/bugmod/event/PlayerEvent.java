@@ -2,8 +2,11 @@ package net.kunmc.lab.bugmod.event;
 
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.kunmc.lab.bugmod.game.GameManager;
+import net.kunmc.lab.bugmod.networking.ClientNetworking;
+import net.kunmc.lab.bugmod.networking.ServerNetworking;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.RunArgs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.ActionResult;
@@ -17,10 +20,11 @@ public class PlayerEvent {
         UseBlockCallback.EVENT.register((player, world, hand, hitResult) ->
         {
             ItemStack item = player.getStackInHand(hand);
-            System.out.println("BBB");
+            System.out.println("AAAAA");
             if (item.getItem() == Items.TORCH){
-                GameManager.redScreenLevel += 1;
-                System.out.println("AAA" + GameManager.redScreenLevel);
+                System.out.println(GameManager.redScreenLevel);
+                // ServerNetworking.sendRedScreenLevel();
+                ClientNetworking.sendRedScreenLevel();
             }
             return ActionResult.PASS;
         });

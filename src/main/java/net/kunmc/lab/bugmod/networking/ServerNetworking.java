@@ -1,19 +1,28 @@
 package net.kunmc.lab.bugmod.networking;
 
-import com.mojang.brigadier.context.CommandContext;
 import io.netty.buffer.Unpooled;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.kunmc.lab.bugmod.BugMod;
 import net.kunmc.lab.bugmod.game.GameManager;
 import net.minecraft.client.RunArgs;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.server.command.ServerCommandSource;
 
 public class ServerNetworking {
-    public static void sendRedScreenLevel(CommandContext<ServerCommandSource> context){
-        context.getSource().getMinecraftServer().getPlayerManager().getPlayerList().forEach(player -> {
+    public static void sendRedScreenLevel(){
+        BugMod.minecraftServerInstance.getPlayerManager().getPlayerList().forEach(player -> {
             PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
             buf.writeInt(GameManager.redScreenLevel);
-            ServerPlayNetworking.send(player, BugModNetworking.RED_SCREEN_LEVEL, new PacketByteBuf(Unpooled.buffer()));
+            ServerPlayNetworking.send(player, BugModNetworking.identifierFactory(GameManager.redScreenName), buf);
+        });
+    }
+
+    public static void receiveRedScreenLevel(){
+        ServerPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(GameManager.redScreenName), (server, player, handler, buf, response) -> {
+            System.out.println(buf.readableBytes());
+            GameManager.updateLevel(GameManager.redScreenName, buf.readInt());
         });
     }
 }
