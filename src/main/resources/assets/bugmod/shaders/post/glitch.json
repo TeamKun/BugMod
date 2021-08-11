@@ -1,0 +1,17 @@
+{
+  "targets": [
+    "swap"
+  ],
+  "passes": [
+    {
+      "name": "bugmod:glitch",
+      "intarget": "minecraft:main",
+      "outtarget": "swap"
+    },
+    {
+      "name": "bugmod:glitch",
+      "intarget": "swap",
+      "outtarget": "minecraft:main"
+    }
+  ]
+}

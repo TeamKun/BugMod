@@ -16,7 +16,6 @@ public class ClientNetworking {
     }
     public static void sendRedScreenLevel() {
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
-        //buf.writeInt(GameManager.redScreenLevel+1);
         buf.writeInt(GameManager.redScreenLevel+1);
         ClientPlayNetworking.send(BugModNetworking.identifierFactory(GameManager.redScreenName), buf);
     }
