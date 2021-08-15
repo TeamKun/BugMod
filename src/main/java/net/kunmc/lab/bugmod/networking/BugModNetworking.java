@@ -10,6 +10,8 @@ public class BugModNetworking {
         switch (name) {
             case GameManager.redScreenName:
                 return new Identifier(ID, GameManager.redScreenName);
+            case GameManager.garbledCharName:
+                return new Identifier(ID, GameManager.garbledCharName);
         }
         return null;
     }

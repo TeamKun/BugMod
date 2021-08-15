@@ -64,12 +64,24 @@ public class GameManager {
             case redScreenName:
                 if (isUpdatedLevel(GameManager.redScreenLevel, level)){
                     GameManager.redScreenLevel = level;
-                    ServerNetworking.sendRedScreenLevel();
+                    ServerNetworking.sendLevel(GameManager.redScreenName, level);
+                }
+                break;
+            case garbledCharName:
+                if (isUpdatedLevel(GameManager.garbledCharLevel, level)){
+                    GameManager.garbledCharLevel = level;
+                    ServerNetworking.sendLevel(GameManager.garbledCharName, level);
                 }
                 break;
         }
     }
 
+    /**
+     * 不正にレベルが下がるようなことにならないようにチェック
+     * @param currentLevel
+     * @param level
+     * @return
+     */
     private static boolean isUpdatedLevel(int currentLevel, int level){
         return currentLevel < level;
     }

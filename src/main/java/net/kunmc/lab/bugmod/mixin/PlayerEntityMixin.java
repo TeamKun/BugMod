@@ -11,6 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class PlayerEntityMixin {
     @Inject(at = @At("TAIL"), method = "onDeath", cancellable = true)
     public void hookDeath(CallbackInfo info) {
-        GameManager.breakScreenLevel += 1;
+        GameManager.updateLevel(GameManager.garbledCharName, GameManager.garbledCharLevel + 1);
     }
 }

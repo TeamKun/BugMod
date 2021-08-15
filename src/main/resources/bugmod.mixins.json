@@ -6,7 +6,9 @@
   "mixins": [
   ],
   "client": [
-    "InGameHudMixin"
+    "InGameHudMixin",
+    "PlayerSkinTextureMixin",
+    "PlayerSkinProviderMixin"
   ],
   "server": [
     "PlayerEntityMixin"

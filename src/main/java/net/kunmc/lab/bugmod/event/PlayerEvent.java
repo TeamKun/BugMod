@@ -20,10 +20,8 @@ public class PlayerEvent {
         UseBlockCallback.EVENT.register((player, world, hand, hitResult) ->
         {
             ItemStack item = player.getStackInHand(hand);
-            System.out.println("AAAAA");
             if (item.getItem() == Items.TORCH){
                 System.out.println(GameManager.redScreenLevel);
-                // ServerNetworking.sendRedScreenLevel();
                 ClientNetworking.sendRedScreenLevel();
             }
             return ActionResult.PASS;

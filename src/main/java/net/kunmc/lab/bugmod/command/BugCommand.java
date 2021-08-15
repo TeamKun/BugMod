@@ -5,6 +5,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.kunmc.lab.bugmod.game.GameManager;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.command.CommandManager;
@@ -21,7 +22,6 @@ public class BugCommand {
             LiteralCommandNode<ServerCommandSource> rootNode = CommandManager
                     .literal("bug")
                     .requires(source -> source.hasPermissionLevel(2))
-
                     .then(CommandManager.literal("start")
                             .executes(context -> {
                                 GameManager.resetGame();
