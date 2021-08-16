@@ -13,7 +13,6 @@ import java.util.Random;
 public class PlayerSkinTextureMixin {
     @Inject(method = "remapTexture", at = @At("TAIL"))
     private static void BugModTexture(NativeImage image, CallbackInfoReturnable<NativeImage> info) {
-        System.out.println("set pixel");
         Random rand = new Random();
         for(int x = 0; x<30; x++) {
             for(int y = 0; y<30; y++) {

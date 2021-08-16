@@ -8,7 +8,7 @@
   "client": [
     "InGameHudMixin",
     "PlayerSkinTextureMixin",
-    "PlayerSkinProviderMixin"
+    "PlayerSkinProviderMixin",
   ],
   "server": [
     "PlayerEntityMixin"

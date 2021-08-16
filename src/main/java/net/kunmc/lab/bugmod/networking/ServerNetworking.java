@@ -20,12 +20,15 @@ public class ServerNetworking {
         });
     }
 
-    public static void receiveRedScreenLevel(){
+    public static void receiveLevel(){
         ServerPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(GameManager.redScreenName), (server, player, handler, buf, response) -> {
             GameManager.updateLevel(GameManager.redScreenName, buf.readInt());
         });
         ServerPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(GameManager.garbledCharName), (server, player, handler, buf, response) -> {
             GameManager.updateLevel(GameManager.garbledCharName, buf.readInt());
+        });
+        ServerPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(GameManager.breakScreenName), (server, player, handler, buf, response) -> {
+            GameManager.updateLevel(GameManager.breakScreenName, buf.readInt());
         });
     }
 }

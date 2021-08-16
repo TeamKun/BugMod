@@ -73,6 +73,12 @@ public class GameManager {
                     ServerNetworking.sendLevel(GameManager.garbledCharName, level);
                 }
                 break;
+            case breakScreenName:
+                if (isUpdatedLevel(GameManager.breakScreenLevel, level)){
+                    GameManager.breakScreenLevel = level;
+                    ServerNetworking.sendLevel(GameManager.breakScreenName, level);
+                }
+                break;
         }
     }
 

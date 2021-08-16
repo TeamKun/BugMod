@@ -12,6 +12,8 @@ public class BugModNetworking {
                 return new Identifier(ID, GameManager.redScreenName);
             case GameManager.garbledCharName:
                 return new Identifier(ID, GameManager.garbledCharName);
+            case GameManager.breakScreenName:
+                return new Identifier(ID, GameManager.breakScreenName);
         }
         return null;
     }
