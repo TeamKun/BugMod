@@ -2,11 +2,14 @@ package net.kunmc.lab.bugmod.event;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
+import net.kunmc.lab.bugmod.client.BugModHUD;
 import net.kunmc.lab.bugmod.game.GameManager;
 import net.kunmc.lab.bugmod.networking.ClientNetworking;
 import net.kunmc.lab.bugmod.networking.ServerNetworking;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.RunArgs;
@@ -40,5 +43,14 @@ public class PlayerEvent {
             }
             return TypedActionResult.pass(player.getStackInHand(hand));
         });
+        UseItemCallback.EVENT.register((player, world, hand) -> {
+            ItemStack item = player.getStackInHand(hand);
+            if (item.getItem() == Items.BUCKET ||
+                    item.getItem() == Items.WATER_BUCKET ||
+                    item.getItem() == Items.LAVA_BUCKET){
+            }
+            return TypedActionResult.pass(player.getStackInHand(hand));
+        });
+
     }
 }
