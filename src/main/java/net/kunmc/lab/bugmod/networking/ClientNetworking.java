@@ -4,7 +4,9 @@ import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.kunmc.lab.bugmod.client.UpdateLevelManager;
 import net.kunmc.lab.bugmod.game.GameManager;
+import net.kunmc.lab.bugmod.shader.ShaderManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.network.PacketByteBuf;
 
@@ -12,7 +14,7 @@ import net.minecraft.network.PacketByteBuf;
 public class ClientNetworking {
     public static void registerReceiver() {
         ClientPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(GameManager.redScreenName), (minecraftClient, clientPlayNetworkHandler, packetByteBuf, packetSender) -> {
-            GameManager.redScreenLevel = packetByteBuf.readInt();
+            UpdateLevelManager.startUpdateLevel(GameManager.redScreenName, packetByteBuf.readInt());
         });
         ClientPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(GameManager.garbledCharName), (minecraftClient, clientPlayNetworkHandler, packetByteBuf, packetSender) -> {
             GameManager.garbledCharLevel = packetByteBuf.readInt();

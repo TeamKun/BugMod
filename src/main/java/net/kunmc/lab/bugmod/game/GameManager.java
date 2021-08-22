@@ -1,5 +1,7 @@
 package net.kunmc.lab.bugmod.game;
 
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.kunmc.lab.bugmod.client.UpdateLevelManager;
 import net.kunmc.lab.bugmod.networking.ServerNetworking;
 
 public class GameManager {
@@ -28,6 +30,14 @@ public class GameManager {
 
     // Gameの実行・停止状態の管理用
     public static GameMode runningMode;
+    public static boolean recoveryMode = true;
+
+    public static void register(){
+        ClientTickEvents.START_CLIENT_TICK.register(m -> {
+            UpdateLevelManager.updateLevel();
+            UpdateLevelManager.updateTimer();
+        });
+    }
 
     public static void resetGame(){
         redScreenLevel = 0;
@@ -38,6 +48,7 @@ public class GameManager {
         helpSoundLevel = 0;
         bugRunLevel = 0;
         runningMode = GameMode.MODE_NEUTRAL;
+        recoveryMode = true;
     }
 
     public static void controller(GameMode runningMode) {
@@ -77,6 +88,30 @@ public class GameManager {
                 if (isUpdatedLevel(GameManager.breakScreenLevel, level)){
                     GameManager.breakScreenLevel = level;
                     ServerNetworking.sendLevel(GameManager.breakScreenName, level);
+                }
+                break;
+            case breakTextureName:
+                if (isUpdatedLevel(GameManager.breakTextureLevel, level)){
+                    GameManager.breakTextureLevel = level;
+                    ServerNetworking.sendLevel(GameManager.breakTextureName, level);
+                }
+                break;
+            case breakSkinName:
+                if (isUpdatedLevel(GameManager.breakSkinLevel, level)){
+                    GameManager.breakSkinLevel = level;
+                    ServerNetworking.sendLevel(GameManager.breakSkinName, level);
+                }
+                break;
+            case helpSoundName:
+                if (isUpdatedLevel(GameManager.helpSoundLevel, level)){
+                    GameManager.helpSoundLevel = level;
+                    ServerNetworking.sendLevel(GameManager.helpSoundName, level);
+                }
+                break;
+            case bugRunName:
+                if (isUpdatedLevel(GameManager.bugRunLevel, level)){
+                    GameManager.bugRunLevel = level;
+                    ServerNetworking.sendLevel(GameManager.bugRunName, level);
                 }
                 break;
         }

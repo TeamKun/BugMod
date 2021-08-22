@@ -62,4 +62,15 @@ public class BugModHUD {
             }
         }
     }
+    public static void renderBlackScreen(MatrixStack matrices){
+        if (!UpdateLevelManager.isBlackOut) return;
+
+        // See: https://qiita.com/konifar/items/106731d8a35303606597
+        // int alphaColor = ((int)(transparency * 255) << 24) & 0xFF000000 | color;
+        int alphaColor = 0xFF000000;
+        DrawableHelper.fill(matrices, 0, 0,
+                MinecraftClient.getInstance().getWindow().getWidth(),
+                MinecraftClient.getInstance().getWindow().getHeight(),
+                alphaColor);
+    }
 }
