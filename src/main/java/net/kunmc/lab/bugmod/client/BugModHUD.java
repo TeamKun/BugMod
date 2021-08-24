@@ -63,7 +63,7 @@ public class BugModHUD {
 
         // 画面の横分割の数
         int splitHorizontalNum = GameManager.breakScreenMaxLevel;
-        int singleHorizontalSize = (MinecraftClient.getInstance().getWindow().getWidth()/splitHorizontalNum;
+        double singleHorizontalSize = MinecraftClient.getInstance().getWindow().getWidth()/splitHorizontalNum;
         // 画面の縦分割の割合
         int splitVerticalNum = 100;
         Random rnd = new Random();
