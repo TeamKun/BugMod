@@ -5,6 +5,7 @@ import net.fabricmc.api.Environment;
 import net.kunmc.lab.bugmod.game.GameManager;
 import net.kunmc.lab.bugmod.networking.ServerNetworking;
 import net.kunmc.lab.bugmod.shader.ShaderManager;
+import net.minecraft.client.MinecraftClient;
 
 @Environment(EnvType.CLIENT)
 public class UpdateLevelManager {
@@ -33,7 +34,7 @@ public class UpdateLevelManager {
     }
 
     public static void updateLevel() {
-        if (!isUpdating) return;
+        if (!shouldUpdatedLevel()) return;
         switch (name) {
             case GameManager.breakTextureName:
             case GameManager.garbledCharName:
@@ -47,6 +48,10 @@ public class UpdateLevelManager {
         }
     }
 
+    private static boolean shouldUpdatedLevel() {
+        return GameManager.runningMode == GameManager.GameMode.MODE_START && !isUpdating;
+    }
+
     private static void updateLevelWithGlitch() {
         if ( time == 0 || time == 25) {
             ShaderManager.runGlitch(10);
@@ -54,8 +59,10 @@ public class UpdateLevelManager {
 
         if (time == 25) {
             switch (name) {
-                case GameManager.redScreenName:
-                    GameManager.redScreenLevel = level;
+                case GameManager.breakSkinName:
+                    GameManager.breakSkinLevel = level;
+                    MinecraftClient.getInstance().getSkinProvider().loadSkin(MinecraftClient.getInstance().player.getGameProfile(), (type, id, texture) -> {}, true);
+                    break;
             }
         }
     }

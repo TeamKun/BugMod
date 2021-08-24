@@ -26,7 +26,6 @@ public class ClientNetworking {
     public static void sendRedScreenLevel() {
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
         buf.writeInt(GameManager.redScreenLevel+1);
-        //MinecraftClient.getInstance().getSkinProvider().loadSkin(MinecraftClient.getInstance().player.getGameProfile(), (type, id, texture) -> {}, true);
         ClientPlayNetworking.send(BugModNetworking.identifierFactory(GameManager.redScreenName), buf);
     }
     public static void sendBreakScreenLevel() {

@@ -3,6 +3,7 @@ package net.kunmc.lab.bugmod.game;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.kunmc.lab.bugmod.client.UpdateLevelManager;
 import net.kunmc.lab.bugmod.networking.ServerNetworking;
+import net.minecraft.text.LiteralText;
 
 public class GameManager {
     public static final String redScreenName = "redscreen";
@@ -12,6 +13,14 @@ public class GameManager {
     public static final String breakSkinName = "breakskin";
     public static final String helpSoundName = "helpsound";
     public static final String bugRunName = "bugrun";
+
+    public static final int redScreenMaxLevel = 5;
+    public static final int garbledCharMaxLevel = 5;
+    public static final int breakScreenMaxLevel = 20;
+    public static final int breakTextureMaxLevel = 5;
+    public static final int breakSkinMaxLevel = 5;
+    public static final int helpSoundMaxLevel = 5;
+    public static final int bugRunMaxLevel = 1;
 
     // 画面が赤くなる
     public static int redScreenLevel;
@@ -58,7 +67,6 @@ public class GameManager {
             case MODE_START:
             case MODE_NEUTRAL:
                 GameManager.runningMode = runningMode;
-                resetGame();
                 break;
             case MODE_PAUSE:
                 if (GameManager.runningMode == GameMode.MODE_PAUSE) {

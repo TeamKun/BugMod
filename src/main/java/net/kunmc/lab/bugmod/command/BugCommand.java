@@ -25,13 +25,21 @@ public class BugCommand {
                     .then(CommandManager.literal("start")
                             .executes(context -> {
                                 GameManager.resetGame();
-                                context.getSource().sendFeedback(new LiteralText("世界の何かが少し変わり始めた"), true);
+                                GameManager.controller(GameManager.GameMode.MODE_START);
+                                context.getSource().sendFeedback(new LiteralText("ワールドがバグるようになった"), true);
+                                return 1;
+                            }))
+                    .then(CommandManager.literal("stop")
+                            .executes(context -> {
+                                GameManager.resetGame();
+                                GameManager.controller(GameManager.GameMode.MODE_NEUTRAL);
+                                context.getSource().sendFeedback(new LiteralText("ワールドのバグが停止した"), true);
                                 return 1;
                             }))
                     .then(CommandManager.literal("pause")
                             .executes(context -> {
-                                GameManager.resetGame();
-                                context.getSource().sendFeedback(new LiteralText("世界の何かが少し変わり始めた"), true);
+                                GameManager.controller(GameManager.GameMode.MODE_PAUSE);
+                                context.getSource().sendFeedback(new LiteralText("バグの進行が停止した"), true);
                                 return 1;
                             }))
                     .build();
