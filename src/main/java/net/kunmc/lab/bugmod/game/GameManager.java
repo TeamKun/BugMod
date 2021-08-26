@@ -1,9 +1,6 @@
 package net.kunmc.lab.bugmod.game;
 
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.kunmc.lab.bugmod.client.UpdateLevelManager;
 import net.kunmc.lab.bugmod.networking.ServerNetworking;
-import net.minecraft.text.LiteralText;
 
 public class GameManager {
     public static final String redScreenName = "redscreen";
@@ -41,12 +38,6 @@ public class GameManager {
     public static GameMode runningMode;
     public static boolean recoveryMode = true;
 
-    public static void register(){
-        ClientTickEvents.START_CLIENT_TICK.register(m -> {
-            UpdateLevelManager.updateLevel();
-            UpdateLevelManager.updateTimer();
-        });
-    }
 
     public static void resetGame(){
         redScreenLevel = 0;

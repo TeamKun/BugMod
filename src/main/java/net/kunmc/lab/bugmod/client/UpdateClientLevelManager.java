@@ -2,18 +2,25 @@ package net.kunmc.lab.bugmod.client;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.kunmc.lab.bugmod.game.GameManager;
-import net.kunmc.lab.bugmod.networking.ServerNetworking;
 import net.kunmc.lab.bugmod.shader.ShaderManager;
 import net.minecraft.client.MinecraftClient;
 
 @Environment(EnvType.CLIENT)
-public class UpdateLevelManager {
+public class UpdateClientLevelManager {
     private static boolean isUpdating = false;
     public static boolean isBlackOut = false;
     private static int time = 0;
     private static String name = "";
     private static int level = 0;
+
+    public static void register(){
+        ClientTickEvents.START_CLIENT_TICK.register(m -> {
+            UpdateClientLevelManager.updateLevel();
+            UpdateClientLevelManager.updateTimer();
+        });
+    }
 
     public static void startUpdateLevel(String targetName, int targetLevel){
         isUpdating = true;
@@ -48,7 +55,7 @@ public class UpdateLevelManager {
         }
     }
 
-    private static boolean shouldUpdatedLevel() {
+    public static boolean shouldUpdatedLevel() {
         return GameManager.runningMode == GameManager.GameMode.MODE_START && !isUpdating;
     }
 

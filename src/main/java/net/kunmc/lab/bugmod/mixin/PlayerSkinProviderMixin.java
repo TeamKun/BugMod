@@ -42,7 +42,6 @@ public class PlayerSkinProviderMixin {
      */
     @Overwrite()
     private Identifier loadSkin(MinecraftProfileTexture profileTexture, MinecraftProfileTexture.Type type, @Nullable PlayerSkinProvider.SkinTextureAvailableCallback callback) {
-        System.out.println("Load Skin");
         String string = Hashing.sha1().hashUnencodedChars(profileTexture.getHash()).toString();
         Identifier identifier = new Identifier("skins/" + string);
         File file = new File(this.skinCacheDir, string.length() > 2 ? string.substring(0, 2) : "xx");

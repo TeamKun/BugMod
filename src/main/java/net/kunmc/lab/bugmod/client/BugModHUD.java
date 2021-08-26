@@ -3,7 +3,6 @@ package net.kunmc.lab.bugmod.client;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.kunmc.lab.bugmod.game.GameManager;
-import net.kunmc.lab.bugmod.networking.ServerNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
@@ -79,7 +78,7 @@ public class BugModHUD {
         }
     }
     public static void renderBlackScreen(MatrixStack matrices){
-        if (!UpdateLevelManager.isBlackOut) return;
+        if (!UpdateClientLevelManager.isBlackOut) return;
 
         // See: https://qiita.com/konifar/items/106731d8a35303606597
         // int alphaColor = ((int)(transparency * 255) << 24) & 0xFF000000 | color;

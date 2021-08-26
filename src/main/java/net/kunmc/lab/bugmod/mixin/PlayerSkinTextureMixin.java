@@ -14,8 +14,8 @@ public class PlayerSkinTextureMixin {
     @Inject(method = "remapTexture", at = @At("TAIL"))
     private static void BugModTexture(NativeImage image, CallbackInfoReturnable<NativeImage> info) {
         Random rand = new Random();
-        for(int x = 0; x<30; x++) {
-            for(int y = 0; y<30; y++) {
+        for(int x = 0; x<64; x++) {
+            for(int y = 0; y<64; y++) {
                 if (rand.nextInt(2)==0) {
                     image.setPixelColor(x, y, -16713505);
                 }
