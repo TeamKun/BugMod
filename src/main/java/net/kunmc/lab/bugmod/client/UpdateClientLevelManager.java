@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.kunmc.lab.bugmod.game.GameManager;
 import net.kunmc.lab.bugmod.shader.ShaderManager;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.RunArgs;
 
 @Environment(EnvType.CLIENT)
 public class UpdateClientLevelManager {
@@ -66,6 +67,12 @@ public class UpdateClientLevelManager {
 
         if (time == 25) {
             switch (name) {
+                case GameManager.breakTextureName:
+                    GameManager.breakTextureLevel = level;
+                    break;
+                case GameManager.garbledCharName:
+                    GameManager.garbledCharLevel = level;
+                    break;
                 case GameManager.breakSkinName:
                     GameManager.breakSkinLevel = level;
                     MinecraftClient.getInstance().getSkinProvider().loadSkin(MinecraftClient.getInstance().player.getGameProfile(), (type, id, texture) -> {}, true);
@@ -86,6 +93,10 @@ public class UpdateClientLevelManager {
             switch (name) {
                 case GameManager.redScreenName:
                     GameManager.redScreenLevel = level;
+                    break;
+                case GameManager.breakScreenName:
+                    GameManager.breakScreenLevel = level;
+                    break;
             }
         }
     }
