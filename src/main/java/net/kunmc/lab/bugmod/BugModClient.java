@@ -4,7 +4,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.kunmc.lab.bugmod.client.UpdateClientLevelManager;
-import net.kunmc.lab.bugmod.event.PlayerEvent;
+import net.kunmc.lab.bugmod.event.PlayerClientEvent;
 import net.kunmc.lab.bugmod.networking.ClientNetworking;
 import net.kunmc.lab.bugmod.shader.ShaderManager;
 
@@ -20,7 +20,7 @@ public class BugModClient implements ClientModInitializer {
     public void onInitializeClient() {
         instance = this;
         ClientNetworking.registerReceiver();
-        PlayerEvent.register();
+        PlayerClientEvent.register();
         UpdateClientLevelManager.register();
         ShaderManager.register();
     }

@@ -70,7 +70,7 @@ public class ServerNetworking {
                             GameManager.helpSoundLevel;
                     buf.writeString(all);
 
-                    ServerPlayNetworking.send(player, BugModNetworking.identifierFactory("ALL"), buf);
+                    ServerPlayNetworking.send(player, BugModNetworking.identifierFactory("all"), buf);
                 });
             }
         });

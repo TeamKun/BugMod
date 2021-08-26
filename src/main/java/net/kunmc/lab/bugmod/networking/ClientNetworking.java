@@ -22,7 +22,7 @@ public class ClientNetworking {
         ClientPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(GameManager.breakScreenName), (minecraftClient, clientPlayNetworkHandler, packetByteBuf, packetSender) -> {
             UpdateClientLevelManager.startUpdateLevel(GameManager.breakScreenName, packetByteBuf.readInt());
         });
-        ClientPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory("ALL"), (minecraftClient, clientPlayNetworkHandler, packetByteBuf, packetSender) -> {
+        ClientPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory("all"), (minecraftClient, clientPlayNetworkHandler, packetByteBuf, packetSender) -> {
             if (UpdateClientLevelManager.shouldUpdatedLevel()){
                 String[] array = packetByteBuf.readString().split(" ");
                 GameManager.redScreenLevel = Integer.parseInt(array[0]);

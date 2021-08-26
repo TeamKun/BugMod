@@ -21,8 +21,8 @@ public class BugModNetworking {
                 return new Identifier(BugMod.MODID, GameManager.helpSoundName);
             case GameManager.bugRunName:
                 return new Identifier(BugMod.MODID, GameManager.bugRunName);
-            case "ALL":
-                return new Identifier(BugMod.MODID, "ALL");
+            case "all":
+                return new Identifier(BugMod.MODID, "all");
         }
         return null;
     }

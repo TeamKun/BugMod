@@ -69,46 +69,47 @@ public class GameManager {
         }
     }
 
+    // サーバ側のレベル更新
     public static void updateLevel(String name, int level){
         switch (name){
             case redScreenName:
-                if (isUpdatedLevel(GameManager.redScreenLevel, level)){
+                if (isUpdatedLevel(GameManager.redScreenLevel, level, GameManager.redScreenMaxLevel)){
                     GameManager.redScreenLevel = level;
                     ServerNetworking.sendLevel(GameManager.redScreenName, level);
                 }
                 break;
             case garbledCharName:
-                if (isUpdatedLevel(GameManager.garbledCharLevel, level)){
+                if (isUpdatedLevel(GameManager.garbledCharLevel, level, GameManager.garbledCharMaxLevel)){
                     GameManager.garbledCharLevel = level;
                     ServerNetworking.sendLevel(GameManager.garbledCharName, level);
                 }
                 break;
             case breakScreenName:
-                if (isUpdatedLevel(GameManager.breakScreenLevel, level)){
+                if (isUpdatedLevel(GameManager.breakScreenLevel, level, GameManager.breakScreenMaxLevel)){
                     GameManager.breakScreenLevel = level;
                     ServerNetworking.sendLevel(GameManager.breakScreenName, level);
                 }
                 break;
             case breakTextureName:
-                if (isUpdatedLevel(GameManager.breakTextureLevel, level)){
+                if (isUpdatedLevel(GameManager.breakTextureLevel, level, GameManager.breakTextureMaxLevel)){
                     GameManager.breakTextureLevel = level;
                     ServerNetworking.sendLevel(GameManager.breakTextureName, level);
                 }
                 break;
             case breakSkinName:
-                if (isUpdatedLevel(GameManager.breakSkinLevel, level)){
+                if (isUpdatedLevel(GameManager.breakSkinLevel, level, GameManager.breakSkinMaxLevel)){
                     GameManager.breakSkinLevel = level;
                     ServerNetworking.sendLevel(GameManager.breakSkinName, level);
                 }
                 break;
             case helpSoundName:
-                if (isUpdatedLevel(GameManager.helpSoundLevel, level)){
+                if (isUpdatedLevel(GameManager.helpSoundLevel, level, GameManager.helpSoundLevel)){
                     GameManager.helpSoundLevel = level;
                     ServerNetworking.sendLevel(GameManager.helpSoundName, level);
                 }
                 break;
             case bugRunName:
-                if (isUpdatedLevel(GameManager.bugRunLevel, level)){
+                if (isUpdatedLevel(GameManager.bugRunLevel, level, GameManager.bugRunMaxLevel)){
                     GameManager.bugRunLevel = level;
                     ServerNetworking.sendLevel(GameManager.bugRunName, level);
                 }
@@ -122,8 +123,8 @@ public class GameManager {
      * @param level
      * @return
      */
-    private static boolean isUpdatedLevel(int currentLevel, int level){
-        return currentLevel < level;
+    private static boolean isUpdatedLevel(int currentLevel, int level, int maxLevel){
+        return currentLevel < level && maxLevel >= level;
     }
 
     public enum GameMode {
