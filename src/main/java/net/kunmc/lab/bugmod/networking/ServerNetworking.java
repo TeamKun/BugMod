@@ -76,7 +76,9 @@ public class ServerNetworking {
                             GameManager.garbledCharLevel + " " +
                             GameManager.breakScreenLevel + " " +
                             GameManager.breakTextureLevel + " " +
+                            GameManager.breakSkinLevel + " " +
                             GameManager.helpSoundLevel;
+                    System.out.println(all);
                     buf.writeString(all);
 
                     ServerPlayNetworking.send(player, BugModNetworking.identifierFactory("all"), buf);

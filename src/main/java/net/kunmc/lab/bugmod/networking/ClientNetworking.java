@@ -25,6 +25,10 @@ public class ClientNetworking {
         ClientPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(GameManager.breakTextureName), (minecraftClient, clientPlayNetworkHandler, packetByteBuf, packetSender) -> {
             UpdateClientLevelManager.startUpdateLevel(GameManager.breakTextureName, packetByteBuf.readInt());
         });
+        ClientPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(GameManager.breakSkinName), (minecraftClient, clientPlayNetworkHandler, packetByteBuf, packetSender) -> {
+            System.out.println("AAABBB");
+            UpdateClientLevelManager.startUpdateLevel(GameManager.breakSkinName, packetByteBuf.readInt());
+        });
         ClientPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory("gamemode"), (minecraftClient, clientPlayNetworkHandler, packetByteBuf, packetSender) -> {
             String gameMode = packetByteBuf.readString();
             if (gameMode.equals(GameManager.GameMode.MODE_START.toString())) {
@@ -36,7 +40,7 @@ public class ClientNetworking {
             }
         });
         ClientPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory("all"), (minecraftClient, clientPlayNetworkHandler, packetByteBuf, packetSender) -> {
-            if (UpdateClientLevelManager.shouldUpdatedLevel()){
+            //if (UpdateClientLevelManager.shouldUpdatedLevel()){
                 String level = packetByteBuf.readString();
                 String[] levelArray = level.split(" ");
                 System.out.println(level);
@@ -44,8 +48,9 @@ public class ClientNetworking {
                 GameManager.garbledCharLevel = Integer.parseInt(levelArray[1]);
                 GameManager.breakScreenLevel = Integer.parseInt(levelArray[2]);
                 GameManager.breakTextureLevel = Integer.parseInt(levelArray[3]);
-                GameManager.helpSoundLevel = Integer.parseInt(levelArray[4]);
-            }
+                GameManager.breakSkinLevel = Integer.parseInt(levelArray[4]);
+                GameManager.helpSoundLevel = Integer.parseInt(levelArray[5]);
+            //}
         });
     }
     public static void sendRedScreenLevel() {

@@ -97,7 +97,12 @@ public class GameManager {
                 }
                 break;
             case breakSkinName:
+                System.out.println("AACCDD");
+                System.out.println(GameManager.breakSkinLevel);
+                System.out.println(level);
+                System.out.println(GameManager.breakSkinMaxLevel);
                 if (shouldUpdateLevel(GameManager.breakSkinLevel, level, GameManager.breakSkinMaxLevel)){
+                    System.out.println("AACCDDD");
                     GameManager.breakSkinLevel = level;
                     ServerNetworking.sendLevel(GameManager.breakSkinName, level);
                 }

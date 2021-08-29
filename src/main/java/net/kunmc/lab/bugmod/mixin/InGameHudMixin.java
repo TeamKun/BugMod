@@ -24,7 +24,7 @@ public class InGameHudMixin {
     // よくある文字化けの文字
     private static char[] chars = {'?','§','℃','√','∞','∴','■','○','●','ゅ','上','九','代','吶','壹','峨','後','悶','溘','縺','繧','舌','輔','＜','＞','＠','ｂ','ｅ','ｆ','ｊ','ｌ','ｐ','ｒ','｢','｣','､','･','ｦ','ｧ','ｨ','ｩ','ｪ','ｫ','ｬ','ｭ','ｮ','ｯ','ｰ','ｱ','ｲ','ｳ','ｴ','ｵ','ｶ','ｷ','ｸ','ｹ','ｺ','ｻ','ｼ','ｽ','ｾ','ｿ','￠','￡'};
 
-    @Inject(at = @At("TAIL"), method = "render")
+    @Inject(at = @At("HEAD"), method = "render")
     public void bugModRender(MatrixStack matrixStack, float tickDelta, CallbackInfo info) {
         if (GameManager.runningMode == GameManager.GameMode.MODE_START) {
             BugModHUD.renderRedScreen(matrixStack);

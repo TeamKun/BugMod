@@ -8,10 +8,11 @@
   "client": [
     "InGameHudMixin",
     "PlayerSkinTextureMixin",
-    "PlayerSkinProviderMixin",
+    "PlayerSkinProviderMixin"
   ],
   "server": [
-    "PlayerEntityMixin"
+    "PlayerEntityMixin",
+    "ItemStackMixin"
   ],
   "injectors": {
     "defaultRequire": 1
