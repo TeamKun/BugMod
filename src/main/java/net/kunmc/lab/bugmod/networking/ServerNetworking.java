@@ -23,43 +23,52 @@ public class ServerNetworking {
         });
     }
 
+    public static void sendGameMode() {
+        BugMod.minecraftServerInstance.getPlayerManager().getPlayerList().forEach(player -> {
+            PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+            buf.writeString(GameManager.runningMode.toString());
+            ServerPlayNetworking.send(player, BugModNetworking.identifierFactory("gamemode"), buf);
+        });
+    }
+
     public static void receiveLevel(){
         ServerPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(GameManager.redScreenName), (server, player, handler, buf, response) -> {
             int level = buf.readInt();
-            if (GameManager.runningMode == GameManager.GameMode.MODE_START && GameManager.redScreenMaxLevel < level) {
-                GameManager.updateLevel(GameManager.redScreenName, buf.readInt());
+            if (GameManager.runningMode == GameManager.GameMode.MODE_START && GameManager.redScreenMaxLevel >= level) {
+                GameManager.updateLevel(GameManager.redScreenName, level);
             }
         });
         ServerPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(GameManager.garbledCharName), (server, player, handler, buf, response) -> {
             int level = buf.readInt();
-            if (GameManager.runningMode == GameManager.GameMode.MODE_START && GameManager.garbledCharMaxLevel < level) {
-                GameManager.updateLevel(GameManager.garbledCharName, buf.readInt());
+            if (GameManager.runningMode == GameManager.GameMode.MODE_START && GameManager.garbledCharMaxLevel >= level) {
+                GameManager.updateLevel(GameManager.garbledCharName, level);
             }
         });
         ServerPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(GameManager.breakScreenName), (server, player, handler, buf, response) -> {
             int level = buf.readInt();
-            if (GameManager.runningMode == GameManager.GameMode.MODE_START && GameManager.breakScreenMaxLevel < level) {
-                GameManager.updateLevel(GameManager.breakScreenName, buf.readInt());
+            if (GameManager.runningMode == GameManager.GameMode.MODE_START && GameManager.breakScreenMaxLevel >= level) {
+                GameManager.updateLevel(GameManager.breakScreenName, level);
             }
         });
         ServerPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(GameManager.breakTextureName), (server, player, handler, buf, response) -> {
             int level = buf.readInt();
-            if (GameManager.runningMode == GameManager.GameMode.MODE_START && GameManager.breakTextureMaxLevel < level) {
-                GameManager.updateLevel(GameManager.breakTextureName, buf.readInt());
+            if (GameManager.runningMode == GameManager.GameMode.MODE_START && GameManager.breakTextureMaxLevel >= level) {
+                GameManager.updateLevel(GameManager.breakTextureName, level);
             }
         });
         ServerPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(GameManager.helpSoundName), (server, player, handler, buf, response) -> {
             int level = buf.readInt();
-            if (GameManager.runningMode == GameManager.GameMode.MODE_START && GameManager.helpSoundMaxLevel < level) {
-                GameManager.updateLevel(GameManager.helpSoundName, buf.readInt());
+            if (GameManager.runningMode == GameManager.GameMode.MODE_START && GameManager.helpSoundMaxLevel > level) {
+                GameManager.updateLevel(GameManager.helpSoundName, level);
             }
         });
     }
 
-    public static void sendLevelEveryTick(){
+    public static void syncServerAndClientEveryTick(){
         ServerTickEvents.START_SERVER_TICK.register(m -> {
             tick ++;
             if (tick % 20 == 0){
+                // レベル送信
                 BugMod.minecraftServerInstance.getPlayerManager().getPlayerList().forEach(player -> {
                     PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
                     // 全パラメータをスペース区切りで送る
@@ -72,6 +81,8 @@ public class ServerNetworking {
 
                     ServerPlayNetworking.send(player, BugModNetworking.identifierFactory("all"), buf);
                 });
+                // ゲームモード送信
+                sendGameMode();
             }
         });
     }

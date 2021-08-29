@@ -26,9 +26,11 @@ public class InGameHudMixin {
 
     @Inject(at = @At("TAIL"), method = "render")
     public void bugModRender(MatrixStack matrixStack, float tickDelta, CallbackInfo info) {
-        BugModHUD.renderRedScreen(matrixStack);
-        BugModHUD.renderBreakScreen(matrixStack);
-        BugModHUD.renderBlackScreen(matrixStack);
+        if (GameManager.runningMode == GameManager.GameMode.MODE_START) {
+            BugModHUD.renderRedScreen(matrixStack);
+            BugModHUD.renderBreakScreen(matrixStack);
+            BugModHUD.renderBlackScreen(matrixStack);
+        }
     }
 
     @ModifyVariable(at = @At(value = "HEAD"), method = "addChatMessage")

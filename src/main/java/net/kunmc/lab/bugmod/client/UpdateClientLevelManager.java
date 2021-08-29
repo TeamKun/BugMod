@@ -6,11 +6,10 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.kunmc.lab.bugmod.game.GameManager;
 import net.kunmc.lab.bugmod.shader.ShaderManager;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.RunArgs;
 
 @Environment(EnvType.CLIENT)
 public class UpdateClientLevelManager {
-    private static boolean isUpdating = false;
+    private static boolean shouldUpdate = true;
     public static boolean isBlackOut = false;
     private static int time = 0;
     private static String name = "";
@@ -24,25 +23,26 @@ public class UpdateClientLevelManager {
     }
 
     public static void startUpdateLevel(String targetName, int targetLevel){
-        isUpdating = true;
+        if (!shouldUpdatedLevel()) return;
         name = targetName;
         level = targetLevel;
+        shouldUpdate = false;
     }
 
     public static void updateTimer(){
-        if (!isUpdating) return;
+        if (name.isEmpty()) return;
 
         time++;
         if (time > 40){
             time = 0;
-            isUpdating = false;
             name = "";
             level = 0;
+            shouldUpdate = true;
         }
     }
 
     public static void updateLevel() {
-        if (!shouldUpdatedLevel()) return;
+        if (name.isEmpty()) return;
         switch (name) {
             case GameManager.breakTextureName:
             case GameManager.garbledCharName:
@@ -57,7 +57,7 @@ public class UpdateClientLevelManager {
     }
 
     public static boolean shouldUpdatedLevel() {
-        return GameManager.runningMode == GameManager.GameMode.MODE_START && !isUpdating;
+        return GameManager.runningMode == GameManager.GameMode.MODE_START && shouldUpdate;
     }
 
     private static void updateLevelWithGlitch() {

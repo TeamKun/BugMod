@@ -1,17 +1,10 @@
 package net.kunmc.lab.bugmod.event;
 
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
-import net.fabricmc.fabric.api.event.player.UseBlockCallback;
-import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.kunmc.lab.bugmod.block.BlockManager;
 import net.kunmc.lab.bugmod.game.GameManager;
-import net.kunmc.lab.bugmod.networking.ClientNetworking;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 
@@ -77,8 +70,8 @@ public class PlayerServerEvent {
                     }
                 }
             }
-            System.out.println(GameManager.breakTextureLevel);
-            GameManager.updateLevel(GameManager.breakTextureName, GameManager.breakTextureLevel+1);
+            if (rnd.nextDouble() <= 0.1)
+                GameManager.updateLevel(GameManager.breakTextureName, GameManager.breakTextureLevel+1);
         });
     }
 }

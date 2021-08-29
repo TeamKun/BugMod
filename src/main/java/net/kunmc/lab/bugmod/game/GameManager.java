@@ -35,7 +35,7 @@ public class GameManager {
     public static int bugRunLevel;
 
     // Gameの実行・停止状態の管理用
-    public static GameMode runningMode;
+    public static GameMode runningMode = GameMode.MODE_NEUTRAL;
     public static boolean recoveryMode = true;
 
 
@@ -73,43 +73,43 @@ public class GameManager {
     public static void updateLevel(String name, int level){
         switch (name){
             case redScreenName:
-                if (isUpdatedLevel(GameManager.redScreenLevel, level, GameManager.redScreenMaxLevel)){
+                if (shouldUpdateLevel(GameManager.redScreenLevel, level, GameManager.redScreenMaxLevel)){
                     GameManager.redScreenLevel = level;
                     ServerNetworking.sendLevel(GameManager.redScreenName, level);
                 }
                 break;
             case garbledCharName:
-                if (isUpdatedLevel(GameManager.garbledCharLevel, level, GameManager.garbledCharMaxLevel)){
+                if (shouldUpdateLevel(GameManager.garbledCharLevel, level, GameManager.garbledCharMaxLevel)){
                     GameManager.garbledCharLevel = level;
                     ServerNetworking.sendLevel(GameManager.garbledCharName, level);
                 }
                 break;
             case breakScreenName:
-                if (isUpdatedLevel(GameManager.breakScreenLevel, level, GameManager.breakScreenMaxLevel)){
+                if (shouldUpdateLevel(GameManager.breakScreenLevel, level, GameManager.breakScreenMaxLevel)){
                     GameManager.breakScreenLevel = level;
                     ServerNetworking.sendLevel(GameManager.breakScreenName, level);
                 }
                 break;
             case breakTextureName:
-                if (isUpdatedLevel(GameManager.breakTextureLevel, level, GameManager.breakTextureMaxLevel)){
+                if (shouldUpdateLevel(GameManager.breakTextureLevel, level, GameManager.breakTextureMaxLevel)){
                     GameManager.breakTextureLevel = level;
                     ServerNetworking.sendLevel(GameManager.breakTextureName, level);
                 }
                 break;
             case breakSkinName:
-                if (isUpdatedLevel(GameManager.breakSkinLevel, level, GameManager.breakSkinMaxLevel)){
+                if (shouldUpdateLevel(GameManager.breakSkinLevel, level, GameManager.breakSkinMaxLevel)){
                     GameManager.breakSkinLevel = level;
                     ServerNetworking.sendLevel(GameManager.breakSkinName, level);
                 }
                 break;
             case helpSoundName:
-                if (isUpdatedLevel(GameManager.helpSoundLevel, level, GameManager.helpSoundLevel)){
+                if (shouldUpdateLevel(GameManager.helpSoundLevel, level, GameManager.helpSoundLevel)){
                     GameManager.helpSoundLevel = level;
                     ServerNetworking.sendLevel(GameManager.helpSoundName, level);
                 }
                 break;
             case bugRunName:
-                if (isUpdatedLevel(GameManager.bugRunLevel, level, GameManager.bugRunMaxLevel)){
+                if (shouldUpdateLevel(GameManager.bugRunLevel, level, GameManager.bugRunMaxLevel)){
                     GameManager.bugRunLevel = level;
                     ServerNetworking.sendLevel(GameManager.bugRunName, level);
                 }
@@ -123,7 +123,7 @@ public class GameManager {
      * @param level
      * @return
      */
-    private static boolean isUpdatedLevel(int currentLevel, int level, int maxLevel){
+    private static boolean shouldUpdateLevel(int currentLevel, int level, int maxLevel){
         return currentLevel < level && maxLevel >= level;
     }
 

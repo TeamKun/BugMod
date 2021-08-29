@@ -22,20 +22,35 @@ public class ClientNetworking {
         ClientPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(GameManager.breakScreenName), (minecraftClient, clientPlayNetworkHandler, packetByteBuf, packetSender) -> {
             UpdateClientLevelManager.startUpdateLevel(GameManager.breakScreenName, packetByteBuf.readInt());
         });
+        ClientPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(GameManager.breakTextureName), (minecraftClient, clientPlayNetworkHandler, packetByteBuf, packetSender) -> {
+            UpdateClientLevelManager.startUpdateLevel(GameManager.breakTextureName, packetByteBuf.readInt());
+        });
+        ClientPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory("gamemode"), (minecraftClient, clientPlayNetworkHandler, packetByteBuf, packetSender) -> {
+            String gameMode = packetByteBuf.readString();
+            if (gameMode.equals(GameManager.GameMode.MODE_START.toString())) {
+                GameManager.controller(GameManager.GameMode.MODE_START);
+            }else if (gameMode.equals(GameManager.GameMode.MODE_NEUTRAL.toString())) {
+                GameManager.controller(GameManager.GameMode.MODE_NEUTRAL);
+            }else if (gameMode.equals(GameManager.GameMode.MODE_PAUSE.toString())) {
+                GameManager.controller(GameManager.GameMode.MODE_PAUSE);
+            }
+        });
         ClientPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory("all"), (minecraftClient, clientPlayNetworkHandler, packetByteBuf, packetSender) -> {
             if (UpdateClientLevelManager.shouldUpdatedLevel()){
-                String[] array = packetByteBuf.readString().split(" ");
-                GameManager.redScreenLevel = Integer.parseInt(array[0]);
-                GameManager.garbledCharLevel = Integer.parseInt(array[1]);
-                GameManager.breakScreenLevel = Integer.parseInt(array[2]);
-                GameManager.breakTextureLevel = Integer.parseInt(array[3]);
-                GameManager.helpSoundLevel = Integer.parseInt(array[4]);
-
+                String level = packetByteBuf.readString();
+                String[] levelArray = level.split(" ");
+                System.out.println(level);
+                GameManager.redScreenLevel = Integer.parseInt(levelArray[0]);
+                GameManager.garbledCharLevel = Integer.parseInt(levelArray[1]);
+                GameManager.breakScreenLevel = Integer.parseInt(levelArray[2]);
+                GameManager.breakTextureLevel = Integer.parseInt(levelArray[3]);
+                GameManager.helpSoundLevel = Integer.parseInt(levelArray[4]);
             }
         });
     }
     public static void sendRedScreenLevel() {
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+        System.out.println(GameManager.redScreenLevel+1);
         buf.writeInt(GameManager.redScreenLevel+1);
         ClientPlayNetworking.send(BugModNetworking.identifierFactory(GameManager.redScreenName), buf);
     }

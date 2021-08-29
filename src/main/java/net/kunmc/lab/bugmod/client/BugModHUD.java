@@ -16,29 +16,29 @@ public class BugModHUD {
      * @param matrices
      */
     public static void renderRedScreen(MatrixStack matrices){
-        if (GameManager.runningMode != GameManager.GameMode.MODE_START || GameManager.redScreenLevel == 0) return;
+        if (GameManager.redScreenLevel == 0) return;
         // See: https://qiita.com/konifar/items/106731d8a35303606597
         int alphaColor = 0x0;
         switch (GameManager.redScreenLevel){
             case 1:
-                // 20%
-                alphaColor = 0x332f0000;
-                break;
-            case 2:
-                // 30%
-                alphaColor = 0x4D2f0000;
-                break;
-            case 3:
                 // 40%
                 alphaColor = 0x662f0000;
                 break;
-            case 4:
+            case 2:
                 // 50%
                 alphaColor = 0x802f0000;
                 break;
-            case 5:
-                // 60
+            case 3:
+                // 60%
                 alphaColor = 0x992f0000;
+                break;
+            case 4:
+                // 70%
+                alphaColor = 0xB32f0000;
+                break;
+            case 5:
+                // 80%
+                alphaColor = 0xCC2f0000;
                 break;
         }
 
@@ -48,7 +48,7 @@ public class BugModHUD {
                 alphaColor);
     }
     public static void renderBreakScreen(MatrixStack matrices){
-        if (GameManager.runningMode != GameManager.GameMode.MODE_START || GameManager.breakScreenLevel == 0) return;
+        if (GameManager.breakScreenLevel == 0) return;
         /**
          * - 画面が右端から徐々に削れていくことを想定する
          *   - 削る範囲が小さいと意味がないので、範囲を決めて削るようにする
