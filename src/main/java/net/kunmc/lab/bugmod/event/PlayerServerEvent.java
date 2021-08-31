@@ -3,8 +3,10 @@ package net.kunmc.lab.bugmod.event;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.kunmc.lab.bugmod.block.BlockManager;
 import net.kunmc.lab.bugmod.game.GameManager;
+import net.minecraft.block.BedBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.SignBlock;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 
@@ -52,17 +54,17 @@ public class PlayerServerEvent {
                         BlockPos bPos = new BlockPos(px + x,py + y,pz + z);
 
                         Block b = world.getBlockState(bPos).getBlock();
-                        String bugBlockName = "";
-                        if (b == Blocks.STONE) {
-                            bugBlockName = BlockManager.bugStone;
-                            //} else if (b == Blocks.DIRT){
-                            //} else if (b == Blocks.COBBLESTONE){
-                            //} else if (b == Blocks.END_STONE){
-                            //} else if (b == Blocks.GRASS_BLOCK){
-                            //} else if (b == Blocks.OBSIDIAN){
-                            //} else if (b == Blocks.SAND){
-                        } else {
+                        if (b == Blocks.AIR || b instanceof BedBlock || b instanceof SignBlock || b == Blocks.LAVA || b == Blocks.WATER)
                             continue;
+                        String bugBlockName = "";
+
+                        switch (rnd.nextInt(2)){
+                            case 0:
+                                bugBlockName = BlockManager.bugBlock1Name;
+                                break;
+                            case 1:
+                                bugBlockName = BlockManager.bugBlock2Name;
+                                break;
                         }
                         Block newBlock = Registry.BLOCK.get(BlockManager.identifierFactory(bugBlockName));
                         world.removeBlock(bPos,false);
