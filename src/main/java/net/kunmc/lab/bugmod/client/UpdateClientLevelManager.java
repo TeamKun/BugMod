@@ -11,7 +11,8 @@ import net.minecraft.client.MinecraftClient;
 public class UpdateClientLevelManager {
     private static boolean shouldUpdate = true;
     public static boolean isBlackOut = false;
-    private static int time = 0;
+    public static boolean runBugs = false;
+    public static int time = 0;
     private static String name = "";
     private static int level = 0;
 
@@ -52,6 +53,9 @@ public class UpdateClientLevelManager {
             case GameManager.redScreenName:
             case GameManager.breakScreenName:
                 updateLevelWithBlack();
+                break;
+            case GameManager.spiderSoundName:
+                updateLevelWithBugs();
                 break;
         }
     }
@@ -98,6 +102,16 @@ public class UpdateClientLevelManager {
                     GameManager.breakScreenLevel = level;
                     break;
             }
+        }
+    }
+    private static void updateLevelWithBugs() {
+        if (time == 0) {
+            runBugs = true;
+            GameManager.spiderSoundLevel = level;
+        }
+
+        if (time == 40) {
+            runBugs = false;
         }
     }
 }

@@ -62,6 +62,12 @@ public class ServerNetworking {
                 GameManager.updateLevel(GameManager.helpSoundName, level);
             }
         });
+        ServerPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(GameManager.spiderSoundName), (server, player, handler, buf, response) -> {
+            int level = buf.readInt();
+            if (GameManager.runningMode == GameManager.GameMode.MODE_START && GameManager.spiderSoundMaxLevel > level) {
+                GameManager.updateLevel(GameManager.spiderSoundName, level);
+            }
+        });
     }
 
     public static void syncServerAndClientEveryTick(){
@@ -77,7 +83,8 @@ public class ServerNetworking {
                             GameManager.breakScreenLevel + " " +
                             GameManager.breakTextureLevel + " " +
                             GameManager.breakSkinLevel + " " +
-                            GameManager.helpSoundLevel;
+                            GameManager.helpSoundLevel + " " +
+                            GameManager.spiderSoundLevel;
                     System.out.println(all);
                     buf.writeString(all);
 

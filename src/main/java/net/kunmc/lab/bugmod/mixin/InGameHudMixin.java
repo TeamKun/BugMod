@@ -3,6 +3,7 @@ package net.kunmc.lab.bugmod.mixin;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.kunmc.lab.bugmod.client.BugModHUD;
+import net.kunmc.lab.bugmod.client.BugsHUD;
 import net.kunmc.lab.bugmod.game.GameManager;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.math.MatrixStack;
@@ -26,9 +27,11 @@ public class InGameHudMixin {
 
     @Inject(at = @At("HEAD"), method = "render")
     public void bugModRender(MatrixStack matrixStack, float tickDelta, CallbackInfo info) {
+        BugsHUD.renderBugs(matrixStack);
         if (GameManager.runningMode == GameManager.GameMode.MODE_START) {
             BugModHUD.renderRedScreen(matrixStack);
             BugModHUD.renderBreakScreen(matrixStack);
+            BugModHUD.renderBugs(matrixStack);
             BugModHUD.renderBlackScreen(matrixStack);
         }
     }

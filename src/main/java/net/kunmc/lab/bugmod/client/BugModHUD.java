@@ -88,4 +88,8 @@ public class BugModHUD {
                 MinecraftClient.getInstance().getWindow().getHeight(),
                 alphaColor);
     }
+    public static void renderBugs(MatrixStack matrices){
+        if (!UpdateClientLevelManager.runBugs) return;
+        BugsHUD.renderBugs(matrices);
+    }
 }

@@ -6,6 +6,7 @@ import net.kunmc.lab.bugmod.block.BlockManager;
 import net.kunmc.lab.bugmod.command.BugCommand;
 import net.kunmc.lab.bugmod.event.PlayerServerEvent;
 import net.kunmc.lab.bugmod.networking.ServerNetworking;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.server.MinecraftServer;
 
 public class BugMod implements ModInitializer {

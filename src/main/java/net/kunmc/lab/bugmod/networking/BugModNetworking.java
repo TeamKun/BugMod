@@ -19,8 +19,8 @@ public class BugModNetworking {
                 return new Identifier(BugMod.MODID, GameManager.breakTextureName);
             case GameManager.helpSoundName:
                 return new Identifier(BugMod.MODID, GameManager.helpSoundName);
-            case GameManager.bugRunName:
-                return new Identifier(BugMod.MODID, GameManager.bugRunName);
+            case GameManager.spiderSoundName:
+                return new Identifier(BugMod.MODID, GameManager.spiderSoundName);
             case "gamemode":
                 return new Identifier(BugMod.MODID, "gamemode");
             case "all":

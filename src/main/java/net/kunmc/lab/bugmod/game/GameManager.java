@@ -9,7 +9,7 @@ public class GameManager {
     public static final String breakTextureName = "breaktexture";
     public static final String breakSkinName = "breakskin";
     public static final String helpSoundName = "helpsound";
-    public static final String bugRunName = "bugrun";
+    public static final String spiderSoundName = "spidersound";
 
     public static final int redScreenMaxLevel = 5;
     public static final int garbledCharMaxLevel = 5;
@@ -17,7 +17,7 @@ public class GameManager {
     public static final int breakTextureMaxLevel = 5;
     public static final int breakSkinMaxLevel = 5;
     public static final int helpSoundMaxLevel = 5;
-    public static final int bugRunMaxLevel = 1;
+    public static final int spiderSoundMaxLevel = 3;
 
     // 画面が赤くなる
     public static int redScreenLevel;
@@ -32,7 +32,7 @@ public class GameManager {
     // 音がバグる
     public static int helpSoundLevel;
     // 虫が走る
-    public static int bugRunLevel;
+    public static int spiderSoundLevel;
 
     // Gameの実行・停止状態の管理用
     public static GameMode runningMode = GameMode.MODE_NEUTRAL;
@@ -46,7 +46,7 @@ public class GameManager {
         breakTextureLevel = 0;
         breakSkinLevel = 0;
         helpSoundLevel = 0;
-        bugRunLevel = 0;
+        spiderSoundLevel = 0;
         runningMode = GameMode.MODE_NEUTRAL;
         recoveryMode = true;
     }
@@ -97,12 +97,7 @@ public class GameManager {
                 }
                 break;
             case breakSkinName:
-                System.out.println("AACCDD");
-                System.out.println(GameManager.breakSkinLevel);
-                System.out.println(level);
-                System.out.println(GameManager.breakSkinMaxLevel);
                 if (shouldUpdateLevel(GameManager.breakSkinLevel, level, GameManager.breakSkinMaxLevel)){
-                    System.out.println("AACCDDD");
                     GameManager.breakSkinLevel = level;
                     ServerNetworking.sendLevel(GameManager.breakSkinName, level);
                 }
@@ -113,10 +108,10 @@ public class GameManager {
                     ServerNetworking.sendLevel(GameManager.helpSoundName, level);
                 }
                 break;
-            case bugRunName:
-                if (shouldUpdateLevel(GameManager.bugRunLevel, level, GameManager.bugRunMaxLevel)){
-                    GameManager.bugRunLevel = level;
-                    ServerNetworking.sendLevel(GameManager.bugRunName, level);
+            case spiderSoundName:
+                if (shouldUpdateLevel(GameManager.spiderSoundLevel, level, GameManager.spiderSoundMaxLevel)){
+                    GameManager.spiderSoundLevel = level;
+                    ServerNetworking.sendLevel(GameManager.spiderSoundName, level);
                 }
                 break;
         }

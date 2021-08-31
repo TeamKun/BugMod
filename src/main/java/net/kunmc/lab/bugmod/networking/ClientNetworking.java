@@ -40,17 +40,16 @@ public class ClientNetworking {
             }
         });
         ClientPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory("all"), (minecraftClient, clientPlayNetworkHandler, packetByteBuf, packetSender) -> {
-            //if (UpdateClientLevelManager.shouldUpdatedLevel()){
-                String level = packetByteBuf.readString();
-                String[] levelArray = level.split(" ");
-                System.out.println(level);
-                GameManager.redScreenLevel = Integer.parseInt(levelArray[0]);
-                GameManager.garbledCharLevel = Integer.parseInt(levelArray[1]);
-                GameManager.breakScreenLevel = Integer.parseInt(levelArray[2]);
-                GameManager.breakTextureLevel = Integer.parseInt(levelArray[3]);
-                GameManager.breakSkinLevel = Integer.parseInt(levelArray[4]);
-                GameManager.helpSoundLevel = Integer.parseInt(levelArray[5]);
-            //}
+            String level = packetByteBuf.readString();
+            String[] levelArray = level.split(" ");
+            System.out.println(level);
+            GameManager.redScreenLevel = Integer.parseInt(levelArray[0]);
+            GameManager.garbledCharLevel = Integer.parseInt(levelArray[1]);
+            GameManager.breakScreenLevel = Integer.parseInt(levelArray[2]);
+            GameManager.breakTextureLevel = Integer.parseInt(levelArray[3]);
+            GameManager.breakSkinLevel = Integer.parseInt(levelArray[4]);
+            GameManager.helpSoundLevel = Integer.parseInt(levelArray[5]);
+            GameManager.spiderSoundLevel = Integer.parseInt(levelArray[6]);
         });
     }
     public static void sendRedScreenLevel() {
