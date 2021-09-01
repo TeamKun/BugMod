@@ -21,6 +21,7 @@ import org.spongepowered.asm.mixin.Shadow;
 @Mixin(BlockSoundGroup.class)
 public class BlockSoundGroupMixin {
     @Shadow @Final private SoundEvent placeSound;
+    @Shadow @Final private SoundEvent stepSound;
 
     /**
      * @author POne0301
@@ -29,7 +30,10 @@ public class BlockSoundGroupMixin {
      */
     @Overwrite()
     public SoundEvent getPlaceSound() {
-        return SoundEvents.ENTITY_SPIDER_AMBIENT;
+        if (GameManager.spiderSoundLevel > 0)
+            return SoundEvents.ENTITY_SPIDER_AMBIENT;
+
+        return this.placeSound;
     }
 
     /**
@@ -39,29 +43,9 @@ public class BlockSoundGroupMixin {
      */
     @Overwrite()
     public SoundEvent getStepSound() {
-        return SoundEvents.ENTITY_SPIDER_AMBIENT;
+        if (GameManager.spiderSoundLevel > 1)
+            return SoundEvents.ENTITY_SPIDER_AMBIENT;
+
+        return this.stepSound;
     }
-
-
-    //@Environment(EnvType.CLIENT)
-    //public SoundEvent getBreakSound() {
-    //    return this.breakSound;
-    //}
-
-    //public SoundEvent getStepSound() {
-    //    return this.stepSound;
-    //}
-
-    //public SoundEvent getPlaceSound() {
-    //    return this.placeSound;
-    //}
-
-    //@Environment(EnvType.CLIENT)
-    //public SoundEvent getHitSound() {
-    //    return this.hitSound;
-    //}
-
-    //public SoundEvent getFallSound() {
-    //    return this.fallSound;
-    //}
 }

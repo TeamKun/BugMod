@@ -3,10 +3,7 @@ package net.kunmc.lab.bugmod.event;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.kunmc.lab.bugmod.block.BlockManager;
 import net.kunmc.lab.bugmod.game.GameManager;
-import net.minecraft.block.BedBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SignBlock;
+import net.minecraft.block.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 
@@ -35,11 +32,11 @@ public class PlayerServerEvent {
                     changeProb = 0.4;
                     break;
                 case 4:
-                    xzRange = 5;
+                    xzRange = 4;
                     changeProb = 0.5;
                     break;
                 case 5:
-                    xzRange = 6;
+                    xzRange = 4;
                     changeProb = 0.6;
                     break;
             }
@@ -54,16 +51,22 @@ public class PlayerServerEvent {
                         BlockPos bPos = new BlockPos(px + x,py + y,pz + z);
 
                         Block b = world.getBlockState(bPos).getBlock();
-                        if (b == Blocks.AIR || b instanceof BedBlock || b instanceof SignBlock || b == Blocks.LAVA || b == Blocks.WATER)
+                        if (b == Blocks.AIR || b instanceof BedBlock || b instanceof SignBlock || b instanceof DoorBlock ||
+                                b == Blocks.LAVA || b == Blocks.WATER || b == Blocks.OBSIDIAN ||
+                                b == Blocks.END_GATEWAY || b == Blocks.END_PORTAL || b == Blocks.END_PORTAL_FRAME ||
+                                b == Blocks.IRON_ORE || b == Blocks.DIAMOND_ORE || b == Blocks.SPAWNER)
                             continue;
                         String bugBlockName = "";
 
-                        switch (rnd.nextInt(2)){
+                        switch (rnd.nextInt(3)){
                             case 0:
                                 bugBlockName = BlockManager.bugBlock1Name;
                                 break;
                             case 1:
                                 bugBlockName = BlockManager.bugBlock2Name;
+                                break;
+                            case 2:
+                                bugBlockName = BlockManager.bugBlock3Name;
                                 break;
                         }
                         Block newBlock = Registry.BLOCK.get(BlockManager.identifierFactory(bugBlockName));

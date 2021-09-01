@@ -26,8 +26,10 @@ public class ClientNetworking {
             UpdateClientLevelManager.startUpdateLevel(GameManager.breakTextureName, packetByteBuf.readInt());
         });
         ClientPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(GameManager.breakSkinName), (minecraftClient, clientPlayNetworkHandler, packetByteBuf, packetSender) -> {
-            System.out.println("AAABBB");
             UpdateClientLevelManager.startUpdateLevel(GameManager.breakSkinName, packetByteBuf.readInt());
+        });
+        ClientPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(GameManager.spiderSoundName), (minecraftClient, clientPlayNetworkHandler, packetByteBuf, packetSender) -> {
+            UpdateClientLevelManager.startUpdateLevel(GameManager.spiderSoundName, packetByteBuf.readInt());
         });
         ClientPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory("gamemode"), (minecraftClient, clientPlayNetworkHandler, packetByteBuf, packetSender) -> {
             String gameMode = packetByteBuf.readString();

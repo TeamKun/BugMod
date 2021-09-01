@@ -108,10 +108,12 @@ public class UpdateClientLevelManager {
         if (time == 0) {
             runBugs = true;
             GameManager.spiderSoundLevel = level;
+            BugsHUD.startBugs();
         }
 
         if (time == 40) {
             runBugs = false;
+            BugsHUD.endBugs();
         }
     }
 }

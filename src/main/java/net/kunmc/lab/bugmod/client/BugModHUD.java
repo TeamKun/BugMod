@@ -61,20 +61,25 @@ public class BugModHUD {
         int alphaColor = 0xFF000000;
 
         // 画面の横分割の数
-        int splitHorizontalNum = GameManager.breakScreenMaxLevel;
-        double singleHorizontalSize = MinecraftClient.getInstance().getWindow().getWidth()/splitHorizontalNum;
-        // 画面の縦分割の割合
+        double singleHorizontalSize = MinecraftClient.getInstance().getWindow().getScaledWidth()/GameManager.breakScreenMaxLevel;
+        // 画面の縦分割の割合、intで計算すると小数点切り捨ての都合から画面を覆えないので、必要な数を出しておく
         int splitVerticalNum = 100;
+        int scaleHeight = MinecraftClient.getInstance().getWindow().getScaledHeight();
+        int splitScaleHeight = scaleHeight/splitVerticalNum;
+        int cnt = 0;
+
+        // 雰囲気のためrandで覆う範囲を少し動かす
         Random rnd = new Random();
-        for (int i = 0; i < splitVerticalNum; i++){
+        while (splitScaleHeight * cnt < scaleHeight) {
             int left_x = 0;
-            int right_x = (int)(singleHorizontalSize * GameManager.breakScreenLevel * 0.9 + singleHorizontalSize * rnd.nextDouble());
-            int down_y = MinecraftClient.getInstance().getWindow().getHeight()/splitVerticalNum*i;
-            int up_y = MinecraftClient.getInstance().getWindow().getHeight()/splitVerticalNum*(i+1);
+            int right_x = (int)(singleHorizontalSize * GameManager.breakScreenLevel * 0.9 + singleHorizontalSize * rnd.nextDouble() * 0.3);
+            int down_y = splitScaleHeight * cnt;
+            int up_y = splitScaleHeight * (cnt+1);
             DrawableHelper.fill(matrices, left_x, down_y,
                     right_x,
                     up_y,
                     alphaColor);
+            cnt ++;
         }
     }
     public static void renderBlackScreen(MatrixStack matrices){

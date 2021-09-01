@@ -13,11 +13,11 @@ public class GameManager {
 
     public static final int redScreenMaxLevel = 5;
     public static final int garbledCharMaxLevel = 5;
-    public static final int breakScreenMaxLevel = 20;
+    public static final int breakScreenMaxLevel = 30;
     public static final int breakTextureMaxLevel = 5;
     public static final int breakSkinMaxLevel = 5;
     public static final int helpSoundMaxLevel = 5;
-    public static final int spiderSoundMaxLevel = 3;
+    public static final int spiderSoundMaxLevel = 2;
 
     // 画面が赤くなる
     public static int redScreenLevel;

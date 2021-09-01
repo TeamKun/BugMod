@@ -77,8 +77,6 @@ public class PlayerSkinTextureMixin {
                         tmpCnt = 0;
                         preColor = 0x0;
                     }
-                    System.out.println(c);
-
                     image.setPixelColor(x, y, c);
                 }
             }

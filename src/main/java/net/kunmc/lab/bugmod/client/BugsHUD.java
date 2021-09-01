@@ -17,6 +17,7 @@ public class BugsHUD {
     public static List<Point> point = new ArrayList<Point>();
 
     public static void startBugs(){
+        point.clear();
         point.add(new Point(0,-10));
         point.add(new Point(10,-60));
         point.add(new Point(-10,-110));
@@ -32,5 +33,8 @@ public class BugsHUD {
             DrawableHelper.drawTexture(matrixStack, p.x,p.y,1.0f,1.0f, MinecraftClient.getInstance().getWindow().getWidth(),50,50,50);
             p.setLocation(p.x,p.y+10);
         }
+    }
+    public static void endBugs(){
+        point.clear();
     }
 }

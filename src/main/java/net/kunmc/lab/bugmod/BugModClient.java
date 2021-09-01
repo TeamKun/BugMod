@@ -27,6 +27,5 @@ public class BugModClient implements ClientModInitializer {
         PlayerClientEvent.register();
         UpdateClientLevelManager.register();
         ShaderManager.register();
-        BugsHUD.startBugs();
     }
 }

@@ -22,8 +22,7 @@ public class PlayerClientEvent {
         });
         UseItemCallback.EVENT.register((player, world, hand) -> {
             ItemStack item = player.getStackInHand(hand);
-            if (item.getItem() == Items.BUCKET ||
-                    item.getItem() == Items.WATER_BUCKET ||
+            if (item.getItem() == Items.WATER_BUCKET ||
                     item.getItem() == Items.LAVA_BUCKET){
                 ClientNetworking.sendBreakScreenLevel();
             }
