@@ -30,7 +30,7 @@ public class InGameHudMixin {
             BugModHUD.renderRedScreen(matrixStack);
             BugModHUD.renderBreakScreen(matrixStack);
             BugModHUD.renderBugs(matrixStack);
-            BugModHUD.renderBlackScreen(matrixStack);
+            //BugModHUD.renderBlackScreen(matrixStack);
         }
     }
 

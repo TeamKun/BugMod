@@ -34,7 +34,7 @@ public class UpdateClientLevelManager {
         if (name.isEmpty()) return;
 
         time++;
-        if (time > 40){
+        if (time > 30){
             time = 0;
             name = "";
             level = 0;
@@ -48,11 +48,9 @@ public class UpdateClientLevelManager {
             case GameManager.breakTextureName:
             case GameManager.garbledCharName:
             case GameManager.breakSkinName:
-                updateLevelWithGlitch();
-                break;
             case GameManager.redScreenName:
             case GameManager.breakScreenName:
-                updateLevelWithBlack();
+                updateLevelWithGlitch();
                 break;
             case GameManager.spiderSoundName:
                 updateLevelWithBugs();
@@ -65,11 +63,11 @@ public class UpdateClientLevelManager {
     }
 
     private static void updateLevelWithGlitch() {
-        if ( time == 0 || time == 25) {
-            ShaderManager.runGlitch(10);
+        if ( time == 0) {
+            ShaderManager.runGlitch(15);
         }
 
-        if (time == 25) {
+        if (time == 5) {
             switch (name) {
                 case GameManager.breakTextureName:
                     GameManager.breakTextureLevel = level;
@@ -81,20 +79,6 @@ public class UpdateClientLevelManager {
                     GameManager.breakSkinLevel = level;
                     MinecraftClient.getInstance().getSkinProvider().loadSkin(MinecraftClient.getInstance().player.getGameProfile(), (type, id, texture) -> {}, true);
                     break;
-            }
-        }
-    }
-
-    private static void updateLevelWithBlack() {
-        if (time == 0 || time == 15) {
-            isBlackOut = true;
-        }
-
-        if (time == 5 || time == 25) {
-            isBlackOut = false;
-        }
-        if (time == 20) {
-            switch (name) {
                 case GameManager.redScreenName:
                     GameManager.redScreenLevel = level;
                     break;
@@ -104,6 +88,30 @@ public class UpdateClientLevelManager {
             }
         }
     }
+
+    /**
+     * 没案、画面をブラックアウトさせる。
+     *   画面が一時的に見えなくなるのでテンポが悪くなり、画面上の表示をコントールすることが難しかったので没
+     */
+    //private static void updateLevelWithBlack() {
+    //    if (time == 0) {
+    //        isBlackOut = true;
+    //    }
+
+    //    if (time == 15) {
+    //        isBlackOut = false;
+    //    }
+    //    if (time == 0) {
+    //        switch (name) {
+    //            case GameManager.redScreenName:
+    //                GameManager.redScreenLevel = level;
+    //                break;
+    //            case GameManager.breakScreenName:
+    //                GameManager.breakScreenLevel = level;
+    //                break;
+    //        }
+    //    }
+    //}
     private static void updateLevelWithBugs() {
         if (time == 0) {
             runBugs = true;
@@ -111,7 +119,7 @@ public class UpdateClientLevelManager {
             BugsHUD.startBugs();
         }
 
-        if (time == 40) {
+        if (time == 20) {
             runBugs = false;
             BugsHUD.endBugs();
         }

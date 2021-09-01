@@ -50,10 +50,10 @@ public class BugModHUD {
     public static void renderBreakScreen(MatrixStack matrices){
         if (GameManager.breakScreenLevel == 0) return;
         /**
-         * - 画面が右端から徐々に削れていくことを想定する
+         * - 画面が左端から徐々に削れていくことを想定する
          *   - 削る範囲が小さいと意味がないので、範囲を決めて削るようにする
          *     - 画面を縦にn分割, 横にm分割すると想定
-         *     - 右端画面からmの範囲を決めてmaxの削る範囲を決める
+         *     - 左端画面からmの範囲を決めてmaxの削る範囲を決める
          *     - 四角に画面を削ってしまうと味気ないので、nの範囲毎にmの値を変えて長さの違う横棒がいくつもある感じで削る
          */
         // See: https://qiita.com/konifar/items/106731d8a35303606597
