@@ -12,7 +12,7 @@
     "BlockSoundGroupMixin"
   ],
   "server": [
-    "PlayerEntityMixin",
+    "ServerPlayerEntityMixin",
     "ItemStackMixin",
     "LivingEntityMixin"
   ],

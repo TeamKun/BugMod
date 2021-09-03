@@ -7,12 +7,12 @@ import net.kunmc.lab.bugmod.BugMod;
 import net.minecraft.util.Identifier;
 
 public class ShaderManager {
-    private static int glitchTime;
+    public static int glitchTime = 0;
 
     private static final ManagedShaderEffect GLITCH_SHADER = ShaderEffectManager.getInstance()
             .manage(new Identifier(BugMod.MODID, "shaders/post/glitch.json"));
 
-    public static void register(){
+    public static void register() {
         ShaderEffectRenderCallback.EVENT.register(tickDelta -> {
             if (glitchTime > 0) {
                 GLITCH_SHADER.render(tickDelta);
@@ -21,7 +21,7 @@ public class ShaderManager {
         });
     }
 
-    public static void runGlitch(int time){
+    public static void runGlitch(int time) {
         glitchTime = time;
     }
 }

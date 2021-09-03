@@ -13,8 +13,6 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 public class BugModClient implements ClientModInitializer {
     public static BugModClient instance;
-    public static final Identifier SPIDER1 = new Identifier(BugMod.MODID, "textures/entity/spider1.png");
-    public static final Identifier SPIDER2 = new Identifier(BugMod.MODID, "textures/entity/spider2.png");
 
     public static BugModClient getInstance() {
         return instance;
@@ -25,7 +23,7 @@ public class BugModClient implements ClientModInitializer {
         instance = this;
         ClientNetworking.registerReceiver();
         PlayerClientEvent.register();
-        UpdateClientLevelManager.register();
+        BugsHUD.register();
         ShaderManager.register();
     }
 }

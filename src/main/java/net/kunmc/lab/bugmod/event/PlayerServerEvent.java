@@ -54,7 +54,7 @@ public class PlayerServerEvent {
                         if (b == Blocks.AIR || b instanceof BedBlock || b instanceof SignBlock || b instanceof DoorBlock ||
                                 b == Blocks.LAVA || b == Blocks.WATER || b == Blocks.OBSIDIAN ||
                                 b == Blocks.END_GATEWAY || b == Blocks.END_PORTAL || b == Blocks.END_PORTAL_FRAME ||
-                                b == Blocks.IRON_ORE || b == Blocks.DIAMOND_ORE || b == Blocks.SPAWNER)
+                                b == Blocks.COAL_ORE || b == Blocks.IRON_ORE || b == Blocks.DIAMOND_ORE || b == Blocks.SPAWNER)
                             continue;
                         String bugBlockName = "";
 
@@ -76,7 +76,7 @@ public class PlayerServerEvent {
                 }
             }
             if (rnd.nextDouble() <= 0.1)
-                GameManager.updateLevel(GameManager.breakTextureName, GameManager.breakTextureLevel+1);
+                GameManager.updateLevel(GameManager.breakTextureName, GameManager.breakTextureLevel+1, player.getGameProfile().getName());
         });
     }
 }

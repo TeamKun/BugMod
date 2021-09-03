@@ -1,6 +1,10 @@
 package net.kunmc.lab.bugmod.game;
 
+import net.kunmc.lab.bugmod.BugMod;
 import net.kunmc.lab.bugmod.networking.ServerNetworking;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.network.MessageType;
+import net.minecraft.server.MinecraftServer;
 
 public class GameManager {
     public static final String redScreenName = "redscreen";
@@ -70,48 +74,48 @@ public class GameManager {
     }
 
     // サーバ側のレベル更新
-    public static void updateLevel(String name, int level){
+    public static void updateLevel(String name, int level, String playerName){
         switch (name){
             case redScreenName:
                 if (shouldUpdateLevel(GameManager.redScreenLevel, level, GameManager.redScreenMaxLevel)){
                     GameManager.redScreenLevel = level;
-                    ServerNetworking.sendLevel(GameManager.redScreenName, level);
+                    ServerNetworking.sendLevel(GameManager.redScreenName, level, playerName);
                 }
                 break;
             case garbledCharName:
                 if (shouldUpdateLevel(GameManager.garbledCharLevel, level, GameManager.garbledCharMaxLevel)){
                     GameManager.garbledCharLevel = level;
-                    ServerNetworking.sendLevel(GameManager.garbledCharName, level);
+                    ServerNetworking.sendLevel(GameManager.garbledCharName, level, playerName);
                 }
                 break;
             case breakScreenName:
                 if (shouldUpdateLevel(GameManager.breakScreenLevel, level, GameManager.breakScreenMaxLevel)){
                     GameManager.breakScreenLevel = level;
-                    ServerNetworking.sendLevel(GameManager.breakScreenName, level);
+                    ServerNetworking.sendLevel(GameManager.breakScreenName, level, playerName);
                 }
                 break;
             case breakTextureName:
                 if (shouldUpdateLevel(GameManager.breakTextureLevel, level, GameManager.breakTextureMaxLevel)){
                     GameManager.breakTextureLevel = level;
-                    ServerNetworking.sendLevel(GameManager.breakTextureName, level);
+                    ServerNetworking.sendLevel(GameManager.breakTextureName, level, playerName);
                 }
                 break;
             case breakSkinName:
                 if (shouldUpdateLevel(GameManager.breakSkinLevel, level, GameManager.breakSkinMaxLevel)){
                     GameManager.breakSkinLevel = level;
-                    ServerNetworking.sendLevel(GameManager.breakSkinName, level);
+                    ServerNetworking.sendLevel(GameManager.breakSkinName, level, playerName);
                 }
                 break;
             case helpSoundName:
-                if (shouldUpdateLevel(GameManager.helpSoundLevel, level, GameManager.helpSoundLevel)){
+                if (shouldUpdateLevel(GameManager.helpSoundLevel, level, GameManager.helpSoundMaxLevel)){
                     GameManager.helpSoundLevel = level;
-                    ServerNetworking.sendLevel(GameManager.helpSoundName, level);
+                    ServerNetworking.sendLevel(GameManager.helpSoundName, level, playerName);
                 }
                 break;
             case spiderSoundName:
                 if (shouldUpdateLevel(GameManager.spiderSoundLevel, level, GameManager.spiderSoundMaxLevel)){
                     GameManager.spiderSoundLevel = level;
-                    ServerNetworking.sendLevel(GameManager.spiderSoundName, level);
+                    ServerNetworking.sendLevel(GameManager.spiderSoundName, level, playerName);
                 }
                 break;
         }

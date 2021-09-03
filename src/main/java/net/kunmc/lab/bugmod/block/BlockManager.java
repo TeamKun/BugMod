@@ -2,7 +2,6 @@ package net.kunmc.lab.bugmod.block;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.kunmc.lab.bugmod.BugMod;
-import net.kunmc.lab.bugmod.game.GameManager;
 import net.minecraft.block.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;

@@ -10,16 +10,20 @@ import net.kunmc.lab.bugmod.BugMod;
 import net.kunmc.lab.bugmod.game.GameManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.RunArgs;
+import net.minecraft.network.MessageType;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.text.Text;
+
+import java.lang.reflect.Type;
 
 public class ServerNetworking {
     public static int tick = 0;
 
-    public static void sendLevel(String name, int level) {
+    public static void sendLevel(String name, int level, String playerName) {
         BugMod.minecraftServerInstance.getPlayerManager().getPlayerList().forEach(player -> {
             PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
-            buf.writeInt(level);
-            ServerPlayNetworking.send(player, BugModNetworking.identifierFactory(name), buf);
+            buf.writeString(name + " " + level + " " + playerName);
+            ServerPlayNetworking.send(player, BugModNetworking.identifierFactory(BugModNetworking.level), buf);
         });
     }
 
@@ -27,45 +31,18 @@ public class ServerNetworking {
         BugMod.minecraftServerInstance.getPlayerManager().getPlayerList().forEach(player -> {
             PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
             buf.writeString(GameManager.runningMode.toString());
-            ServerPlayNetworking.send(player, BugModNetworking.identifierFactory("gamemode"), buf);
+            ServerPlayNetworking.send(player, BugModNetworking.identifierFactory(BugModNetworking.gameMode), buf);
         });
     }
 
     public static void receiveLevel(){
-        ServerPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(GameManager.redScreenName), (server, player, handler, buf, response) -> {
-            int level = buf.readInt();
-            if (GameManager.runningMode == GameManager.GameMode.MODE_START && GameManager.redScreenMaxLevel >= level) {
-                GameManager.updateLevel(GameManager.redScreenName, level);
-            }
-        });
-        ServerPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(GameManager.garbledCharName), (server, player, handler, buf, response) -> {
-            int level = buf.readInt();
-            if (GameManager.runningMode == GameManager.GameMode.MODE_START && GameManager.garbledCharMaxLevel >= level) {
-                GameManager.updateLevel(GameManager.garbledCharName, level);
-            }
-        });
-        ServerPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(GameManager.breakScreenName), (server, player, handler, buf, response) -> {
-            int level = buf.readInt();
-            if (GameManager.runningMode == GameManager.GameMode.MODE_START && GameManager.breakScreenMaxLevel >= level) {
-                GameManager.updateLevel(GameManager.breakScreenName, level);
-            }
-        });
-        ServerPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(GameManager.breakTextureName), (server, player, handler, buf, response) -> {
-            int level = buf.readInt();
-            if (GameManager.runningMode == GameManager.GameMode.MODE_START && GameManager.breakTextureMaxLevel >= level) {
-                GameManager.updateLevel(GameManager.breakTextureName, level);
-            }
-        });
-        ServerPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(GameManager.helpSoundName), (server, player, handler, buf, response) -> {
-            int level = buf.readInt();
-            if (GameManager.runningMode == GameManager.GameMode.MODE_START && GameManager.helpSoundMaxLevel > level) {
-                GameManager.updateLevel(GameManager.helpSoundName, level);
-            }
-        });
-        ServerPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(GameManager.spiderSoundName), (server, player, handler, buf, response) -> {
-            int level = buf.readInt();
-            if (GameManager.runningMode == GameManager.GameMode.MODE_START && GameManager.spiderSoundMaxLevel > level) {
-                GameManager.updateLevel(GameManager.spiderSoundName, level);
+        ServerPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(BugModNetworking.level), (server, player, handler, buf, response) -> {
+            // Name, level, PlayerName??
+            String test = buf.readString(30);
+            System.out.println(test);
+            String[] array = test.split(" ");
+            if (GameManager.runningMode == GameManager.GameMode.MODE_START) {
+                GameManager.updateLevel(array[0], Integer.parseInt(array[1]), player.getGameProfile().getName());
             }
         });
     }

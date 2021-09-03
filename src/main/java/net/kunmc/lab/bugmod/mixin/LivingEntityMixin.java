@@ -8,6 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.SpiderEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.BlockSoundGroup;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,8 +20,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class LivingEntityMixin {
     @Inject(at = @At("HEAD"), method = "onDeath", cancellable = true)
     public void hookDeath(DamageSource source, CallbackInfo info) {
-        if ((LivingEntity)(Object)this instanceof SpiderEntity) {
-            GameManager.updateLevel(GameManager.spiderSoundName, GameManager.spiderSoundLevel + 1);
+        if ((LivingEntity)(Object)this instanceof SpiderEntity && source.getAttacker() instanceof PlayerEntity) {
+            GameManager.updateLevel(GameManager.spiderSoundName, GameManager.spiderSoundLevel + 1, source.getName());
         }
     }
 }

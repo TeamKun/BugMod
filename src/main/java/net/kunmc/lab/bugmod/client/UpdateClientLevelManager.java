@@ -2,126 +2,95 @@ package net.kunmc.lab.bugmod.client;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.kunmc.lab.bugmod.game.GameManager;
 import net.kunmc.lab.bugmod.shader.ShaderManager;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.network.MessageType;
+import net.minecraft.text.Text;
 
 @Environment(EnvType.CLIENT)
 public class UpdateClientLevelManager {
-    private static boolean shouldUpdate = true;
-    public static boolean isBlackOut = false;
-    public static boolean runBugs = false;
-    public static int time = 0;
-    private static String name = "";
-    private static int level = 0;
-
-    public static void register(){
-        ClientTickEvents.START_CLIENT_TICK.register(m -> {
-            UpdateClientLevelManager.updateLevel();
-            UpdateClientLevelManager.updateTimer();
-        });
-    }
-
-    public static void startUpdateLevel(String targetName, int targetLevel){
-        if (!shouldUpdatedLevel()) return;
-        name = targetName;
-        level = targetLevel;
-        shouldUpdate = false;
-    }
-
-    public static void updateTimer(){
-        if (name.isEmpty()) return;
-
-        time++;
-        if (time > 30){
-            time = 0;
-            name = "";
-            level = 0;
-            shouldUpdate = true;
-        }
-    }
-
-    public static void updateLevel() {
-        if (name.isEmpty()) return;
-        switch (name) {
-            case GameManager.breakTextureName:
-            case GameManager.garbledCharName:
-            case GameManager.breakSkinName:
-            case GameManager.redScreenName:
-            case GameManager.breakScreenName:
-                updateLevelWithGlitch();
-                break;
-            case GameManager.spiderSoundName:
-                updateLevelWithBugs();
-                break;
-        }
-    }
-
-    public static boolean shouldUpdatedLevel() {
-        return GameManager.runningMode == GameManager.GameMode.MODE_START && shouldUpdate;
-    }
-
-    private static void updateLevelWithGlitch() {
-        if ( time == 0) {
-            ShaderManager.runGlitch(15);
-        }
-
-        if (time == 5) {
-            switch (name) {
+    public static void updateLevel(String targetName, int targetLevel, String playerName, boolean pyEffect) {
+        // レベルアップ時のエフェクト
+        if (pyEffect) {
+            switch (targetName) {
                 case GameManager.breakTextureName:
-                    GameManager.breakTextureLevel = level;
-                    break;
                 case GameManager.garbledCharName:
-                    GameManager.garbledCharLevel = level;
-                    break;
                 case GameManager.breakSkinName:
-                    GameManager.breakSkinLevel = level;
-                    MinecraftClient.getInstance().getSkinProvider().loadSkin(MinecraftClient.getInstance().player.getGameProfile(), (type, id, texture) -> {}, true);
-                    break;
                 case GameManager.redScreenName:
-                    GameManager.redScreenLevel = level;
-                    break;
                 case GameManager.breakScreenName:
-                    GameManager.breakScreenLevel = level;
+                    if (ShaderManager.glitchTime <= 0);
+                        ShaderManager.runGlitch(30);
+                    break;
+                case GameManager.spiderSoundName:
+                    if (BugsHUD.time <= 0)
+                        BugsHUD.startBugs(30);
                     break;
             }
         }
+        // レベルアップ実行
+        switch (targetName) {
+            case GameManager.breakTextureName:
+                GameManager.breakTextureLevel = targetLevel;
+                if (!playerName.isEmpty()) {
+                    String sub = subMessage(targetLevel, GameManager.breakTextureMaxLevel);
+                    String message = String.format("%sの行動で%sブロックがバグるようになった", playerName, sub);
+                    MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
+                }
+                break;
+            case GameManager.garbledCharName:
+                GameManager.garbledCharLevel = targetLevel;
+                if (!playerName.isEmpty()) {
+                    String sub = subMessage(targetLevel, GameManager.garbledCharMaxLevel);
+                    String message = String.format("%sの行動で%sチャットがバグるようになった", playerName, sub);
+                    MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
+                }
+                break;
+            case GameManager.breakSkinName:
+                GameManager.breakSkinLevel = targetLevel;
+                MinecraftClient.getInstance().getSkinProvider().loadSkin(MinecraftClient.getInstance().player.getGameProfile(), (type, id, texture) -> {}, true);
+                if (!playerName.isEmpty()) {
+                    String sub = subMessage(targetLevel, GameManager.breakSkinMaxLevel);
+                    String message = String.format("%sの行動で%sスキンがバグった", playerName, sub);
+                    MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
+                }
+                break;
+            case GameManager.redScreenName:
+                GameManager.redScreenLevel = targetLevel;
+                if (!playerName.isEmpty()) {
+                    String sub = subMessage(targetLevel, GameManager.redScreenMaxLevel);
+                    String message = String.format("%sの行動で画面が%s赤く染まった", playerName, sub);
+                    MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
+                }
+                break;
+            case GameManager.breakScreenName:
+                GameManager.breakScreenLevel = targetLevel;
+                if (!playerName.isEmpty()) {
+                    String sub = subMessage(targetLevel, GameManager.breakScreenMaxLevel);
+                    String message = String.format("%sの行動で画面が%s削れた", playerName, sub);
+                    MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
+                }
+                break;
+            case GameManager.spiderSoundName:
+                GameManager.spiderSoundLevel = targetLevel;
+                if (!playerName.isEmpty()) {
+                    String message = playerName + "の行動がクモを呼んだ";
+                    MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
+                    if (targetLevel == 1) {
+                        message = "ブロック設置でクモの幻聴が聞こえるようになった";
+                    } else if(targetLevel >= 2){
+                        message = "歩くとクモの幻聴が聞こえるようになった";
+                    }
+                    MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
+                }
+                break;
+        }
     }
-
-    /**
-     * 没案、画面をブラックアウトさせる。
-     *   画面が一時的に見えなくなるのでテンポが悪くなり、画面上の表示をコントールすることが難しかったので没
-     */
-    //private static void updateLevelWithBlack() {
-    //    if (time == 0) {
-    //        isBlackOut = true;
-    //    }
-
-    //    if (time == 15) {
-    //        isBlackOut = false;
-    //    }
-    //    if (time == 0) {
-    //        switch (name) {
-    //            case GameManager.redScreenName:
-    //                GameManager.redScreenLevel = level;
-    //                break;
-    //            case GameManager.breakScreenName:
-    //                GameManager.breakScreenLevel = level;
-    //                break;
-    //        }
-    //    }
-    //}
-    private static void updateLevelWithBugs() {
-        if (time == 0) {
-            runBugs = true;
-            GameManager.spiderSoundLevel = level;
-            BugsHUD.startBugs();
-        }
-
-        if (time == 20) {
-            runBugs = false;
-            BugsHUD.endBugs();
-        }
+    private static String subMessage(int targetLevel, int targetMaxLevel) {
+        String message = "";
+        if (targetLevel > 1) message = "少し";
+        if (targetLevel > 2) message = "より";
+        if (targetLevel >= targetMaxLevel) message = "最大まで";
+        return message;
     }
 }
