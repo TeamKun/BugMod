@@ -73,7 +73,7 @@ public class GameManager {
         }
     }
 
-    // サーバ側のレベル更新
+    // サーバ側のレベル更新 & Clinetへのレベル転送
     public static void updateLevel(String name, int level, String playerName){
         switch (name){
             case redScreenName:
@@ -128,7 +128,7 @@ public class GameManager {
      * @return
      */
     private static boolean shouldUpdateLevel(int currentLevel, int level, int maxLevel){
-        return currentLevel < level && maxLevel >= level;
+        return currentLevel < level && maxLevel >= level && GameManager.runningMode == GameMode.MODE_START;
     }
 
     public enum GameMode {

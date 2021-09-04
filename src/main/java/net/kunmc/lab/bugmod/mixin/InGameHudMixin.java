@@ -30,12 +30,12 @@ public class InGameHudMixin {
             BugModHUD.renderRedScreen(matrixStack);
             BugModHUD.renderBreakScreen(matrixStack);
             BugModHUD.renderBugs(matrixStack);
-            //BugModHUD.renderBlackScreen(matrixStack);
         }
     }
 
     @ModifyVariable(at = @At(value = "HEAD"), method = "addChatMessage")
     private Text bugModChatMessage(Text message, MessageType type) {
+        if (GameManager.runningMode != GameManager.GameMode.MODE_START)
         if (type == MessageType.CHAT) {
             // exp: <Player90> aaa
             String[] message_info = message.getString().split(" ");

@@ -8,22 +8,17 @@ import net.kunmc.lab.bugmod.client.UpdateClientLevelManager;
 import net.kunmc.lab.bugmod.event.PlayerClientEvent;
 import net.kunmc.lab.bugmod.networking.ClientNetworking;
 import net.kunmc.lab.bugmod.shader.ShaderManager;
+import net.kunmc.lab.bugmod.sound.BugSoundManager;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 
 @Environment(EnvType.CLIENT)
 public class BugModClient implements ClientModInitializer {
-    public static BugModClient instance;
-
-    public static BugModClient getInstance() {
-        return instance;
-    }
 
     @Override
     public void onInitializeClient() {
-        instance = this;
         ClientNetworking.registerReceiver();
         PlayerClientEvent.register();
         BugsHUD.register();
-        ShaderManager.register();
     }
 }

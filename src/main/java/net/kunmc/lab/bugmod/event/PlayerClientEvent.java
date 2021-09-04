@@ -5,18 +5,28 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.kunmc.lab.bugmod.networking.ClientNetworking;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.TorchBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 
 @Environment(EnvType.CLIENT)
 public class PlayerClientEvent {
     public static void register() {
         UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
-            ItemStack item = player.getStackInHand(hand);
+           ItemStack item = player.getStackInHand(hand);
+
             if (item.getItem() == Items.TORCH){
-                ClientNetworking.sendRedScreenLevel();
+                BlockPos pos = hitResult.getBlockPos();
+                // 置けるならレベル更新
+                if (Block.sideCoversSmallSquare(world, pos, Direction.UP)) {
+                    ClientNetworking.sendRedScreenLevel();
+                }
             }
             return ActionResult.PASS;
         });

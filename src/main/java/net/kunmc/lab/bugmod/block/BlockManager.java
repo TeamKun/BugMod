@@ -1,8 +1,10 @@
 package net.kunmc.lab.bugmod.block;
 
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.kunmc.lab.bugmod.BugMod;
 import net.minecraft.block.Material;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -28,6 +30,10 @@ public class BlockManager {
 
         Registry.register(net.minecraft.util.registry.Registry.BLOCK, identifierFactory(bugBlock3Name), bugBlock3);
         Registry.register(Registry.ITEM, new Identifier(BugMod.MODID, bugBlock3Name), new BlockItem(bugBlock3, new Item.Settings().group(ItemGroup.MISC)));
+
+        BlockRenderLayerMap.INSTANCE.putBlock(bugBlock1, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(bugBlock2, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(bugBlock3, RenderLayer.getCutout());
     }
 
     public static Identifier identifierFactory(String name) {

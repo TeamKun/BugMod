@@ -88,8 +88,8 @@ public class UpdateClientLevelManager {
     }
     private static String subMessage(int targetLevel, int targetMaxLevel) {
         String message = "";
-        if (targetLevel > 1) message = "少し";
-        if (targetLevel > 2) message = "より";
+        if (targetLevel > 0) message = "少し";
+        if (targetLevel > 1) message = "より";
         if (targetLevel >= targetMaxLevel) message = "最大まで";
         return message;
     }

@@ -21,23 +21,23 @@ public class PlayerServerEvent {
             switch (GameManager.breakTextureLevel) {
                 case 1:
                     xzRange = 2;
-                    changeProb = 0.2;
+                    changeProb = 0.05;
                     break;
                 case 2:
                     xzRange = 3;
-                    changeProb = 0.3;
+                    changeProb = 0.1;
                     break;
                 case 3:
                     xzRange = 4;
-                    changeProb = 0.4;
+                    changeProb = 0.2;
                     break;
                 case 4:
                     xzRange = 4;
-                    changeProb = 0.5;
+                    changeProb = 0.3;
                     break;
                 case 5:
                     xzRange = 4;
-                    changeProb = 0.6;
+                    changeProb = 0.4;
                     break;
             }
             int px = (int)player.getPos().x;
