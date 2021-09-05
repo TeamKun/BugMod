@@ -1,5 +1,6 @@
 package net.kunmc.lab.bugmod.command;
 
+import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
@@ -65,6 +66,7 @@ public class BugCommand {
                                 for (int i=0; i< name.length; i++) {
                                     currentConfig += String.format("  %sLevel: %d%s", name[i], level[i], br);
                                 }
+                                currentConfig += String.format("  recoveryMode: %b", GameManager.canRecovery);
                                 context.getSource().sendFeedback(new LiteralText(currentConfig), false);
                                 return 1;
                             }))
@@ -112,6 +114,14 @@ public class BugCommand {
                                                 int value = IntegerArgumentType.getInteger(context, "num");
                                                 context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "%sを%dに設定しました", name, value)), true);
                                                 GameManager.garbledCharLevel = value;
+                                                return 1;
+                                            })))
+                            .then(CommandManager.literal("recoveryMode")
+                                    .then(CommandManager.argument("mode", BoolArgumentType.bool())
+                                            .executes(context -> {
+                                                boolean value = BoolArgumentType.getBool(context, "mode");
+                                                context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "recoveryModeを%bに設定しました", value)), true);
+                                                GameManager.canRecovery = value;
                                                 return 1;
                                             })))
                     ).build();

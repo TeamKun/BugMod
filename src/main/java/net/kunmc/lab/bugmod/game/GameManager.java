@@ -32,8 +32,8 @@ public class GameManager {
 
     // Gameの実行・停止状態の管理用
     public static GameMode runningMode = GameMode.MODE_NEUTRAL;
-    public static boolean recoveryMode = true;
-
+    // 回復できるかどうか
+    public static boolean canRecovery = true;
 
     public static void resetGame(){
         redScreenLevel = 0;
@@ -42,7 +42,7 @@ public class GameManager {
         breakBlockLevel = 0;
         breakSkinLevel = 0;
         runningMode = GameMode.MODE_NEUTRAL;
-        recoveryMode = true;
+        canRecovery = true;
     }
 
     public static void controller(GameMode runningMode) {

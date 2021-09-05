@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MilkBucketItemMixin {
     @Inject(at = @At("HEAD"), method = "finishUsing", cancellable = true)
     public void onUseItem(ItemStack stack, World world, LivingEntity user, CallbackInfoReturnable<ItemStack> cir) {
-        if (!world.isClient) {
+        if (!world.isClient && GameManager.canRecovery) {
             String bugName = GameManager.getBugRandom();
             if (!bugName.isEmpty()) {
                 String[] array = bugName.split(" ");
