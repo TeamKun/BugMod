@@ -7,7 +7,6 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.EndermiteEntity;
-import net.minecraft.entity.mob.SilverfishEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -23,7 +22,7 @@ public class BugBlock2 extends Block {
 
     @Override
     public void onBroken(WorldAccess world, BlockPos pos, BlockState state) {
-        if (GameManager.breakBlockLevel == 3 ) {
+        if (GameManager.breakBlockLevel == 3) {
             world.playSound(
                     null, // Player - if non-null, will play sound for every nearby player *except* the specified player
                     pos, // The position of where the sound will come from
@@ -37,7 +36,7 @@ public class BugBlock2 extends Block {
 
     private void spawnEndermite(ServerWorld world, BlockPos pos) {
         EndermiteEntity endermiteEntity = EntityType.ENDERMITE.create(world);
-        endermiteEntity.refreshPositionAndAngles((double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, 0.0F, 0.0F);
+        endermiteEntity.refreshPositionAndAngles((double) pos.getX() + 0.5D, (double) pos.getY(), (double) pos.getZ() + 0.5D, 0.0F, 0.0F);
         world.spawnEntity(endermiteEntity);
         endermiteEntity.playSpawnEffects();
     }

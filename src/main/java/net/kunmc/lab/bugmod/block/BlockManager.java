@@ -1,10 +1,8 @@
 package net.kunmc.lab.bugmod.block;
 
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.kunmc.lab.bugmod.BugMod;
 import net.minecraft.block.Material;
-import net.minecraft.client.render.RenderLayer;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -13,15 +11,13 @@ import net.minecraft.util.registry.Registry;
 
 public class BlockManager {
     public static final String bugBlock1Name = "bug_block1";
-    public static BugBlock1 bugBlock1 = new BugBlock1(FabricBlockSettings.of(Material.ICE));
-
     public static final String bugBlock2Name = "bug_block2";
-    private static BugBlock2 bugBlock2 = new BugBlock2(FabricBlockSettings.of(Material.ICE));
-
     public static final String bugBlock3Name = "bug_block3";
+    public static BugBlock1 bugBlock1 = new BugBlock1(FabricBlockSettings.of(Material.ICE));
+    private static BugBlock2 bugBlock2 = new BugBlock2(FabricBlockSettings.of(Material.ICE));
     private static BugBlock3 bugBlock3 = new BugBlock3(FabricBlockSettings.of(Material.ICE));
 
-    public static void register(){
+    public static void register() {
         Registry.register(net.minecraft.util.registry.Registry.BLOCK, identifierFactory(bugBlock1Name), bugBlock1);
         Registry.register(Registry.ITEM, new Identifier(BugMod.MODID, bugBlock1Name), new BlockItem(bugBlock1, new Item.Settings().group(ItemGroup.MISC)));
 

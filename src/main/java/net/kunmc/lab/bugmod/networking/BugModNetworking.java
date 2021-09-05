@@ -1,9 +1,7 @@
 package net.kunmc.lab.bugmod.networking;
 
 import net.kunmc.lab.bugmod.BugMod;
-import net.kunmc.lab.bugmod.game.GameManager;
 import net.minecraft.util.Identifier;
-import org.lwjgl.system.CallbackI;
 
 public class BugModNetworking {
     // ゲームモード転送用
