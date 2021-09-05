@@ -16,18 +16,18 @@ import net.minecraft.util.math.Direction;
 @Environment(EnvType.CLIENT)
 public class PlayerClientEvent {
     public static void register() {
-        UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
-           ItemStack item = player.getStackInHand(hand);
+        //UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
+        //   ItemStack item = player.getStackInHand(hand);
 
-            if (item.getItem() == Items.TORCH){
-                BlockPos pos = hitResult.getBlockPos();
-                // 置けるならレベル更新
-                if (Block.sideCoversSmallSquare(world, pos, Direction.UP)) {
-                    ClientNetworking.sendRedScreenLevel();
-                }
-            }
-            return ActionResult.PASS;
-        });
+        //    if (item.getItem() == Items.TORCH){
+        //        BlockPos pos = hitResult.getBlockPos();
+        //        // 置けるならレベル更新
+        //        if (Block.sideCoversSmallSquare(world, pos, Direction.UP)) {
+        //            ClientNetworking.sendRedScreenLevel();
+        //        }
+        //    }
+        //    return ActionResult.PASS;
+        //});
         UseItemCallback.EVENT.register((player, world, hand) -> {
             ItemStack item = player.getStackInHand(hand);
             if (item.getItem() == Items.WATER_BUCKET ||

@@ -21,7 +21,7 @@ public class ClientNetworking {
         });
         ClientPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(BugModNetworking.recoverLevel), (minecraftClient, clientPlayNetworkHandler, packetByteBuf, packetSender) -> {
             String[] array = packetByteBuf.readString().split(" ");
-            UpdateClientLevelManager.updateLevel(array[0], Integer.parseInt(array[1]), "", false, true);
+            UpdateClientLevelManager.updateLevel(array[0], Integer.parseInt(array[1]), array[2], false, true);
         });
         ClientPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(BugModNetworking.gameMode), (minecraftClient, clientPlayNetworkHandler, packetByteBuf, packetSender) -> {
             String gameMode = packetByteBuf.readString();

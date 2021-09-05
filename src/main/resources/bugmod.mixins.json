@@ -9,12 +9,11 @@
     "InGameHudMixin",
     "PlayerSkinTextureMixin",
     "PlayerSkinProviderMixin",
-    "BlockSoundGroupMixin"
+    "BlockMixin"
   ],
   "server": [
     "ServerPlayerEntityMixin",
     "ItemStackMixin",
-    "LivingEntityMixin",
     "MilkBucketItemMixin"
   ],
   "injectors": {

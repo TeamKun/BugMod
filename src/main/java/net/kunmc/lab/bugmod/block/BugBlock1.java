@@ -13,12 +13,27 @@ import net.minecraft.entity.mob.SilverfishEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameRules;
+import net.minecraft.world.WorldAccess;
 
 public class BugBlock1 extends Block {
     public BugBlock1(AbstractBlock.Settings settings) {
         super(settings);
+    }
+
+    @Override
+    public void onBroken(WorldAccess world, BlockPos pos, BlockState state) {
+        world.playSound(
+                null, // Player - if non-null, will play sound for every nearby player *except* the specified player
+                 pos, // The position of where the sound will come from
+                 SoundEvents.ENTITY_SILVERFISH_AMBIENT, // The sound that will play
+                 SoundCategory.BLOCKS, // This determines which of the volume sliders affect this sound
+                 1f, //Volume multiplier, 1 is normal, 0.5 is half volume, etc
+                 0.01f // Pitch multiplier, 1 is normal, 0.5 is half pitch, etc
+        );
     }
 
     private void spawnSilverfish(ServerWorld world, BlockPos pos) {

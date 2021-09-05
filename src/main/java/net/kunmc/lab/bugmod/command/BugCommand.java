@@ -82,13 +82,6 @@ public class BugCommand {
                                         context.getSource().sendFeedback(new LiteralText(String.format("%sを%dに設定しました", name, value)), true);
                                         return 1;
                                     }))
-                            .then(CommandManager.argument(GameManager.helpSoundName+"Level", IntegerArgumentType.integer(0,GameManager.helpSoundLevel))
-                                    .executes(context -> {
-                                        String name = GameManager.helpSoundName + "Level";
-                                        int value = IntegerArgumentType.getInteger(context, name);
-                                        context.getSource().sendFeedback(new LiteralText(String.format("%sを%dに設定しました", name, value)), true);
-                                        return 1;
-                                    }))
                     ).build();
 
             dispatcher.getRoot().addChild(rootNode);

@@ -6,22 +6,22 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.network.MessageType;
 import net.minecraft.server.MinecraftServer;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class GameManager {
     public static final String redScreenName = "redscreen";
     public static final String garbledCharName = "garbledchar";
     public static final String breakScreenName = "breakscreen";
     public static final String breakTextureName = "breaktexture";
     public static final String breakSkinName = "breakskin";
-    public static final String helpSoundName = "helpsound";
-    public static final String spiderSoundName = "spidersound";
 
-    public static final int redScreenMaxLevel = 5;
+    public static final int redScreenMaxLevel = 16;
     public static final int garbledCharMaxLevel = 5;
-    public static final int breakScreenMaxLevel = 30;
+    public static final int breakScreenMaxLevel = 25;
     public static final int breakTextureMaxLevel = 5;
     public static final int breakSkinMaxLevel = 5;
-    public static final int helpSoundMaxLevel = 5;
-    public static final int spiderSoundMaxLevel = 2;
 
     // 画面が赤くなる
     public static int redScreenLevel;
@@ -33,10 +33,6 @@ public class GameManager {
     public static int breakTextureLevel;
     // スキンがバグる
     public static int breakSkinLevel;
-    // 音がバグる
-    public static int helpSoundLevel;
-    // 虫が走る
-    public static int spiderSoundLevel;
 
     // Gameの実行・停止状態の管理用
     public static GameMode runningMode = GameMode.MODE_NEUTRAL;
@@ -49,8 +45,6 @@ public class GameManager {
         breakScreenLevel = 0;
         breakTextureLevel = 0;
         breakSkinLevel = 0;
-        helpSoundLevel = 0;
-        spiderSoundLevel = 0;
         runningMode = GameMode.MODE_NEUTRAL;
         recoveryMode = true;
     }
@@ -76,17 +70,31 @@ public class GameManager {
     public static String[] getAllBugName() {
         String[] name = {GameManager.redScreenName, GameManager.breakScreenName,
                 GameManager.breakSkinName, GameManager.breakTextureName,
-                GameManager.garbledCharName, GameManager.spiderSoundName,
-                GameManager.helpSoundName};
+                GameManager.garbledCharName};
         return name;
     }
 
     public static int[] getAllBugLevel() {
         int[] level = {GameManager.redScreenLevel, GameManager.breakScreenLevel,
                 GameManager.breakSkinLevel, GameManager.breakTextureLevel,
-                GameManager.garbledCharLevel, GameManager.spiderSoundLevel,
-                GameManager.helpSoundLevel};
+                GameManager.garbledCharLevel};
         return level;
+    }
+
+    public static String getBugRandom() {
+        String[] bugName = getAllBugName();
+        int[] bugLevel = getAllBugLevel();
+        List<String> name = new ArrayList<String>();
+        for (int i=0; i < getAllBugLevel().length; i++){
+            if (bugLevel[i]>0){
+                name.add(bugName[i] + " " + bugLevel[i]);
+            }
+        }
+        if (name.size() == 0)
+            return "";
+
+        Random rand = new Random();
+        return name.get(rand.nextInt(name.size()));
     }
 
     // サーバ側のレベル更新 & Clinetへのレベル転送
@@ -122,16 +130,39 @@ public class GameManager {
                     ServerNetworking.sendLevel(GameManager.breakSkinName, level, playerName);
                 }
                 break;
-            case helpSoundName:
-                if (shouldUpdateLevel(GameManager.helpSoundLevel, level, GameManager.helpSoundMaxLevel)){
-                    GameManager.helpSoundLevel = level;
-                    ServerNetworking.sendLevel(GameManager.helpSoundName, level, playerName);
+        }
+    }
+
+    public static void recoverLevel(String name, int level, String playerName){
+        switch (name){
+            case redScreenName:
+                if (shouldDownLevel(level)) {
+                    GameManager.redScreenLevel = level - 1;
+                    ServerNetworking.sendRecoveryLevel(GameManager.redScreenName, level, playerName);
                 }
                 break;
-            case spiderSoundName:
-                if (shouldUpdateLevel(GameManager.spiderSoundLevel, level, GameManager.spiderSoundMaxLevel)){
-                    GameManager.spiderSoundLevel = level;
-                    ServerNetworking.sendLevel(GameManager.spiderSoundName, level, playerName);
+            case garbledCharName:
+                if (shouldDownLevel(level)) {
+                    GameManager.garbledCharLevel = level - 1;
+                    ServerNetworking.sendLevel(GameManager.garbledCharName, level, playerName);
+                }
+                break;
+            case breakScreenName:
+                if (shouldDownLevel(level)) {
+                    GameManager.breakScreenLevel = level - 1;
+                    ServerNetworking.sendLevel(GameManager.breakScreenName, level, playerName);
+                }
+                break;
+            case breakTextureName:
+                if (shouldDownLevel(level)) {
+                    GameManager.breakTextureLevel = level - 1;
+                    ServerNetworking.sendLevel(GameManager.breakTextureName, level, playerName);
+                }
+                break;
+            case breakSkinName:
+                if (shouldDownLevel(level)) {
+                    GameManager.breakSkinLevel = level - 1;
+                    ServerNetworking.sendLevel(GameManager.breakSkinName, level, playerName);
                 }
                 break;
         }
@@ -145,6 +176,9 @@ public class GameManager {
      */
     private static boolean shouldUpdateLevel(int currentLevel, int level, int maxLevel){
         return currentLevel < level && maxLevel >= level && GameManager.runningMode == GameMode.MODE_START;
+    }
+    private static boolean shouldDownLevel(int level){
+        return level > 0 && GameManager.runningMode == GameMode.MODE_START;
     }
 
     public enum GameMode {

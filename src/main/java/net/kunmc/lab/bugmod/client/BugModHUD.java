@@ -18,27 +18,57 @@ public class BugModHUD {
     public static void renderRedScreen(MatrixStack matrices){
         if (GameManager.redScreenLevel == 0) return;
         // See: https://qiita.com/konifar/items/106731d8a35303606597
+
+        // 計算が面倒なのでゴリ押し、5%ずつ透明度が下がる 100 - case * 5 = 透明度
         int alphaColor = 0x0;
         switch (GameManager.redScreenLevel){
             case 1:
-                // 40%
-                alphaColor = 0x662f0000;
+                alphaColor = 0x262f0000;
                 break;
             case 2:
-                // 50%
-                alphaColor = 0x802f0000;
+                alphaColor = 0x332f0000;
                 break;
             case 3:
-                // 60%
-                alphaColor = 0x992f0000;
+                alphaColor = 0x402f0000;
                 break;
             case 4:
-                // 70%
-                alphaColor = 0xB32f0000;
+                alphaColor = 0x4D2f0000;
                 break;
             case 5:
-                // 80%
+                alphaColor = 0x592f0000;
+                break;
+            case 6:
+                alphaColor = 0x662f0000;
+                break;
+            case 7:
+                alphaColor = 0x732f0000;
+                break;
+            case 8:
+                alphaColor = 0x802f0000;
+                break;
+            case 9:
+                alphaColor = 0x8C2f0000;
+                break;
+            case 10:
+                alphaColor = 0x992f0000;
+                break;
+            case 11:
+                alphaColor = 0xA62f0000;
+                break;
+            case 12:
+                alphaColor = 0xB32f0000;
+                break;
+            case 13:
+                alphaColor = 0xBF2f0000;
+                break;
+            case 14:
                 alphaColor = 0xCC2f0000;
+                break;
+            case 15:
+                alphaColor = 0xD92f0000;
+                break;
+            case 16:
+                alphaColor = 0xE62f0000;
                 break;
         }
 
@@ -80,9 +110,5 @@ public class BugModHUD {
                     alphaColor);
             cnt ++;
         }
-    }
-    public static void renderBugs(MatrixStack matrices){
-        if (BugsHUD.time <= 0) return;
-        BugsHUD.renderBugs(matrices);
     }
 }

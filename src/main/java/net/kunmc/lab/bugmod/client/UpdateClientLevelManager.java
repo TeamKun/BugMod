@@ -19,12 +19,8 @@ public class UpdateClientLevelManager {
                 case GameManager.breakSkinName:
                 case GameManager.redScreenName:
                 case GameManager.breakScreenName:
-                    if (ShaderManager.glitchTime <= 0) ;
-                    ShaderManager.runGlitch(30);
-                    break;
-                case GameManager.spiderSoundName:
-                    if (BugsHUD.time <= 0)
-                        BugsHUD.startBugs(30);
+                    if (ShaderManager.glitchTime <= 0)
+                        ShaderManager.runGlitch(30);
                     break;
             }
         }
@@ -46,9 +42,6 @@ public class UpdateClientLevelManager {
                 break;
             case GameManager.breakScreenName:
                 GameManager.breakScreenLevel = targetLevel;
-                break;
-            case GameManager.spiderSoundName:
-                GameManager.spiderSoundLevel = targetLevel;
                 break;
         }
         // メッセージ送信
@@ -87,16 +80,6 @@ public class UpdateClientLevelManager {
                     message = String.format("%sの行動で画面が%s削れた", playerName, sub);
                     MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
                     break;
-                case GameManager.spiderSoundName:
-                    message = playerName + "の行動がクモを呼んだ";
-                    MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
-                    if (targetLevel == 1) {
-                        message = "ブロック設置でクモの幻聴が聞こえるようになった";
-                    } else if (targetLevel >= 2) {
-                        message = "歩くとクモの幻聴が聞こえるようになった";
-                    }
-                    MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
-                    break;
             }
         } else {
             switch (targetName) {
@@ -127,14 +110,6 @@ public class UpdateClientLevelManager {
                     sub = subMessage(targetLevel, GameManager.breakScreenMaxLevel);
                     message = String.format("%sの行動で画面が%s削れた", playerName, sub);
                     if (targetLevel == 0) message = String.format("%sの行動で画面の削れが治った", playerName, sub);
-                    MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
-                    break;
-                case GameManager.spiderSoundName:
-                    if (targetLevel == 0) {
-                        message = "ブロックからクモの幻聴が消えた";
-                    } else if (targetLevel == 1) {
-                        message = "足音からクモの幻聴が消えた";
-                    }
                     MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
                     break;
             }

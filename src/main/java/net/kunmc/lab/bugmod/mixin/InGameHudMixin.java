@@ -29,7 +29,6 @@ public class InGameHudMixin {
         if (GameManager.runningMode == GameManager.GameMode.MODE_START) {
             BugModHUD.renderRedScreen(matrixStack);
             BugModHUD.renderBreakScreen(matrixStack);
-            BugModHUD.renderBugs(matrixStack);
         }
     }
 

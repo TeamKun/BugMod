@@ -19,6 +19,14 @@ public class ServerNetworking {
         });
     }
 
+    public static void sendRecoveryLevel(String name, int level, String playerName) {
+        BugMod.minecraftServerInstance.getPlayerManager().getPlayerList().forEach(player -> {
+            PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+            buf.writeString(name + " " + level + " " + playerName);
+            ServerPlayNetworking.send(player, BugModNetworking.identifierFactory(BugModNetworking.recoverLevel), buf);
+        });
+    }
+
     public static void sendGameMode() {
         BugMod.minecraftServerInstance.getPlayerManager().getPlayerList().forEach(player -> {
             PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
@@ -29,7 +37,6 @@ public class ServerNetworking {
 
     public static void receiveLevel(){
         ServerPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(BugModNetworking.level), (server, player, handler, buf, response) -> {
-            // Name, level, PlayerName??
             String test = buf.readString(30);
             String[] array = test.split(" ");
             if (GameManager.runningMode == GameManager.GameMode.MODE_START) {
