@@ -18,8 +18,8 @@ public class GameManager {
     public static final String breakSkinName = "breakskin";
 
     public static final int redScreenMaxLevel = 16;
-    public static final int garbledCharMaxLevel = 5;
-    public static final int breakScreenMaxLevel = 25;
+    public static final int garbledCharMaxLevel = 15;
+    public static final int breakScreenMaxLevel = 30;
     public static final int breakTextureMaxLevel = 5;
     public static final int breakSkinMaxLevel = 5;
 
@@ -144,32 +144,32 @@ public class GameManager {
             case garbledCharName:
                 if (shouldDownLevel(level)) {
                     GameManager.garbledCharLevel = level - 1;
-                    ServerNetworking.sendLevel(GameManager.garbledCharName, level, playerName);
+                    ServerNetworking.sendRecoveryLevel(GameManager.garbledCharName, level, playerName);
                 }
                 break;
             case breakScreenName:
                 if (shouldDownLevel(level)) {
                     GameManager.breakScreenLevel = level - 1;
-                    ServerNetworking.sendLevel(GameManager.breakScreenName, level, playerName);
+                    ServerNetworking.sendRecoveryLevel(GameManager.breakScreenName, level, playerName);
                 }
                 break;
             case breakTextureName:
                 if (shouldDownLevel(level)) {
                     GameManager.breakTextureLevel = level - 1;
-                    ServerNetworking.sendLevel(GameManager.breakTextureName, level, playerName);
+                    ServerNetworking.sendRecoveryLevel(GameManager.breakTextureName, level, playerName);
                 }
                 break;
             case breakSkinName:
                 if (shouldDownLevel(level)) {
                     GameManager.breakSkinLevel = level - 1;
-                    ServerNetworking.sendLevel(GameManager.breakSkinName, level, playerName);
+                    ServerNetworking.sendRecoveryLevel(GameManager.breakSkinName, level, playerName);
                 }
                 break;
         }
     }
 
     /**
-     * 不正にレベルが下がるようなことにならないようにチェック
+     * 意図しない値のレベルに更新されないようにチェック
      * @param currentLevel
      * @param level
      * @return

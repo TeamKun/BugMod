@@ -23,9 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class BlockMixin {
     @Inject(at = @At("HEAD"), method = "onPlaced")
     public void onTorchPlace(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack, CallbackInfo ci) {
-        System.out.println("AAAAA");
         if (itemStack.getItem() == Items.TORCH)
-            System.out.println("BBBBB");
             ClientNetworking.sendRedScreenLevel();
     }
 }

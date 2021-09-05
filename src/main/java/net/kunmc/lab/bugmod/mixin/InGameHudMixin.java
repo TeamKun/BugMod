@@ -35,6 +35,7 @@ public class InGameHudMixin {
     @ModifyVariable(at = @At(value = "HEAD"), method = "addChatMessage")
     private Text bugModChatMessage(Text message, MessageType type) {
         if (GameManager.runningMode != GameManager.GameMode.MODE_START)
+            return message;
         if (type == MessageType.CHAT) {
             // exp: <Player90> aaa
             String[] message_info = message.getString().split(" ");
@@ -44,27 +45,12 @@ public class InGameHudMixin {
             String user_message = String.join(" ", split_message_info);
 
             // バグらせる文字数計算
-            //  割合だとすぐに全文字見えなくなりそうなので文字数にしておく
-            int num = 0;
-
-            // もうレベル = 文字化け数にしちゃったほうがいいかも？後で要調整
-            switch (GameManager.garbledCharLevel){
-                case 1:
-                    num = 1;
-                    break;
-                case 2:
-                    num = 2;
-                    break;
-                case 3:
-                    num = 4;
-                    break;
-                case 4:
-                    num = 8;
-                    break;
-                case 5:
-                    num = user_message.length();
-                    break;
+            //  レベル分だけ文字化けする
+            int num = GameManager.garbledCharLevel;
+            if (GameManager.garbledCharLevel == GameManager.garbledCharMaxLevel) {
+                num = user_message.length();
             }
+
             num = Math.min(num, user_message.length());
 
             List<Integer> arr = IntStream.rangeClosed(0, user_message.length()-1).boxed().collect(Collectors.toList());

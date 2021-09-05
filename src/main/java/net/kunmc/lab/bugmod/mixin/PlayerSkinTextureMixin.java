@@ -19,19 +19,19 @@ public class PlayerSkinTextureMixin {
         double prob = 0;
         switch (GameManager.breakSkinLevel) {
             case 1:
-                prob = 0.05;
+                prob = 0.01;
                 break;
             case 2:
-                prob = 0.1;
+                prob = 0.05;
                 break;
             case 3:
-                prob = 0.15;
+                prob = 0.1;
                 break;
             case 4:
-                prob = 0.2;
+                prob = 0.15;
                 break;
             case 5:
-                prob = 0.25;
+                prob = 0.2;
                 break;
         }
 

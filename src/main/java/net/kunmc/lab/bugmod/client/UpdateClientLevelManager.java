@@ -33,9 +33,11 @@ public class UpdateClientLevelManager {
                 GameManager.garbledCharLevel = targetLevel;
                 break;
             case GameManager.breakSkinName:
-                GameManager.breakSkinLevel = targetLevel;
-                MinecraftClient.getInstance().getSkinProvider().loadSkin(MinecraftClient.getInstance().player.getGameProfile(), (type, id, texture) -> {
-                }, true);
+                if (targetLevel != GameManager.breakSkinLevel) {
+                    GameManager.breakSkinLevel = targetLevel;
+                    MinecraftClient.getInstance().getSkinProvider().loadSkin(MinecraftClient.getInstance().player.getGameProfile(), (type, id, texture) -> {
+                    }, true);
+                }
                 break;
             case GameManager.redScreenName:
                 GameManager.redScreenLevel = targetLevel;
