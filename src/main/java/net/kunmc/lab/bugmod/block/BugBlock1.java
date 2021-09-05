@@ -1,17 +1,14 @@
 package net.kunmc.lab.bugmod.block;
 
-import net.kunmc.lab.bugmod.BugMod;
-import net.kunmc.lab.bugmod.sound.BugSoundManager;
+import net.kunmc.lab.bugmod.game.GameManager;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.SilverfishEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -26,14 +23,16 @@ public class BugBlock1 extends Block {
 
     @Override
     public void onBroken(WorldAccess world, BlockPos pos, BlockState state) {
-        world.playSound(
-                null, // Player - if non-null, will play sound for every nearby player *except* the specified player
-                 pos, // The position of where the sound will come from
-                 SoundEvents.ENTITY_SILVERFISH_AMBIENT, // The sound that will play
-                 SoundCategory.BLOCKS, // This determines which of the volume sliders affect this sound
-                 1f, //Volume multiplier, 1 is normal, 0.5 is half volume, etc
-                 0.01f // Pitch multiplier, 1 is normal, 0.5 is half pitch, etc
-        );
+        if (GameManager.breakBlockLevel == 3 ) {
+            world.playSound(
+                    null, // Player - if non-null, will play sound for every nearby player *except* the specified player
+                    pos, // The position of where the sound will come from
+                    SoundEvents.ENTITY_SILVERFISH_AMBIENT, // The sound that will play
+                    SoundCategory.BLOCKS, // This determines which of the volume sliders affect this sound
+                    1f, //Volume multiplier, 1 is normal, 0.5 is half volume, etc
+                    0.01f // Pitch multiplier, 1 is normal, 0.5 is half pitch, etc
+            );
+        }
     }
 
     private void spawnSilverfish(ServerWorld world, BlockPos pos) {
@@ -44,8 +43,10 @@ public class BugBlock1 extends Block {
     }
 
     public void onStacksDropped(BlockState state, ServerWorld world, BlockPos pos, ItemStack stack) {
-        if (world.getGameRules().getBoolean(GameRules.DO_TILE_DROPS) && EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, stack) == 0) {
-            spawnSilverfish(world, pos);
+        if (GameManager.breakBlockLevel >= 4) {
+            if (world.getGameRules().getBoolean(GameRules.DO_TILE_DROPS) && EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, stack) == 0) {
+                spawnSilverfish(world, pos);
+            }
         }
     }
 }

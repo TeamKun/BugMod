@@ -6,6 +6,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.kunmc.lab.bugmod.client.UpdateClientLevelManager;
 import net.kunmc.lab.bugmod.game.GameManager;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.network.PacketByteBuf;
 
 @Environment(EnvType.CLIENT)
@@ -29,8 +30,6 @@ public class ClientNetworking {
                 GameManager.controller(GameManager.GameMode.MODE_START);
             }else if (gameMode.equals(GameManager.GameMode.MODE_NEUTRAL.toString())) {
                 GameManager.controller(GameManager.GameMode.MODE_NEUTRAL);
-            }else if (gameMode.equals(GameManager.GameMode.MODE_PAUSE.toString())) {
-                GameManager.controller(GameManager.GameMode.MODE_PAUSE);
             }
         });
         ClientPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(BugModNetworking.allLevel), (minecraftClient, clientPlayNetworkHandler, packetByteBuf, packetSender) -> {
@@ -43,11 +42,13 @@ public class ClientNetworking {
         });
     }
     public static void sendRedScreenLevel() {
+        if (MinecraftClient.getInstance().player.isSpectator()) return;
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
         buf.writeString(GameManager.redScreenName + " " + (GameManager.redScreenLevel+1));
         ClientPlayNetworking.send(BugModNetworking.identifierFactory(BugModNetworking.level), buf);
     }
     public static void sendBreakScreenLevel() {
+        if (MinecraftClient.getInstance().player.isSpectator()) return;
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
         buf.writeString(GameManager.breakScreenName + " " + (GameManager.breakScreenLevel+1));
         ClientPlayNetworking.send(BugModNetworking.identifierFactory(BugModNetworking.level), buf);

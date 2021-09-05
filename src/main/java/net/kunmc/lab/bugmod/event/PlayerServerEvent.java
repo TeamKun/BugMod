@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.kunmc.lab.bugmod.block.BlockManager;
 import net.kunmc.lab.bugmod.game.GameManager;
 import net.minecraft.block.*;
+import net.minecraft.client.RunArgs;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 
@@ -12,33 +13,21 @@ import java.util.Random;
 public class PlayerServerEvent {
     public static void register() {
         PlayerBlockBreakEvents.AFTER.register((world, player, blockPos, blockState, blockEntity) -> {
-            if (GameManager.runningMode != GameManager.GameMode.MODE_START || player.isCreative() || player.isSpectator()) return;
+            if (GameManager.runningMode != GameManager.GameMode.MODE_START || player.isSpectator()) return;
 
             Random rnd = new Random();
             int xzRange = 0;
             int yRange = 2;
             double changeProb = 0.0;
-            switch (GameManager.breakTextureLevel) {
-                case 1:
-                    xzRange = 2;
-                    changeProb = 0.05;
-                    break;
-                case 2:
-                    xzRange = 3;
-                    changeProb = 0.1;
-                    break;
-                case 3:
-                    xzRange = 4;
-                    changeProb = 0.2;
-                    break;
-                case 4:
-                    xzRange = 4;
-                    changeProb = 0.3;
-                    break;
-                case 5:
-                    xzRange = 4;
-                    changeProb = 0.4;
-                    break;
+            if (GameManager.breakBlockLevel == 1) {
+                xzRange = 2;
+                changeProb = 0.1;
+            } else if (GameManager.breakBlockLevel == 2) {
+                xzRange = 3;
+                changeProb = 0.1;
+            } else if (GameManager.breakBlockLevel >=3) {
+                xzRange = 4;
+                changeProb = 0.2;
             }
             int px = (int)player.getPos().x;
             int py = (int)player.getPos().y;
@@ -76,7 +65,7 @@ public class PlayerServerEvent {
                 }
             }
             if (rnd.nextDouble() <= 0.1)
-                GameManager.updateLevel(GameManager.breakTextureName, GameManager.breakTextureLevel+1, player.getGameProfile().getName());
+                GameManager.updateLevel(GameManager.breakBlockName, GameManager.breakBlockLevel +1, player.getGameProfile().getName());
         });
     }
 }

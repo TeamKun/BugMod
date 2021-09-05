@@ -2,6 +2,7 @@ package net.kunmc.lab.bugmod.mixin;
 
 import net.kunmc.lab.bugmod.game.GameManager;
 import net.kunmc.lab.bugmod.networking.ServerNetworking;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.*;
 import net.minecraft.world.World;

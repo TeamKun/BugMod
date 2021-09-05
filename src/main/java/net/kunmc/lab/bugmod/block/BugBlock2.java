@@ -1,5 +1,6 @@
 package net.kunmc.lab.bugmod.block;
 
+import net.kunmc.lab.bugmod.game.GameManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -22,14 +23,16 @@ public class BugBlock2 extends Block {
 
     @Override
     public void onBroken(WorldAccess world, BlockPos pos, BlockState state) {
-        world.playSound(
-                null, // Player - if non-null, will play sound for every nearby player *except* the specified player
-                pos, // The position of where the sound will come from
-                SoundEvents.ENTITY_ENDERMITE_AMBIENT, // The sound that will play
-                SoundCategory.BLOCKS, // This determines which of the volume sliders affect this sound
-                1f, //Volume multiplier, 1 is normal, 0.5 is half volume, etc
-                1f // Pitch multiplier, 1 is normal, 0.5 is half pitch, etc
-        );
+        if (GameManager.breakBlockLevel == 3 ) {
+            world.playSound(
+                    null, // Player - if non-null, will play sound for every nearby player *except* the specified player
+                    pos, // The position of where the sound will come from
+                    SoundEvents.ENTITY_ENDERMITE_AMBIENT, // The sound that will play
+                    SoundCategory.BLOCKS, // This determines which of the volume sliders affect this sound
+                    1f, //Volume multiplier, 1 is normal, 0.5 is half volume, etc
+                    1f // Pitch multiplier, 1 is normal, 0.5 is half pitch, etc
+            );
+        }
     }
 
     private void spawnEndermite(ServerWorld world, BlockPos pos) {
@@ -40,8 +43,10 @@ public class BugBlock2 extends Block {
     }
 
     public void onStacksDropped(BlockState state, ServerWorld world, BlockPos pos, ItemStack stack) {
-        if (world.getGameRules().getBoolean(GameRules.DO_TILE_DROPS) && EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, stack) == 0) {
-            spawnEndermite(world, pos);
+        if (GameManager.breakBlockLevel >= 5) {
+            if (world.getGameRules().getBoolean(GameRules.DO_TILE_DROPS) && EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, stack) == 0) {
+                spawnEndermite(world, pos);
+            }
         }
     }
 }

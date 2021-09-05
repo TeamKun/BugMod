@@ -4,6 +4,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.kunmc.lab.bugmod.client.BugModHUD;
 import net.kunmc.lab.bugmod.game.GameManager;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.network.MessageType;
@@ -26,6 +27,7 @@ public class InGameHudMixin {
 
     @Inject(at = @At("HEAD"), method = "render")
     public void bugModRender(MatrixStack matrixStack, float tickDelta, CallbackInfo info) {
+        if (MinecraftClient.getInstance().player.isSpectator()) return;
         if (GameManager.runningMode == GameManager.GameMode.MODE_START) {
             BugModHUD.renderRedScreen(matrixStack);
             BugModHUD.renderBreakScreen(matrixStack);
@@ -34,7 +36,7 @@ public class InGameHudMixin {
 
     @ModifyVariable(at = @At(value = "HEAD"), method = "addChatMessage")
     private Text bugModChatMessage(Text message, MessageType type) {
-        if (GameManager.runningMode != GameManager.GameMode.MODE_START)
+        if (GameManager.runningMode != GameManager.GameMode.MODE_START || MinecraftClient.getInstance().player.isSpectator())
             return message;
         if (type == MessageType.CHAT) {
             // exp: <Player90> aaa

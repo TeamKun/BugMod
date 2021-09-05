@@ -25,6 +25,8 @@ public class ShaderManager {
     }
 
     public static void runGlitch(int time) {
+        if (MinecraftClient.getInstance().player.isSpectator()) return;
+
         glitchTime = time;
         ClientPlayerEntity p = MinecraftClient.getInstance().player;
         p.playSound(BugSoundManager.noiseSound, 0.05f, 1);

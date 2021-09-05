@@ -1,10 +1,6 @@
 package net.kunmc.lab.bugmod.game;
 
-import net.kunmc.lab.bugmod.BugMod;
 import net.kunmc.lab.bugmod.networking.ServerNetworking;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.network.MessageType;
-import net.minecraft.server.MinecraftServer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +10,13 @@ public class GameManager {
     public static final String redScreenName = "redscreen";
     public static final String garbledCharName = "garbledchar";
     public static final String breakScreenName = "breakscreen";
-    public static final String breakTextureName = "breaktexture";
+    public static final String breakBlockName = "breakblock";
     public static final String breakSkinName = "breakskin";
 
     public static final int redScreenMaxLevel = 16;
     public static final int garbledCharMaxLevel = 15;
     public static final int breakScreenMaxLevel = 30;
-    public static final int breakTextureMaxLevel = 5;
+    public static final int breakBlockMaxLevel = 5;
     public static final int breakSkinMaxLevel = 5;
 
     // 画面が赤くなる
@@ -29,8 +25,8 @@ public class GameManager {
     public static int garbledCharLevel;
     // 画面が壊れる
     public static int breakScreenLevel;
-    // テクスチャがバグる
-    public static int breakTextureLevel;
+    // テクスチャがバグる(バグったブロックを発生させる)
+    public static int breakBlockLevel;
     // スキンがバグる
     public static int breakSkinLevel;
 
@@ -43,7 +39,7 @@ public class GameManager {
         redScreenLevel = 0;
         garbledCharLevel = 0;
         breakScreenLevel = 0;
-        breakTextureLevel = 0;
+        breakBlockLevel = 0;
         breakSkinLevel = 0;
         runningMode = GameMode.MODE_NEUTRAL;
         recoveryMode = true;
@@ -57,26 +53,19 @@ public class GameManager {
             case MODE_NEUTRAL:
                 GameManager.runningMode = runningMode;
                 break;
-            case MODE_PAUSE:
-                if (GameManager.runningMode == GameMode.MODE_PAUSE) {
-                    GameManager.runningMode = GameMode.MODE_START;
-                } else {
-                    GameManager.runningMode = GameMode.MODE_PAUSE;
-                }
-                break;
         }
     }
 
     public static String[] getAllBugName() {
         String[] name = {GameManager.redScreenName, GameManager.breakScreenName,
-                GameManager.breakSkinName, GameManager.breakTextureName,
+                GameManager.breakSkinName, GameManager.breakBlockName,
                 GameManager.garbledCharName};
         return name;
     }
 
     public static int[] getAllBugLevel() {
         int[] level = {GameManager.redScreenLevel, GameManager.breakScreenLevel,
-                GameManager.breakSkinLevel, GameManager.breakTextureLevel,
+                GameManager.breakSkinLevel, GameManager.breakBlockLevel,
                 GameManager.garbledCharLevel};
         return level;
     }
@@ -118,10 +107,10 @@ public class GameManager {
                     ServerNetworking.sendLevel(GameManager.breakScreenName, level, playerName);
                 }
                 break;
-            case breakTextureName:
-                if (shouldUpdateLevel(GameManager.breakTextureLevel, level, GameManager.breakTextureMaxLevel)){
-                    GameManager.breakTextureLevel = level;
-                    ServerNetworking.sendLevel(GameManager.breakTextureName, level, playerName);
+            case breakBlockName:
+                if (shouldUpdateLevel(GameManager.breakBlockLevel, level, GameManager.breakBlockMaxLevel)){
+                    GameManager.breakBlockLevel = level;
+                    ServerNetworking.sendLevel(GameManager.breakBlockName, level, playerName);
                 }
                 break;
             case breakSkinName:
@@ -153,10 +142,10 @@ public class GameManager {
                     ServerNetworking.sendRecoveryLevel(GameManager.breakScreenName, level, playerName);
                 }
                 break;
-            case breakTextureName:
+            case breakBlockName:
                 if (shouldDownLevel(level)) {
-                    GameManager.breakTextureLevel = level - 1;
-                    ServerNetworking.sendRecoveryLevel(GameManager.breakTextureName, level, playerName);
+                    GameManager.breakBlockLevel = level - 1;
+                    ServerNetworking.sendRecoveryLevel(GameManager.breakBlockName, level, playerName);
                 }
                 break;
             case breakSkinName:
@@ -186,7 +175,5 @@ public class GameManager {
         MODE_NEUTRAL,
         // 開始状態
         MODE_START,
-        // 一時停止状態(resetGameせずに停止・再開ができる)
-        MODE_PAUSE
     }
 }

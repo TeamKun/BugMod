@@ -4,17 +4,11 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.kunmc.lab.bugmod.game.GameManager;
-import net.kunmc.lab.bugmod.networking.ServerNetworking;
 import net.kunmc.lab.bugmod.util.DecolationConst;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.RunArgs;
 import net.minecraft.network.MessageType;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.LiteralText;
-
-import java.awt.*;
 
 public class BugCommand {
     public static void register() {
@@ -84,13 +78,13 @@ public class BugCommand {
                                                 GameManager.redScreenLevel = value;
                                                 return 1;
                                             })))
-                            .then(CommandManager.literal(GameManager.breakTextureName+"Level")
-                                    .then(CommandManager.argument("num", IntegerArgumentType.integer(0,GameManager.breakTextureMaxLevel))
+                            .then(CommandManager.literal(GameManager.breakBlockName +"Level")
+                                    .then(CommandManager.argument("num", IntegerArgumentType.integer(0,GameManager.breakBlockMaxLevel))
                                             .executes(context -> {
-                                                String name = GameManager.breakTextureName + "Level";
+                                                String name = GameManager.breakBlockName + "Level";
                                                 int value = IntegerArgumentType.getInteger(context, "num");
                                                 context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "%sを%dに設定しました", name, value)), true);
-                                                GameManager.breakTextureLevel = value;
+                                                GameManager.breakBlockLevel = value;
                                                 return 1;
                                             })))
                             .then(CommandManager.literal(GameManager.breakScreenName+"Level")
