@@ -6,8 +6,6 @@ import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.kunmc.lab.bugmod.networking.ClientNetworking;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.TorchBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.ActionResult;
@@ -38,6 +36,5 @@ public class PlayerClientEvent {
             }
             return TypedActionResult.pass(player.getStackInHand(hand));
         });
-
     }
 }

@@ -2,7 +2,6 @@ package net.kunmc.lab.bugmod.client;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.kunmc.lab.bugmod.BugMod;
-import net.kunmc.lab.bugmod.BugModClient;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
@@ -11,7 +10,6 @@ import net.minecraft.util.Identifier;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class BugsHUD {
 

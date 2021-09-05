@@ -57,7 +57,6 @@ public class BugModHUD {
          *     - 四角に画面を削ってしまうと味気ないので、nの範囲毎にmの値を変えて長さの違う横棒がいくつもある感じで削る
          */
         // See: https://qiita.com/konifar/items/106731d8a35303606597
-        // int alphaColor = ((int)(transparency * 255) << 24) & 0xFF000000 | color;
         int alphaColor = 0xFF000000;
 
         // 画面の横分割の数

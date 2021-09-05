@@ -73,6 +73,22 @@ public class GameManager {
         }
     }
 
+    public static String[] getAllBugName() {
+        String[] name = {GameManager.redScreenName, GameManager.breakScreenName,
+                GameManager.breakSkinName, GameManager.breakTextureName,
+                GameManager.garbledCharName, GameManager.spiderSoundName,
+                GameManager.helpSoundName};
+        return name;
+    }
+
+    public static int[] getAllBugLevel() {
+        int[] level = {GameManager.redScreenLevel, GameManager.breakScreenLevel,
+                GameManager.breakSkinLevel, GameManager.breakTextureLevel,
+                GameManager.garbledCharLevel, GameManager.spiderSoundLevel,
+                GameManager.helpSoundLevel};
+        return level;
+    }
+
     // サーバ側のレベル更新 & Clinetへのレベル転送
     public static void updateLevel(String name, int level, String playerName){
         switch (name){

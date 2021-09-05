@@ -7,10 +7,7 @@ import net.kunmc.lab.bugmod.BugMod;
 import net.kunmc.lab.bugmod.sound.BugSoundManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Identifier;
-
-import static net.minecraft.util.registry.Registry.SOUND_EVENT;
 
 public class ShaderManager {
     public static int glitchTime = 0;

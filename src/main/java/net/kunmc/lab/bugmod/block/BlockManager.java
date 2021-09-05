@@ -13,13 +13,13 @@ import net.minecraft.util.registry.Registry;
 
 public class BlockManager {
     public static final String bugBlock1Name = "bug_block1";
-    private static BugBlock1 bugBlock1 = new BugBlock1(FabricBlockSettings.of(Material.ICE));
+    public static BugBlock1 bugBlock1 = new BugBlock1(FabricBlockSettings.of(Material.ICE));
 
     public static final String bugBlock2Name = "bug_block2";
-    private static BugBlock1 bugBlock2 = new BugBlock1(FabricBlockSettings.of(Material.ICE));
+    private static BugBlock2 bugBlock2 = new BugBlock2(FabricBlockSettings.of(Material.ICE));
 
     public static final String bugBlock3Name = "bug_block3";
-    private static BugBlock1 bugBlock3 = new BugBlock1(FabricBlockSettings.of(Material.ICE));
+    private static BugBlock3 bugBlock3 = new BugBlock3(FabricBlockSettings.of(Material.ICE));
 
     public static void register(){
         Registry.register(net.minecraft.util.registry.Registry.BLOCK, identifierFactory(bugBlock1Name), bugBlock1);
@@ -30,10 +30,6 @@ public class BlockManager {
 
         Registry.register(net.minecraft.util.registry.Registry.BLOCK, identifierFactory(bugBlock3Name), bugBlock3);
         Registry.register(Registry.ITEM, new Identifier(BugMod.MODID, bugBlock3Name), new BlockItem(bugBlock3, new Item.Settings().group(ItemGroup.MISC)));
-
-        BlockRenderLayerMap.INSTANCE.putBlock(bugBlock1, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(bugBlock2, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(bugBlock3, RenderLayer.getCutout());
     }
 
     public static Identifier identifierFactory(String name) {

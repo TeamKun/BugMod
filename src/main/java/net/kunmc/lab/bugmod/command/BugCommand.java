@@ -39,14 +39,8 @@ public class BugCommand {
                     .then(CommandManager.literal("showParam")
                             .executes(context -> {
                                 String br = System.getProperty("line.separator");
-                                String[] name = {GameManager.redScreenName, GameManager.breakScreenName,
-                                        GameManager.breakSkinName, GameManager.breakTextureName,
-                                        GameManager.garbledCharName, GameManager.spiderSoundName,
-                                        GameManager.helpSoundName};
-                                int[] level = {GameManager.redScreenLevel, GameManager.breakScreenLevel,
-                                        GameManager.breakSkinLevel, GameManager.breakTextureLevel,
-                                        GameManager.garbledCharLevel, GameManager.spiderSoundLevel,
-                                        GameManager.helpSoundLevel};
+                                String[] name = GameManager.getAllBugName();
+                                int[] level = GameManager.getAllBugLevel();
 
                                 String currentConfig = "Parameters: %s" + br;
                                 for (int i=0; i< name.length; i++) {
