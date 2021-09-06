@@ -7,21 +7,26 @@
 - FabricMC 1.16.5
   - [Satin 1.5.1](https://github.com/Ladysnake/Satin/tree/1.5.1)
 ## コマンド
+### 概要
+
+/bug でゲーム内でUsageを確認可能
+
 - bug
+    
     - start
-
+    
       ゲームを開始する
-
-    - stop
-
+    
+    - stopgit 
+    
         ゲームを終了する
-
+    
     - showParam
-
+    
         ゲームで設定可能なパラメータの値を見る(パラメータについては以降を参照)
-
+    
     - setParam <ParameterName> <value>
-
+    
         ゲームで利用するパラメータの値を設定する(パラメータについては以降を参照)
 
 ## (条件を満たした時に)発生する効果
