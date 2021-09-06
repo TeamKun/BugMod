@@ -40,7 +40,7 @@ public class PlayerServerEvent {
 
                         Block b = world.getBlockState(bPos).getBlock();
                         if (b == Blocks.AIR || b instanceof BedBlock || b instanceof SignBlock || b instanceof DoorBlock ||
-                                b == Blocks.LAVA || b == Blocks.WATER || b == Blocks.OBSIDIAN ||
+                                b == Blocks.LAVA || b == Blocks.WATER || b == Blocks.OBSIDIAN || b == Blocks.NETHER_PORTAL ||
                                 b == Blocks.END_GATEWAY || b == Blocks.END_PORTAL || b == Blocks.END_PORTAL_FRAME ||
                                 b == Blocks.COAL_ORE || b == Blocks.IRON_ORE || b == Blocks.DIAMOND_ORE || b == Blocks.SPAWNER || b == Blocks.CHEST)
                             continue;
