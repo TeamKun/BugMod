@@ -127,31 +127,31 @@ public class GameManager {
             case redScreenName:
                 if (shouldDownLevel(level)) {
                     GameManager.redScreenLevel = level - 1;
-                    ServerNetworking.sendRecoveryLevel(GameManager.redScreenName, level, playerName);
+                    ServerNetworking.sendRecoveryLevel(GameManager.redScreenName, GameManager.redScreenLevel, playerName);
                 }
                 break;
             case garbledCharName:
                 if (shouldDownLevel(level)) {
                     GameManager.garbledCharLevel = level - 1;
-                    ServerNetworking.sendRecoveryLevel(GameManager.garbledCharName, level, playerName);
+                    ServerNetworking.sendRecoveryLevel(GameManager.garbledCharName, GameManager.garbledCharLevel, playerName);
                 }
                 break;
             case breakScreenName:
                 if (shouldDownLevel(level)) {
                     GameManager.breakScreenLevel = level - 1;
-                    ServerNetworking.sendRecoveryLevel(GameManager.breakScreenName, level, playerName);
+                    ServerNetworking.sendRecoveryLevel(GameManager.breakScreenName, GameManager.breakScreenLevel, playerName);
                 }
                 break;
             case breakBlockName:
                 if (shouldDownLevel(level)) {
                     GameManager.breakBlockLevel = level - 1;
-                    ServerNetworking.sendRecoveryLevel(GameManager.breakBlockName, level, playerName);
+                    ServerNetworking.sendRecoveryLevel(GameManager.breakBlockName, GameManager.breakBlockLevel, playerName);
                 }
                 break;
             case breakSkinName:
                 if (shouldDownLevel(level)) {
                     GameManager.breakSkinLevel = level - 1;
-                    ServerNetworking.sendRecoveryLevel(GameManager.breakSkinName, level, playerName);
+                    ServerNetworking.sendRecoveryLevel(GameManager.breakSkinName, GameManager.breakSkinLevel, playerName);
                 }
                 break;
         }

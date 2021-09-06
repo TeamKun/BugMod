@@ -11,6 +11,7 @@ import net.minecraft.text.Text;
 @Environment(EnvType.CLIENT)
 public class UpdateClientLevelManager {
     public static void updateLevel(String targetName, int targetLevel, String playerName, boolean useEffect, boolean recovery) {
+
         // レベルアップ時のエフェクト
         if (useEffect) {
             switch (targetName) {
@@ -77,12 +78,12 @@ public class UpdateClientLevelManager {
                     break;
                 case GameManager.redScreenName:
                     sub = subMessage(targetLevel, GameManager.redScreenMaxLevel);
-                    message = String.format("%sの行動で画面が%s赤く染まった", playerName, sub);
+                    message = String.format("%sの行動で視界が%s赤く染まった", playerName, sub);
                     MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
                     break;
                 case GameManager.breakScreenName:
                     sub = subMessage(targetLevel, GameManager.breakScreenMaxLevel);
-                    message = String.format("%sの行動で画面が%s削れた", playerName, sub);
+                    message = String.format("%sの行動で視界が%s削れた", playerName, sub);
                     MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
                     break;
             }
@@ -92,7 +93,7 @@ public class UpdateClientLevelManager {
                     message = String.format("%sの行動でブロックがバグりにくくなった", playerName, sub);
                     if (targetLevel == 0) message = String.format("%sの行動でブロックがバグらなくなった", playerName, sub);
                     if (targetLevel == 2) message = String.format("%sの行動でバグったブロックから虫の声が止んだ", playerName, sub);
-                    if (targetLevel >= 3 ) message = String.format("%sの行動でバグったブロックから少し虫の声が止んだ", playerName, sub);
+                    if (targetLevel >= 3) message = String.format("%sの行動でバグったブロックから少し虫の声が止んだ", playerName, sub);
                     MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
                     break;
                 case GameManager.garbledCharName:
@@ -107,14 +108,14 @@ public class UpdateClientLevelManager {
                     break;
                 case GameManager.redScreenName:
                     sub = subMessage(targetLevel, GameManager.redScreenMaxLevel);
-                    message = String.format("%sの行動で画面の赤が薄まった", playerName, sub);
-                    if (targetLevel == 0) message = String.format("%sの行動で画面が赤くなくなった", playerName, sub);
+                    message = String.format("%sの行動で視界の赤が薄まった", playerName, sub);
+                    if (targetLevel == 0) message = String.format("%sの行動で視界が赤くなくなった", playerName, sub);
                     MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
                     break;
                 case GameManager.breakScreenName:
                     sub = subMessage(targetLevel, GameManager.breakScreenMaxLevel);
-                    message = String.format("%sの行動で画面の削れが少し治った", playerName, sub);
-                    if (targetLevel == 0) message = String.format("%sの行動で画面の削れが治った", playerName, sub);
+                    message = String.format("%sの行動で視界の削れが少し治った", playerName, sub);
+                    if (targetLevel == 0) message = String.format("%sの行動で視界の削れが治った", playerName, sub);
                     MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
                     break;
             }
