@@ -16,29 +16,36 @@ public class PlayerSkinTextureMixin {
     private static void BugModTexture(NativeImage image, CallbackInfoReturnable<NativeImage> info) {
         if (GameManager.runningMode != GameManager.GameMode.MODE_START || GameManager.breakSkinLevel == 0) return;
 
+        // スキンの一部がバグる確率
         double prob = 0;
+        // バグる範囲
+        int maxCnt = 0;
         switch (GameManager.breakSkinLevel) {
             case 1:
                 prob = 0.01;
+                maxCnt = 3;
                 break;
             case 2:
-                prob = 0.05;
+                prob = 0.02;
+                maxCnt = 4;
                 break;
             case 3:
-                prob = 0.1;
+                prob = 0.04;
+                maxCnt = 5;
                 break;
             case 4:
-                prob = 0.15;
+                prob = 0.06;
+                maxCnt = 6;
                 break;
             case 5:
-                prob = 0.2;
+                prob = 0.1;
+                maxCnt = 10;
                 break;
         }
 
         Random rand = new Random();
         // 同じ色が続いたほうがバグっぽいのでカウントで調整
         int tmpCnt = 0;
-        int maxCnt = 10;
         int preColor = 0x0;
         for(int x = 0; x<64; x++) {
             for(int y = 0; y<64; y++) {
