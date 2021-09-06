@@ -9,11 +9,10 @@
     "POne0301"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "sources": "https://github.com/TeamKun/BugMod"
   },
 
-  "license": "CC0-1.0",
+  "license": "GNU LESSER GENERAL PUBLIC LICENSE Version 3",
   "icon": "assets/bugmod/icon.png",
 
   "environment": "*",
