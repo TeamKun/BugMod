@@ -32,6 +32,8 @@ public class BugCommand {
                         usage += String.format("    show game parameters%s", br);
                         usage += String.format("  /bug setParam <parameterName> <value>%s", br);
                         usage += String.format("    set parameter value%s", br);
+                        usage += String.format("  /bug setParam resetUpdateLevelProbability%s", br);
+                        usage += String.format("    reset all probability values%s", br);
                         context.getSource().sendFeedback(new LiteralText(usage), false);
                         return 1;
                     })
@@ -181,6 +183,7 @@ public class BugCommand {
                                             })))
                             .then(CommandManager.literal("resetUpdateLevelProbability")
                                     .executes(context -> {
+                                        GameManager.resetUpdateLevelProbability();
                                         String[] name = GameManager.getAllBugName();
                                         double[] prob = GameManager.getAllBugProbability();
 
@@ -189,7 +192,6 @@ public class BugCommand {
                                         for (int i=0; i< name.length; i++) {
                                             message.add(String.format("  %sLevelProbability: %.2f", name[i], prob[i]));
                                         }
-                                        GameManager.resetUpdateLevelProbability();
                                         context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "レベル更新の確率をデフォルトに設定しました")), true);
                                         context.getSource().sendFeedback(new LiteralText(String.join(br, message)), false);
                                         return 1;
