@@ -1,6 +1,7 @@
 package net.kunmc.lab.bugmod.command;
 
 import com.mojang.brigadier.arguments.BoolArgumentType;
+import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
@@ -10,6 +11,10 @@ import net.minecraft.network.MessageType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.LiteralText;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BugCommand {
     public static void register() {
@@ -61,13 +66,18 @@ public class BugCommand {
                             .executes(context -> {
                                 String[] name = GameManager.getAllBugName();
                                 int[] level = GameManager.getAllBugLevel();
+                                double[] prob = GameManager.getAllBugProbability();
 
-                                String currentConfig = "Parameters:" + br;
+                                List<String> message = new ArrayList();
+                                message.add("Parameters:");
                                 for (int i=0; i< name.length; i++) {
-                                    currentConfig += String.format("  %sLevel: %d%s", name[i], level[i], br);
+                                    message.add(String.format("  %sLevel: %d", name[i], level[i]));
                                 }
-                                currentConfig += String.format("  recoveryMode: %b", GameManager.canRecovery);
-                                context.getSource().sendFeedback(new LiteralText(currentConfig), false);
+                                for (int i=0; i< name.length; i++) {
+                                    message.add(String.format("  %sLevelProbability: %.2f", name[i], prob[i]));
+                                }
+                                message.add(String.format("  recoveryMode: %b", GameManager.canRecovery));
+                                context.getSource().sendFeedback(new LiteralText(String.join(br, message)), false);
                                 return 1;
                             }))
                     .then(CommandManager.literal("setParam")
@@ -76,8 +86,8 @@ public class BugCommand {
                                             .executes(context -> {
                                                 String name = GameManager.redScreenName + "Level";
                                                 int value = IntegerArgumentType.getInteger(context, "num");
-                                                context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "%sを%dに設定しました", name, value)), true);
                                                 GameManager.redScreenLevel = value;
+                                                context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "%sを%dに設定しました", name, value)), true);
                                                 return 1;
                                             })))
                             .then(CommandManager.literal(GameManager.breakBlockName +"Level")
@@ -85,8 +95,8 @@ public class BugCommand {
                                             .executes(context -> {
                                                 String name = GameManager.breakBlockName + "Level";
                                                 int value = IntegerArgumentType.getInteger(context, "num");
-                                                context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "%sを%dに設定しました", name, value)), true);
                                                 GameManager.breakBlockLevel = value;
+                                                context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "%sを%dに設定しました", name, value)), true);
                                                 return 1;
                                             })))
                             .then(CommandManager.literal(GameManager.breakScreenName+"Level")
@@ -94,8 +104,8 @@ public class BugCommand {
                                             .executes(context -> {
                                                 String name = GameManager.breakScreenName + "Level";
                                                 int value = IntegerArgumentType.getInteger(context, "num");
-                                                context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "%sを%dに設定しました", name, value)), true);
                                                 GameManager.breakScreenLevel = value;
+                                                context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "%sを%dに設定しました", name, value)), true);
                                                 return 1;
                                             })))
                             .then(CommandManager.literal(GameManager.breakSkinName+"Level")
@@ -103,8 +113,8 @@ public class BugCommand {
                                             .executes(context -> {
                                                 String name = GameManager.breakSkinName + "Level";
                                                 int value = IntegerArgumentType.getInteger(context, "num");
-                                                context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "%sを%dに設定しました", name, value)), true);
                                                 GameManager.breakSkinLevel = value;
+                                                context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "%sを%dに設定しました", name, value)), true);
                                                 return 1;
                                             })))
                             .then(CommandManager.literal(GameManager.garbledCharName+"Level")
@@ -112,18 +122,78 @@ public class BugCommand {
                                             .executes(context -> {
                                                 String name = GameManager.garbledCharName + "Level";
                                                 int value = IntegerArgumentType.getInteger(context, "num");
-                                                context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "%sを%dに設定しました", name, value)), true);
                                                 GameManager.garbledCharLevel = value;
+                                                context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "%sを%dに設定しました", name, value)), true);
                                                 return 1;
                                             })))
                             .then(CommandManager.literal("recoveryMode")
                                     .then(CommandManager.argument("mode", BoolArgumentType.bool())
                                             .executes(context -> {
                                                 boolean value = BoolArgumentType.getBool(context, "mode");
-                                                context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "recoveryModeを%bに設定しました", value)), true);
                                                 GameManager.canRecovery = value;
+                                                context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "recoveryModeを%bに設定しました", value)), true);
                                                 return 1;
                                             })))
+                            .then(CommandManager.literal(GameManager.redScreenName+"Probability")
+                                    .then(CommandManager.argument("num", DoubleArgumentType.doubleArg(0, 1.0))
+                                            .executes(context -> {
+                                                String name = GameManager.redScreenName + "Probability";
+                                                double value = DoubleArgumentType.getDouble(context, "num");
+                                                GameManager.redScreenUpdateLevelProbability = value;
+                                                context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "%sを%.2fに設定しました", name, value)), true);
+                                                return 1;
+                                            })))
+                            .then(CommandManager.literal(GameManager.breakBlockName+"Probability")
+                                    .then(CommandManager.argument("num", DoubleArgumentType.doubleArg(0, 1.0))
+                                            .executes(context -> {
+                                                String name = GameManager.breakBlockName + "Probability";
+                                                double value = DoubleArgumentType.getDouble(context, "num");
+                                                GameManager.breakBlockUpdateLevelProbability = value;
+                                                context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "%sを%.2fに設定しました", name, value)), true);
+                                                return 1;
+                                            })))
+                            .then(CommandManager.literal(GameManager.breakScreenName+"Probability")
+                                    .then(CommandManager.argument("num", DoubleArgumentType.doubleArg(0, 1.0))
+                                            .executes(context -> {
+                                                String name = GameManager.breakScreenName + "Probability";
+                                                double value = DoubleArgumentType.getDouble(context, "num");
+                                                GameManager.breakScreenUpdateLevelProbability = value;
+                                                context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "%sを%.2fに設定しました", name, value)), true);
+                                                return 1;
+                                            })))
+                            .then(CommandManager.literal(GameManager.breakSkinName+"Probability")
+                                    .then(CommandManager.argument("num", DoubleArgumentType.doubleArg(0, 1.0))
+                                            .executes(context -> {
+                                                String name = GameManager.breakSkinName + "Probability";
+                                                double value = DoubleArgumentType.getDouble(context, "num");
+                                                GameManager.breakSkinUpdateLevelProbability = value;
+                                                context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "%sを%.2fに設定しました", name, value)), true);
+                                                return 1;
+                                            })))
+                            .then(CommandManager.literal(GameManager.garbledCharName+"Probability")
+                                    .then(CommandManager.argument("num", DoubleArgumentType.doubleArg(0, 1.0))
+                                            .executes(context -> {
+                                                String name = GameManager.garbledCharName + "Probability";
+                                                double value = DoubleArgumentType.getDouble(context, "num");
+                                                GameManager.garbledCharUpdateLevelProbability = value;
+                                                context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "%sを%.2fに設定しました", name, value)), true);
+                                                return 1;
+                                            })))
+                            .then(CommandManager.literal("resetUpdateLevelProbability")
+                                    .executes(context -> {
+                                        String[] name = GameManager.getAllBugName();
+                                        double[] prob = GameManager.getAllBugProbability();
+
+                                        List<String> message = new ArrayList();
+                                        message.add("Parameters:");
+                                        for (int i=0; i< name.length; i++) {
+                                            message.add(String.format("  %sLevelProbability: %.2f", name[i], prob[i]));
+                                        }
+                                        GameManager.resetUpdateLevelProbability();
+                                        context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "レベル更新の確率をデフォルトに設定しました")), true);
+                                        context.getSource().sendFeedback(new LiteralText(String.join(br, message)), false);
+                                        return 1;
+                                    }))
                     ).build();
             dispatcher.getRoot().addChild(rootNode);
         });

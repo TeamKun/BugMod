@@ -63,8 +63,7 @@ public class PlayerServerEvent {
                     }
                 }
             }
-            if (rnd.nextDouble() <= 0.1)
-                GameManager.updateLevel(GameManager.breakBlockName, GameManager.breakBlockLevel + 1, player.getGameProfile().getName());
+            GameManager.updateLevel(GameManager.breakBlockName, GameManager.breakBlockLevel + 1, player.getGameProfile().getName());
         });
     }
 }

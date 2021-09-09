@@ -19,6 +19,12 @@ public class GameManager {
     public static final int breakBlockMaxLevel = 5;
     public static final int breakSkinMaxLevel = 5;
 
+    public static double redScreenUpdateLevelProbability;
+    public static double garbledCharUpdateLevelProbability;
+    public static double breakScreenUpdateLevelProbability;
+    public static double breakBlockUpdateLevelProbability;
+    public static double breakSkinUpdateLevelProbability;
+
     // 画面が赤くなる
     public static int redScreenLevel;
     // 文字化けする
@@ -35,6 +41,8 @@ public class GameManager {
     // 回復できるかどうか
     public static boolean canRecovery = true;
 
+    public static Random rand = new Random();
+
     public static void resetGame(){
         redScreenLevel = 0;
         garbledCharLevel = 0;
@@ -43,6 +51,14 @@ public class GameManager {
         breakSkinLevel = 0;
         runningMode = GameMode.MODE_NEUTRAL;
         canRecovery = true;
+    }
+
+    public static void resetUpdateLevelProbability () {
+        redScreenUpdateLevelProbability = 0.3;
+        garbledCharUpdateLevelProbability = 1.0;
+        breakScreenUpdateLevelProbability = 1.0;
+        breakBlockUpdateLevelProbability = 0.01;
+        breakSkinUpdateLevelProbability = 0.5;
     }
 
     public static void controller(GameMode runningMode) {
@@ -70,6 +86,15 @@ public class GameManager {
         return level;
     }
 
+    public static double[] getAllBugProbability() {
+        double[] prob = {GameManager.redScreenUpdateLevelProbability,
+                GameManager.breakScreenUpdateLevelProbability,
+                GameManager.breakSkinUpdateLevelProbability,
+                GameManager.breakBlockUpdateLevelProbability,
+                GameManager.garbledCharUpdateLevelProbability};
+        return prob;
+    }
+
     public static String getBugRandom() {
         String[] bugName = getAllBugName();
         int[] bugLevel = getAllBugLevel();
@@ -86,37 +111,47 @@ public class GameManager {
         return name.get(rand.nextInt(name.size()));
     }
 
-    // サーバ側のレベル更新 & Clinetへのレベル転送
+    // サーバ側のレベル更新 & Clientへのレベル転送
     public static void updateLevel(String name, int level, String playerName){
         switch (name){
             case redScreenName:
-                if (shouldUpdateLevel(GameManager.redScreenLevel, level, GameManager.redScreenMaxLevel)){
-                    GameManager.redScreenLevel = level;
-                    ServerNetworking.sendLevel(GameManager.redScreenName, level, playerName);
+                if (GameManager.redScreenUpdateLevelProbability > rand.nextDouble()) {
+                    if (shouldUpdateLevel(GameManager.redScreenLevel, level, GameManager.redScreenMaxLevel)) {
+                        GameManager.redScreenLevel = level;
+                        ServerNetworking.sendLevel(GameManager.redScreenName, level, playerName);
+                    }
                 }
                 break;
             case garbledCharName:
-                if (shouldUpdateLevel(GameManager.garbledCharLevel, level, GameManager.garbledCharMaxLevel)){
-                    GameManager.garbledCharLevel = level;
-                    ServerNetworking.sendLevel(GameManager.garbledCharName, level, playerName);
+                if (GameManager.garbledCharUpdateLevelProbability > rand.nextDouble()) {
+                    if (shouldUpdateLevel(GameManager.garbledCharLevel, level, GameManager.garbledCharMaxLevel)) {
+                        GameManager.garbledCharLevel = level;
+                        ServerNetworking.sendLevel(GameManager.garbledCharName, level, playerName);
+                    }
                 }
                 break;
             case breakScreenName:
-                if (shouldUpdateLevel(GameManager.breakScreenLevel, level, GameManager.breakScreenMaxLevel)){
-                    GameManager.breakScreenLevel = level;
-                    ServerNetworking.sendLevel(GameManager.breakScreenName, level, playerName);
+                if (GameManager.breakScreenUpdateLevelProbability > rand.nextDouble()) {
+                    if (shouldUpdateLevel(GameManager.breakScreenLevel, level, GameManager.breakScreenMaxLevel)) {
+                        GameManager.breakScreenLevel = level;
+                        ServerNetworking.sendLevel(GameManager.breakScreenName, level, playerName);
+                    }
                 }
                 break;
             case breakBlockName:
-                if (shouldUpdateLevel(GameManager.breakBlockLevel, level, GameManager.breakBlockMaxLevel)){
-                    GameManager.breakBlockLevel = level;
-                    ServerNetworking.sendLevel(GameManager.breakBlockName, level, playerName);
+                if (GameManager.breakBlockUpdateLevelProbability > rand.nextDouble()) {
+                    if (shouldUpdateLevel(GameManager.breakBlockLevel, level, GameManager.breakBlockMaxLevel)) {
+                        GameManager.breakBlockLevel = level;
+                        ServerNetworking.sendLevel(GameManager.breakBlockName, level, playerName);
+                    }
                 }
                 break;
             case breakSkinName:
-                if (shouldUpdateLevel(GameManager.breakSkinLevel, level, GameManager.breakSkinMaxLevel)){
-                    GameManager.breakSkinLevel = level;
-                    ServerNetworking.sendLevel(GameManager.breakSkinName, level, playerName);
+                if (GameManager.breakSkinUpdateLevelProbability > rand.nextDouble()) {
+                    if (shouldUpdateLevel(GameManager.breakSkinLevel, level, GameManager.breakSkinMaxLevel)) {
+                        GameManager.breakSkinLevel = level;
+                        ServerNetworking.sendLevel(GameManager.breakSkinName, level, playerName);
+                    }
                 }
                 break;
         }
