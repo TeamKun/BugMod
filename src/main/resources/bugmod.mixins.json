@@ -9,7 +9,8 @@
     "InGameHudMixin",
     "PlayerSkinTextureMixin",
     "PlayerSkinProviderMixin",
-    "BlockMixin"
+    "BlockMixin",
+    "BucketItemMixin"
   ],
   "server": [
     "ServerPlayerEntityMixin",
