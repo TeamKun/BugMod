@@ -11,6 +11,7 @@ import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(SheepEntityRenderer.class)
@@ -25,6 +26,11 @@ public class SheepEntityRendererMixin extends MobEntityRenderer<SheepEntity, She
         this.addFeature(new SheepWoolFeatureRenderer(this));
     }
 
+    /**
+     * @author POne0301
+     * @reason Bug Mod
+     */
+    @Overwrite
     public Identifier getTexture(SheepEntity sheepEntity) {
         if (GameManager.breakMobTextureLevel >= 2) {
             return BUG_TEXTURE;

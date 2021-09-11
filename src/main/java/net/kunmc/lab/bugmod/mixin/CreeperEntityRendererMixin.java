@@ -11,6 +11,7 @@ import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(CreeperEntityRenderer.class)
@@ -25,7 +26,11 @@ public class CreeperEntityRendererMixin extends MobEntityRenderer<CreeperEntity,
         this.addFeature(new CreeperChargeFeatureRenderer(this));
     }
 
-    @Override
+    /**
+     * @author POne0301
+     * @reason Bug Mod
+     */
+    @Overwrite
     public Identifier getTexture(CreeperEntity creeperEntity) {
         if (GameManager.breakMobTextureLevel >= 3) {
             return BUG_TEXTURE;

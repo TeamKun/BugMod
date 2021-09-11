@@ -10,6 +10,7 @@ import net.minecraft.entity.passive.CowEntity;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(CowEntityRenderer.class)
@@ -23,7 +24,11 @@ public class CowEntityRendererMixin extends MobEntityRenderer<CowEntity, CowEnti
         super(entityRenderDispatcher, new CowEntityModel(), 0.7F);
     }
 
-    @Override
+    /**
+     * @author POne0301
+     * @reason Bug Mod
+     */
+    @Overwrite
     public Identifier getTexture(CowEntity cowEntity) {
         if (GameManager.breakMobTextureLevel >= 1) {
             return BUG_TEXTURE;

@@ -9,6 +9,7 @@ import net.minecraft.client.render.entity.model.BlazeEntityModel;
 import net.minecraft.entity.mob.BlazeEntity;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 
 
 @Mixin(BlazeEntityRenderer.class)
@@ -20,7 +21,11 @@ public class BlazeEntityRendererMixin extends MobEntityRenderer<BlazeEntity, Bla
         super(entityRenderDispatcher, new BlazeEntityModel(), 0.5F);
     }
 
-    @Override
+    /**
+     * @author POne0301
+     * @reason Bug Mod
+     */
+    @Overwrite
     public Identifier getTexture(BlazeEntity blazeEntity) {
         if (GameManager.breakMobTextureLevel >= 5) {
             return BUG_TEXTURE;

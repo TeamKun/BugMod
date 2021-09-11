@@ -11,6 +11,7 @@ import net.minecraft.entity.passive.PigEntity;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(PigEntityRenderer.class)
@@ -25,7 +26,11 @@ public class PigEntityRendererMixin extends MobEntityRenderer<PigEntity, PigEnti
         this.addFeature(new SaddleFeatureRenderer(this, new PigEntityModel(0.5F), new Identifier("textures/entity/pig/pig_saddle.png")));
     }
 
-    @Override
+    /**
+     * @author POne0301
+     * @reason Bug Mod
+     */
+    @Overwrite
     public Identifier getTexture(PigEntity pigEntity) {
         if (GameManager.breakMobTextureLevel >= 1) {
             return BUG_TEXTURE;

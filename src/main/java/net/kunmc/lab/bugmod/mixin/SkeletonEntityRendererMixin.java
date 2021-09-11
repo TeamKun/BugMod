@@ -11,6 +11,7 @@ import net.minecraft.entity.mob.AbstractSkeletonEntity;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(SkeletonEntityRenderer.class)
@@ -25,6 +26,11 @@ public class SkeletonEntityRendererMixin extends BipedEntityRenderer<AbstractSke
         this.addFeature(new ArmorFeatureRenderer(this, new SkeletonEntityModel(0.5F, true), new SkeletonEntityModel(1.0F, true)));
     }
 
+    /**
+     * @author POne0301
+     * @reason Bug Mod
+     */
+    @Overwrite
     public Identifier getTexture(AbstractSkeletonEntity abstractSkeletonEntity) {
         if (GameManager.breakMobTextureLevel >= 4) {
             return BUG_TEXTURE;

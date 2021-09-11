@@ -10,6 +10,7 @@ import net.minecraft.entity.mob.EndermiteEntity;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(EndermiteEntityRenderer.class)
@@ -23,7 +24,11 @@ public class EndermiteEntityRendererMixin extends MobEntityRenderer<EndermiteEnt
         super(entityRenderDispatcher, new EndermiteEntityModel(), 0.3F);
     }
 
-    @Override
+    /**
+     * @author POne0301
+     * @reason Bug Mod
+     */
+    @Overwrite
     public Identifier getTexture(EndermiteEntity endermiteEntity) {
         if (GameManager.breakMobTextureLevel >= 6) {
             return BUG_TEXTURE;

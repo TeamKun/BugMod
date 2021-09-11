@@ -11,6 +11,7 @@ import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(ZombieBaseEntityRenderer.class)
@@ -26,7 +27,11 @@ public class ZombieBaseEntityRendererMixin<T extends ZombieEntity, M extends Zom
         this.addFeature(new ArmorFeatureRenderer(this, zombieEntityModel2, zombieEntityModel3));
     }
 
-    @Override
+    /**
+     * @author POne0301
+     * @reason Bug Mod
+     */
+    @Overwrite
     public Identifier getTexture(ZombieEntity zombieEntity) {
         if (GameManager.breakMobTextureLevel >= 3) {
             return BUG_TEXTURE;

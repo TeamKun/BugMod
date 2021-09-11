@@ -10,6 +10,7 @@ import net.minecraft.entity.mob.SilverfishEntity;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(SilverfishEntityRenderer.class)
@@ -23,7 +24,11 @@ public class SilverfishEntityRendererMixin extends MobEntityRenderer<SilverfishE
         super(entityRenderDispatcher, new SilverfishEntityModel(), 0.3F);
     }
 
-    @Override
+    /**
+     * @author POne0301
+     * @reason Bug Mod
+     */
+    @Overwrite
     public Identifier getTexture(SilverfishEntity silverfishEntity) {
 
         if (GameManager.breakMobTextureLevel >= 6) {

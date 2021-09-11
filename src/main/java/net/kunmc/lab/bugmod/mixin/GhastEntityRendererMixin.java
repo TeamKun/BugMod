@@ -10,6 +10,7 @@ import net.minecraft.entity.mob.GhastEntity;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(GhastEntityRenderer.class)
@@ -28,6 +29,11 @@ public class GhastEntityRendererMixin extends MobEntityRenderer<GhastEntity, Gha
         super(entityRenderDispatcher, new GhastEntityModel(), 1.5F);
     }
 
+    /**
+     * @author POne0301
+     * @reason Bug Mod
+     */
+    @Overwrite
     public Identifier getTexture(GhastEntity ghastEntity) {
         if (GameManager.breakMobTextureLevel >= 5) {
             return ghastEntity.isShooting() ? BUG_ANGRY_TEXTURE : BUG_TEXTURE;

@@ -10,6 +10,7 @@ import net.minecraft.entity.mob.SpiderEntity;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(SpiderEntityRenderer.class)
@@ -23,7 +24,11 @@ public class SpiderEntityRendererMixin<T extends SpiderEntity> extends MobEntity
         super(entityRenderDispatcher, entityModel, f);
     }
 
-    @Override
+    /**
+     * @author POne0301
+     * @reason Bug Mod
+     */
+    @Overwrite
     public Identifier getTexture(T spiderEntity) {
         if (GameManager.breakMobTextureLevel >= 4) {
             return BUG_TEXTURE;
