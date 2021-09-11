@@ -12,6 +12,9 @@
     "BlockMixin",
     "BucketItemMixin",
     "ChickenEntityRendererMixin",
+    "CowEntityRendererMixin",
+    "PigEntityRendererMixin",
+    "SheepEntityRendererMixin",
     "SpiderEntityRendererMixin",
     "ZombieBaseEntityRendererMixin"
   ],
