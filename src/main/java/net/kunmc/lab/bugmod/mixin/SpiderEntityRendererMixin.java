@@ -16,7 +16,7 @@ import java.util.Random;
 @Mixin(SpiderEntityRenderer.class)
 public class SpiderEntityRendererMixin<T extends SpiderEntity> extends MobEntityRenderer<T, SpiderEntityModel<T>> {
     private static final Identifier TEXTURE = new Identifier("textures/entity/spider/spider.png");
-    private static final Identifier BUG_TEXTURE = new Identifier(BugMod.MODID,"textures/entity/spider/spider1.png");
+    private static final Identifier BUG_TEXTURE = new Identifier(BugMod.MODID,"textures/entity/spider/spider.png");
 
     public SpiderEntityRendererMixin(EntityRenderDispatcher entityRenderDispatcher, SpiderEntityModel<T> entityModel, float f) {
         super(entityRenderDispatcher, entityModel, f);

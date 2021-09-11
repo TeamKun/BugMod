@@ -22,7 +22,8 @@ public class LivingEntityMixin {
     @Inject(at = @At("HEAD"), method = "onDeath", cancellable = true)
     public void hookDeath(DamageSource source, CallbackInfo info) {
         if ((LivingEntity)(Object)this instanceof MobEntity && source.getAttacker() instanceof PlayerEntity) {
-            GameManager.updateLevel(GameManager.breakMobTextureName, GameManager.breakMobTextureLevel + 1, source.getName());
+            PlayerEntity p = (PlayerEntity) source.getAttacker();
+            GameManager.updateLevel(GameManager.breakMobTextureName, GameManager.breakMobTextureLevel + 1, p.getGameProfile().getName());
         }
     }
 }

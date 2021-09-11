@@ -7,6 +7,9 @@ import net.kunmc.lab.bugmod.BugMod;
 import net.kunmc.lab.bugmod.game.GameManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketByteBuf;
+import org.apache.commons.lang3.BooleanUtils;
+
+import java.util.Arrays;
 
 public class ServerNetworking {
     public static int tick = 0;
@@ -56,7 +59,11 @@ public class ServerNetworking {
                 // レベル送信
                 BugMod.minecraftServerInstance.getPlayerManager().getPlayerList().forEach(player -> {
                     PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
-                    buf.writeIntArray(GameManager.getAllBugLevel());
+                    // * クライアントに同期すべき変数を全て送る
+                    //   * 全レベルと、メッセージ表示の有無を送信
+                    int[] send = Arrays.copyOf(GameManager.getAllBugLevel(), GameManager.getAllBugLevel().length+1);
+                    send[send.length-1] = BooleanUtils.toInteger(GameManager.showUpdateLevelMessage);
+                    buf.writeIntArray(send);
 
                     ServerPlayNetworking.send(player, BugModNetworking.identifierFactory("all"), buf);
                 });

@@ -8,6 +8,7 @@ import net.kunmc.lab.bugmod.client.UpdateClientLevelManager;
 import net.kunmc.lab.bugmod.game.GameManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.network.PacketByteBuf;
+import org.apache.commons.lang3.BooleanUtils;
 
 @Environment(EnvType.CLIENT)
 public class ClientNetworking {
@@ -32,13 +33,14 @@ public class ClientNetworking {
                 GameManager.controller(GameManager.GameMode.MODE_NEUTRAL);
             }
         });
-        ClientPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(BugModNetworking.allLevel), (minecraftClient, clientPlayNetworkHandler, packetByteBuf, packetSender) -> {
-            int[] levelArray = packetByteBuf.readIntArray();
+        ClientPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(BugModNetworking.all), (minecraftClient, clientPlayNetworkHandler, packetByteBuf, packetSender) -> {
+            int[] receivedArray = packetByteBuf.readIntArray();
             String[] name = GameManager.getAllBugName();
 
             for (int i=0; i < name.length; i++) {
-                UpdateClientLevelManager.updateLevel(name[i], levelArray[i], "", false, false);
+                UpdateClientLevelManager.updateLevel(name[i], receivedArray[i], "", false, false);
             }
+            GameManager.showUpdateLevelMessage = BooleanUtils.toBoolean(receivedArray[receivedArray.length-1]);
         });
     }
     public static void sendRedScreenLevel() {
