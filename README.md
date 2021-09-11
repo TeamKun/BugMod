@@ -81,7 +81,7 @@
 | redscreenProbability                  | 0.3          |
 | breakscreenProbability                | 1.0          |
 | breakblockProbability                 | 0.01         |
-| breakskinProbability                  | 0.5          |
+| breakskinProbability                  | 0.7          |
 | garbledcharProbability                | 1.0          |
 | breakMobTextureUpdateLevelProbability | 0.5          |
 
