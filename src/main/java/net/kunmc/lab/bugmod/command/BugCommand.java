@@ -130,7 +130,7 @@ public class BugCommand {
                                                 return 1;
                                             })))
                             .then(CommandManager.literal(GameManager.breakMobTextureName+"Level")
-                                    .then(CommandManager.argument("num", IntegerArgumentType.integer(0,GameManager.garbledCharMaxLevel))
+                                    .then(CommandManager.argument("num", IntegerArgumentType.integer(0,GameManager.breakMobTextureMaxLevel))
                                             .executes(context -> {
                                                 String name = GameManager.breakMobTextureName + "Level";
                                                 int value = IntegerArgumentType.getInteger(context, "num");

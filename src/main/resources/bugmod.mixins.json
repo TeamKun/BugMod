@@ -11,9 +11,13 @@
     "PlayerSkinProviderMixin",
     "BlockMixin",
     "BucketItemMixin",
+    "BlazeEntityRendererMixin",
     "ChickenEntityRendererMixin",
     "CowEntityRendererMixin",
+    "CreeperEntityRendererMixin",
+    "GhastEntityRendererMixin",
     "PigEntityRendererMixin",
+    "SkeletonEntityRendererMixin",
     "SheepEntityRendererMixin",
     "SpiderEntityRendererMixin",
     "ZombieBaseEntityRendererMixin"
