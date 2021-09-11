@@ -94,7 +94,6 @@ public class UpdateClientLevelManager {
                 case GameManager.breakMobTextureName:
                     message = String.format("%sの行動で一部のMobがバグった", playerName, sub);
                     if (targetLevel >= 2) message = String.format("%sの行動でさらにMobがバグった", playerName, sub);
-                    if (targetLevel == 6) message = String.format("", playerName, sub);
                     MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
                     if (targetLevel == 6) {
                         MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of("これ以上Mobはバグらないようだ"), MinecraftClient.getInstance().player.getUuid());

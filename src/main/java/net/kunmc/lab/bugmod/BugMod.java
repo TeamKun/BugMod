@@ -11,20 +11,20 @@ import net.kunmc.lab.bugmod.sound.BugSoundManager;
 import net.minecraft.server.MinecraftServer;
 
 public class BugMod implements ModInitializer {
-	public static MinecraftServer minecraftServerInstance;
-	public static final String MODID = "bugmod";
+    public static MinecraftServer minecraftServerInstance;
+    public static final String MODID = "bugmod";
 
 
-	@Override
-	public void onInitialize() {
-		ServerStartCallback.EVENT.register(server -> minecraftServerInstance = server);
-		ServerNetworking.receiveLevel();
-		ServerNetworking.syncServerAndClientEveryTick();
-		PlayerServerEvent.register();
-		BlockManager.register();
-		BugCommand.register();
-		BugSoundManager.register();
-		GameManager.resetGame();
-		GameManager.resetUpdateLevelProbability();
-	}
+    @Override
+    public void onInitialize() {
+        ServerStartCallback.EVENT.register(server -> minecraftServerInstance = server);
+        ServerNetworking.receiveLevel();
+        ServerNetworking.syncServerAndClientEveryTick();
+        PlayerServerEvent.register();
+        BlockManager.register();
+        BugCommand.register();
+        BugSoundManager.register();
+        GameManager.resetGame();
+        GameManager.resetUpdateLevelProbability();
+    }
 }

@@ -14,9 +14,11 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(ZombieBaseEntityRenderer.class)
-public class ZombieBaseEntityRendererMixin <T extends ZombieEntity, M extends ZombieEntityModel<T>> extends BipedEntityRenderer<T, M> {
+public class ZombieBaseEntityRendererMixin<T extends ZombieEntity, M extends ZombieEntityModel<T>> extends BipedEntityRenderer<T, M> {
 
-    @Shadow @Final private static Identifier TEXTURE;
+    @Shadow
+    @Final
+    private static Identifier TEXTURE;
     private static final Identifier BUG_TEXTURE = new Identifier(BugMod.MODID, "textures/entity/zombie/zombie.png");
 
     protected ZombieBaseEntityRendererMixin(EntityRenderDispatcher dispatcher, M zombieEntityModel, M zombieEntityModel2, M zombieEntityModel3) {
@@ -26,7 +28,7 @@ public class ZombieBaseEntityRendererMixin <T extends ZombieEntity, M extends Zo
 
     @Override
     public Identifier getTexture(ZombieEntity zombieEntity) {
-        if (GameManager.breakMobTextureLevel >= 3){
+        if (GameManager.breakMobTextureLevel >= 3) {
             return BUG_TEXTURE;
         }
         return this.TEXTURE;

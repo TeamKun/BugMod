@@ -7,21 +7,20 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 
-import java.util.Random;
-
 @Environment(EnvType.CLIENT)
 public class BugModHUD {
     /**
      * fillで画面を赤っぽくするだけ
+     *
      * @param matrices
      */
-    public static void renderRedScreen(MatrixStack matrices){
+    public static void renderRedScreen(MatrixStack matrices) {
         if (GameManager.redScreenLevel == 0) return;
         // See: https://qiita.com/konifar/items/106731d8a35303606597
 
         // 計算が面倒なのでゴリ押し、5%ずつ透明度が下がる 100 - case * 5 = 透明度
         int alphaColor = 0x0;
-        switch (GameManager.redScreenLevel){
+        switch (GameManager.redScreenLevel) {
             case 1:
                 alphaColor = 0x262f0000;
                 break;
@@ -77,7 +76,8 @@ public class BugModHUD {
                 MinecraftClient.getInstance().getWindow().getHeight(),
                 alphaColor);
     }
-    public static void renderBreakScreen(MatrixStack matrices){
+
+    public static void renderBreakScreen(MatrixStack matrices) {
         if (GameManager.breakScreenLevel == 0) return;
         /**
          * - 画面が左端から徐々に削れていくことを想定する
@@ -90,24 +90,24 @@ public class BugModHUD {
         int alphaColor = 0xFF000000;
 
         // 画面の横分割の数
-        double singleHorizontalSize = MinecraftClient.getInstance().getWindow().getScaledWidth()/GameManager.breakScreenMaxLevel;
+        double singleHorizontalSize = MinecraftClient.getInstance().getWindow().getScaledWidth() / GameManager.breakScreenMaxLevel;
         // 画面の縦分割の割合、intで計算すると小数点切り捨ての都合から画面を覆えないので、必要な数を出しておく
         int splitVerticalNum = 100;
         int scaleHeight = MinecraftClient.getInstance().getWindow().getScaledHeight();
-        int splitScaleHeight = scaleHeight/splitVerticalNum;
+        int splitScaleHeight = scaleHeight / splitVerticalNum;
         int cnt = 0;
 
         // 雰囲気のためrandで覆う範囲を少し動かす
         while (splitScaleHeight * cnt < scaleHeight) {
             int left_x = 0;
-            int right_x = (int)(singleHorizontalSize * GameManager.breakScreenLevel * 0.9 + singleHorizontalSize * GameManager.rand.nextDouble() * 0.3);
+            int right_x = (int) (singleHorizontalSize * GameManager.breakScreenLevel * 0.9 + singleHorizontalSize * GameManager.rand.nextDouble() * 0.3);
             int down_y = splitScaleHeight * cnt;
-            int up_y = splitScaleHeight * (cnt+1);
+            int up_y = splitScaleHeight * (cnt + 1);
             DrawableHelper.fill(matrices, left_x, down_y,
                     right_x,
                     up_y,
                     alphaColor);
-            cnt ++;
+            cnt++;
         }
     }
 }

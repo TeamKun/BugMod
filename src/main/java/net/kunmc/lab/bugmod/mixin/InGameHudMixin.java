@@ -15,7 +15,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -23,7 +26,7 @@ import java.util.stream.IntStream;
 @Mixin(InGameHud.class)
 public class InGameHudMixin {
     // よくある文字化けの文字
-    private static char[] chars = {'?','§','℃','√','∞','∴','■','○','●','ゅ','上','九','代','吶','壹','峨','後','悶','溘','縺','繧','舌','輔','＜','＞','＠','ｂ','ｅ','ｆ','ｊ','ｌ','ｐ','ｒ','｢','｣','､','･','ｦ','ｧ','ｨ','ｩ','ｪ','ｫ','ｬ','ｭ','ｮ','ｯ','ｰ','ｱ','ｲ','ｳ','ｴ','ｵ','ｶ','ｷ','ｸ','ｹ','ｺ','ｻ','ｼ','ｽ','ｾ','ｿ','￠','￡'};
+    private static char[] chars = {'?', '§', '℃', '√', '∞', '∴', '■', '○', '●', 'ゅ', '上', '九', '代', '吶', '壹', '峨', '後', '悶', '溘', '縺', '繧', '舌', '輔', '＜', '＞', '＠', 'ｂ', 'ｅ', 'ｆ', 'ｊ', 'ｌ', 'ｐ', 'ｒ', '｢', '｣', '､', '･', 'ｦ', 'ｧ', 'ｨ', 'ｩ', 'ｪ', 'ｫ', 'ｬ', 'ｭ', 'ｮ', 'ｯ', 'ｰ', 'ｱ', 'ｲ', 'ｳ', 'ｴ', 'ｵ', 'ｶ', 'ｷ', 'ｸ', 'ｹ', 'ｺ', 'ｻ', 'ｼ', 'ｽ', 'ｾ', 'ｿ', '￠', '￡'};
 
     @Inject(at = @At("HEAD"), method = "render")
     public void bugModRender(MatrixStack matrixStack, float tickDelta, CallbackInfo info) {
@@ -55,12 +58,12 @@ public class InGameHudMixin {
 
             num = Math.min(num, user_message.length());
 
-            List<Integer> arr = IntStream.rangeClosed(0, user_message.length()-1).boxed().collect(Collectors.toList());
+            List<Integer> arr = IntStream.rangeClosed(0, user_message.length() - 1).boxed().collect(Collectors.toList());
             Collections.shuffle(arr);
             StringBuilder sb_message = new StringBuilder(user_message);
 
             // 決められた文字数文をバグらせる
-            for (int i=0; i<num; i++){
+            for (int i = 0; i < num; i++) {
                 sb_message.setCharAt(arr.get(i), chars[GameManager.rand.nextInt(chars.length)]);
             }
             message = Text.of(message_info[0] + " " + sb_message);

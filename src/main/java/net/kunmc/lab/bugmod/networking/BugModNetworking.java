@@ -14,6 +14,7 @@ public class BugModNetworking {
     public static final String forceLevel = "forcelevel";
     // レベル回復（減少）時に使用
     public static final String recoverLevel = "recoverlevel";
+
     public static Identifier identifierFactory(String name) {
         switch (name) {
             case gameMode:

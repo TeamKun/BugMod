@@ -23,7 +23,7 @@ public class BugModClient implements ClientModInitializer {
         // 透過のための処理
         BlockRenderLayerMap.INSTANCE.putBlock(BlockManager.bugBlock1, RenderLayer.getCutout());
         // ログアウト時の処理、他サーバへのログイン時に影響がないようにしておく
-        ClientPlayConnectionEvents.DISCONNECT.register((handler,server)-> {
+        ClientPlayConnectionEvents.DISCONNECT.register((handler, server) -> {
             GameManager.resetGame();
             MinecraftClient.getInstance().getSkinProvider().loadSkin(MinecraftClient.getInstance().player.getGameProfile(), (type, id, texture) -> {
             }, true);

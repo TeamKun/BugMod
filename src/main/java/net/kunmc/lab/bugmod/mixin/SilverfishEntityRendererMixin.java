@@ -14,7 +14,9 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(SilverfishEntityRenderer.class)
 public class SilverfishEntityRendererMixin extends MobEntityRenderer<SilverfishEntity, SilverfishEntityModel<SilverfishEntity>> {
-    @Shadow @Final private static Identifier TEXTURE;
+    @Shadow
+    @Final
+    private static Identifier TEXTURE;
     private static final Identifier BUG_TEXTURE = new Identifier(BugMod.MODID, "textures/entity/silverfish.png");
 
     public SilverfishEntityRendererMixin(EntityRenderDispatcher entityRenderDispatcher) {
@@ -24,7 +26,7 @@ public class SilverfishEntityRendererMixin extends MobEntityRenderer<SilverfishE
     @Override
     public Identifier getTexture(SilverfishEntity silverfishEntity) {
 
-        if (GameManager.breakMobTextureLevel >= 6){
+        if (GameManager.breakMobTextureLevel >= 6) {
             return BUG_TEXTURE;
         }
         return this.TEXTURE;

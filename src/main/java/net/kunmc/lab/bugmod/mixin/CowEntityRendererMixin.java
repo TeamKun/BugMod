@@ -14,7 +14,9 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(CowEntityRenderer.class)
 public class CowEntityRendererMixin extends MobEntityRenderer<CowEntity, CowEntityModel<CowEntity>> {
-    @Shadow @Final private static Identifier TEXTURE;
+    @Shadow
+    @Final
+    private static Identifier TEXTURE;
     private static final Identifier BUG_TEXTURE = new Identifier(BugMod.MODID, "textures/entity/cow/cow.png");
 
     public CowEntityRendererMixin(EntityRenderDispatcher entityRenderDispatcher) {
@@ -23,7 +25,7 @@ public class CowEntityRendererMixin extends MobEntityRenderer<CowEntity, CowEnti
 
     @Override
     public Identifier getTexture(CowEntity cowEntity) {
-        if (GameManager.breakMobTextureLevel >= 1){
+        if (GameManager.breakMobTextureLevel >= 1) {
             return BUG_TEXTURE;
         }
         return this.TEXTURE;

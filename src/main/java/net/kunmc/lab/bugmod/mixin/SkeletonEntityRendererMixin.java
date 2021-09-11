@@ -15,7 +15,9 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(SkeletonEntityRenderer.class)
 public class SkeletonEntityRendererMixin extends BipedEntityRenderer<AbstractSkeletonEntity, SkeletonEntityModel<AbstractSkeletonEntity>> {
-    @Shadow @Final private static Identifier TEXTURE;
+    @Shadow
+    @Final
+    private static Identifier TEXTURE;
     private static final Identifier BUG_TEXTURE = new Identifier(BugMod.MODID, "textures/entity/skeleton/skeleton.png");
 
     public SkeletonEntityRendererMixin(EntityRenderDispatcher entityRenderDispatcher) {
@@ -24,7 +26,7 @@ public class SkeletonEntityRendererMixin extends BipedEntityRenderer<AbstractSke
     }
 
     public Identifier getTexture(AbstractSkeletonEntity abstractSkeletonEntity) {
-        if (GameManager.breakMobTextureLevel >= 4){
+        if (GameManager.breakMobTextureLevel >= 4) {
             return BUG_TEXTURE;
         }
         return this.TEXTURE;

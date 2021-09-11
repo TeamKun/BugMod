@@ -15,8 +15,10 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(SheepEntityRenderer.class)
 public class SheepEntityRendererMixin extends MobEntityRenderer<SheepEntity, SheepEntityModel<SheepEntity>> {
-    @Shadow @Final private static Identifier TEXTURE;
-    private static final Identifier BUG_TEXTURE = new Identifier(BugMod.MODID,"textures/entity/sheep/sheep.png");
+    @Shadow
+    @Final
+    private static Identifier TEXTURE;
+    private static final Identifier BUG_TEXTURE = new Identifier(BugMod.MODID, "textures/entity/sheep/sheep.png");
 
     public SheepEntityRendererMixin(EntityRenderDispatcher entityRenderDispatcher) {
         super(entityRenderDispatcher, new SheepEntityModel(), 0.7F);
@@ -24,7 +26,7 @@ public class SheepEntityRendererMixin extends MobEntityRenderer<SheepEntity, She
     }
 
     public Identifier getTexture(SheepEntity sheepEntity) {
-        if (GameManager.breakMobTextureLevel >= 2){
+        if (GameManager.breakMobTextureLevel >= 2) {
             return BUG_TEXTURE;
         }
         return this.TEXTURE;

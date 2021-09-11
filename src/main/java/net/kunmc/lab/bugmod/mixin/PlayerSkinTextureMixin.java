@@ -8,8 +8,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.Random;
-
 @Mixin(PlayerSkinTexture.class)
 public class PlayerSkinTextureMixin {
     @Inject(method = "remapTexture", at = @At("TAIL"))
@@ -46,8 +44,8 @@ public class PlayerSkinTextureMixin {
         // 同じ色が続いたほうがバグっぽいのでカウントで調整
         int tmpCnt = 0;
         int preColor = 0x0;
-        for(int x = 0; x<64; x++) {
-            for(int y = 0; y<64; y++) {
+        for (int x = 0; x < 64; x++) {
+            for (int y = 0; y < 64; y++) {
                 if (GameManager.rand.nextDouble() < prob || tmpCnt > 0) {
                     /**
                      * 三種類くらいの色 + 透明を用意する
@@ -74,10 +72,10 @@ public class PlayerSkinTextureMixin {
                                 break;
                         }
                         preColor = c;
-                        tmpCnt+=1;
+                        tmpCnt += 1;
                     } else if (tmpCnt < maxCnt) {
                         c = preColor;
-                        tmpCnt+=1;
+                        tmpCnt += 1;
                     } else if (tmpCnt >= maxCnt) {
                         c = preColor;
                         tmpCnt = 0;

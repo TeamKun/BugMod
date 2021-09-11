@@ -42,7 +42,7 @@ public class ServerNetworking {
         });
     }
 
-    public static void receiveLevel(){
+    public static void receiveLevel() {
         ServerPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(BugModNetworking.level), (server, player, handler, buf, response) -> {
             String test = buf.readString(30);
             String[] array = test.split(" ");
@@ -52,17 +52,17 @@ public class ServerNetworking {
         });
     }
 
-    public static void syncServerAndClientEveryTick(){
+    public static void syncServerAndClientEveryTick() {
         ServerTickEvents.START_SERVER_TICK.register(m -> {
-            tick ++;
-            if (tick % 20 == 0){
+            tick++;
+            if (tick % 20 == 0) {
                 // レベル送信
                 BugMod.minecraftServerInstance.getPlayerManager().getPlayerList().forEach(player -> {
                     PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
                     // * クライアントに同期すべき変数を全て送る
                     //   * 全レベルと、メッセージ表示の有無を送信
-                    int[] send = Arrays.copyOf(GameManager.getAllBugLevel(), GameManager.getAllBugLevel().length+1);
-                    send[send.length-1] = BooleanUtils.toInteger(GameManager.showUpdateLevelMessage);
+                    int[] send = Arrays.copyOf(GameManager.getAllBugLevel(), GameManager.getAllBugLevel().length + 1);
+                    send[send.length - 1] = BooleanUtils.toInteger(GameManager.showUpdateLevelMessage);
                     buf.writeIntArray(send);
 
                     ServerPlayNetworking.send(player, BugModNetworking.identifierFactory("all"), buf);

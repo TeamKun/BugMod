@@ -16,7 +16,7 @@ public class BucketItemMixin {
     @Inject(at = @At("HEAD"), method = "onEmptied", cancellable = true)
     public void onUseItem(World world, ItemStack stack, BlockPos pos, CallbackInfo ci) {
         if (stack.getItem() == Items.WATER_BUCKET ||
-                stack.getItem() == Items.LAVA_BUCKET){
+                stack.getItem() == Items.LAVA_BUCKET) {
             ClientNetworking.sendBreakScreenLevel();
         }
     }

@@ -21,16 +21,20 @@ import java.io.File;
 @Environment(EnvType.CLIENT)
 @Mixin(PlayerSkinProvider.class)
 public class PlayerSkinProviderMixin {
-    @Shadow @Final private TextureManager textureManager;
-    @Shadow @Final private File skinCacheDir;
+    @Shadow
+    @Final
+    private TextureManager textureManager;
+    @Shadow
+    @Final
+    private File skinCacheDir;
 
     /**
-     * @author POne0301
-     * @reason hoge
      * @param profileTexture
      * @param type
      * @param callback
      * @return
+     * @author POne0301
+     * @reason hoge
      */
     @Overwrite()
     private Identifier loadSkin(MinecraftProfileTexture profileTexture, MinecraftProfileTexture.Type type, @Nullable PlayerSkinProvider.SkinTextureAvailableCallback callback) {

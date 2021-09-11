@@ -8,7 +8,6 @@ import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.render.entity.model.BlazeEntityModel;
 import net.minecraft.entity.mob.BlazeEntity;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
 
 
@@ -23,7 +22,7 @@ public class BlazeEntityRendererMixin extends MobEntityRenderer<BlazeEntity, Bla
 
     @Override
     public Identifier getTexture(BlazeEntity blazeEntity) {
-        if (GameManager.breakMobTextureLevel >= 5){
+        if (GameManager.breakMobTextureLevel >= 5) {
             return BUG_TEXTURE;
         }
         return TEXTURE;

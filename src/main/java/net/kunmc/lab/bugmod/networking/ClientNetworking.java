@@ -29,7 +29,7 @@ public class ClientNetworking {
             String gameMode = packetByteBuf.readString();
             if (gameMode.equals(GameManager.GameMode.MODE_START.toString())) {
                 GameManager.controller(GameManager.GameMode.MODE_START);
-            }else if (gameMode.equals(GameManager.GameMode.MODE_NEUTRAL.toString())) {
+            } else if (gameMode.equals(GameManager.GameMode.MODE_NEUTRAL.toString())) {
                 GameManager.controller(GameManager.GameMode.MODE_NEUTRAL);
             }
         });
@@ -37,22 +37,24 @@ public class ClientNetworking {
             int[] receivedArray = packetByteBuf.readIntArray();
             String[] name = GameManager.getAllBugName();
 
-            for (int i=0; i < name.length; i++) {
+            for (int i = 0; i < name.length; i++) {
                 UpdateClientLevelManager.updateLevel(name[i], receivedArray[i], "", false, false);
             }
-            GameManager.showUpdateLevelMessage = BooleanUtils.toBoolean(receivedArray[receivedArray.length-1]);
+            GameManager.showUpdateLevelMessage = BooleanUtils.toBoolean(receivedArray[receivedArray.length - 1]);
         });
     }
+
     public static void sendRedScreenLevel() {
         if (MinecraftClient.getInstance().player.isSpectator()) return;
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
-        buf.writeString(GameManager.redScreenName + " " + (GameManager.redScreenLevel+1));
+        buf.writeString(GameManager.redScreenName + " " + (GameManager.redScreenLevel + 1));
         ClientPlayNetworking.send(BugModNetworking.identifierFactory(BugModNetworking.level), buf);
     }
+
     public static void sendBreakScreenLevel() {
         if (MinecraftClient.getInstance().player.isSpectator()) return;
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
-        buf.writeString(GameManager.breakScreenName + " " + (GameManager.breakScreenLevel+1));
+        buf.writeString(GameManager.breakScreenName + " " + (GameManager.breakScreenLevel + 1));
         ClientPlayNetworking.send(BugModNetworking.identifierFactory(BugModNetworking.level), buf);
     }
 }

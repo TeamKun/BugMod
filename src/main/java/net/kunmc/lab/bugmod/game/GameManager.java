@@ -50,7 +50,7 @@ public class GameManager {
 
     public static Random rand = new Random();
 
-    public static void resetGame(){
+    public static void resetGame() {
         redScreenLevel = 0;
         garbledCharLevel = 0;
         breakScreenLevel = 0;
@@ -58,11 +58,9 @@ public class GameManager {
         breakSkinLevel = 0;
         breakMobTextureLevel = 0;
         runningMode = GameMode.MODE_NEUTRAL;
-        canRecovery = true;
-        showUpdateLevelMessage = true;
     }
 
-    public static void resetUpdateLevelProbability () {
+    public static void resetUpdateLevelProbability() {
         redScreenUpdateLevelProbability = 0.3;
         garbledCharUpdateLevelProbability = 1.0;
         breakScreenUpdateLevelProbability = 1.0;
@@ -109,8 +107,8 @@ public class GameManager {
         String[] bugName = getAllBugName();
         int[] bugLevel = getAllBugLevel();
         List<String> name = new ArrayList<String>();
-        for (int i=0; i < getAllBugLevel().length; i++){
-            if (bugLevel[i]>0){
+        for (int i = 0; i < getAllBugLevel().length; i++) {
+            if (bugLevel[i] > 0) {
                 name.add(bugName[i] + " " + bugLevel[i]);
             }
         }
@@ -122,8 +120,8 @@ public class GameManager {
     }
 
     // サーバ側のレベル更新 & Clientへのレベル転送
-    public static void updateLevel(String name, int level, String playerName){
-        switch (name){
+    public static void updateLevel(String name, int level, String playerName) {
+        switch (name) {
             case redScreenName:
                 if (GameManager.redScreenUpdateLevelProbability > rand.nextDouble()) {
                     if (shouldUpdateLevel(GameManager.redScreenLevel, level, GameManager.redScreenMaxLevel)) {
@@ -174,8 +172,8 @@ public class GameManager {
         }
     }
 
-    public static void recoverLevel(String name, int level, String playerName){
-        switch (name){
+    public static void recoverLevel(String name, int level, String playerName) {
+        switch (name) {
             case redScreenName:
                 if (shouldDownLevel(level)) {
                     GameManager.redScreenLevel = level - 1;
@@ -216,14 +214,16 @@ public class GameManager {
 
     /**
      * 意図しない値のレベルに更新されないようにチェック
+     *
      * @param currentLevel
      * @param level
      * @return
      */
-    private static boolean shouldUpdateLevel(int currentLevel, int level, int maxLevel){
+    private static boolean shouldUpdateLevel(int currentLevel, int level, int maxLevel) {
         return currentLevel < level && maxLevel >= level && GameManager.runningMode == GameMode.MODE_START;
     }
-    private static boolean shouldDownLevel(int level){
+
+    private static boolean shouldDownLevel(int level) {
         return level > 0 && GameManager.runningMode == GameMode.MODE_START;
     }
 

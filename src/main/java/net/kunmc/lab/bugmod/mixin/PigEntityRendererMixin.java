@@ -15,7 +15,9 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(PigEntityRenderer.class)
 public class PigEntityRendererMixin extends MobEntityRenderer<PigEntity, PigEntityModel<PigEntity>> {
-    @Shadow @Final private static Identifier TEXTURE;
+    @Shadow
+    @Final
+    private static Identifier TEXTURE;
     private static final Identifier BUG_TEXTURE = new Identifier(BugMod.MODID, "textures/entity/pig/pig.png");
 
     public PigEntityRendererMixin(EntityRenderDispatcher entityRenderDispatcher) {
@@ -25,7 +27,7 @@ public class PigEntityRendererMixin extends MobEntityRenderer<PigEntity, PigEnti
 
     @Override
     public Identifier getTexture(PigEntity pigEntity) {
-        if (GameManager.breakMobTextureLevel >= 1){
+        if (GameManager.breakMobTextureLevel >= 1) {
             return BUG_TEXTURE;
         }
         return this.TEXTURE;

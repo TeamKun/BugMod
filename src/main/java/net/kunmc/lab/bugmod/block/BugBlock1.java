@@ -23,7 +23,7 @@ public class BugBlock1 extends Block {
 
     @Override
     public void onBroken(WorldAccess world, BlockPos pos, BlockState state) {
-        if (GameManager.breakBlockLevel == 3 ) {
+        if (GameManager.breakBlockLevel == 3) {
             world.playSound(
                     null, // Player - if non-null, will play sound for every nearby player *except* the specified player
                     pos, // The position of where the sound will come from
@@ -37,7 +37,7 @@ public class BugBlock1 extends Block {
 
     private void spawnSilverfish(ServerWorld world, BlockPos pos) {
         SilverfishEntity silverfishEntity = EntityType.SILVERFISH.create(world);
-        silverfishEntity.refreshPositionAndAngles((double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, 0.0F, 0.0F);
+        silverfishEntity.refreshPositionAndAngles((double) pos.getX() + 0.5D, (double) pos.getY(), (double) pos.getZ() + 0.5D, 0.0F, 0.0F);
         world.spawnEntity(silverfishEntity);
         silverfishEntity.playSpawnEffects();
     }
