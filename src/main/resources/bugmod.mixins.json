@@ -10,12 +10,16 @@
     "PlayerSkinTextureMixin",
     "PlayerSkinProviderMixin",
     "BlockMixin",
-    "BucketItemMixin"
+    "BucketItemMixin",
+    "ChickenEntityRendererMixin",
+    "SpiderEntityRendererMixin",
+    "ZombieBaseEntityRendererMixin"
   ],
   "server": [
     "ServerPlayerEntityMixin",
     "ItemStackMixin",
-    "MilkBucketItemMixin"
+    "MilkBucketItemMixin",
+    "LivingEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

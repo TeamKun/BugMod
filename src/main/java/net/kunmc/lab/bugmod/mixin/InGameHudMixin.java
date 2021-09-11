@@ -60,9 +60,8 @@ public class InGameHudMixin {
             StringBuilder sb_message = new StringBuilder(user_message);
 
             // 決められた文字数文をバグらせる
-            Random rnd = new Random();
             for (int i=0; i<num; i++){
-                sb_message.setCharAt(arr.get(i), chars[rnd.nextInt(chars.length)]);
+                sb_message.setCharAt(arr.get(i), chars[GameManager.rand.nextInt(chars.length)]);
             }
             message = Text.of(message_info[0] + " " + sb_message);
         }

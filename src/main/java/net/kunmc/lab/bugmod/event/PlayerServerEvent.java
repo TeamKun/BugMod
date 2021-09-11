@@ -14,7 +14,6 @@ public class PlayerServerEvent {
         PlayerBlockBreakEvents.AFTER.register((world, player, blockPos, blockState, blockEntity) -> {
             if (GameManager.runningMode != GameManager.GameMode.MODE_START || player.isSpectator()) return;
 
-            Random rnd = new Random();
             int xzRange = 0;
             int yRange = 2;
             double changeProb = 0.0;
@@ -34,7 +33,7 @@ public class PlayerServerEvent {
             for (int x = xzRange * -1; xzRange * -1 <= x && x <= xzRange; x++) {
                 for (int y = yRange * -1; yRange * -1 <= y && y <= yRange; y++) {
                     for (int z = xzRange * -1; xzRange * -1 <= z && z <= xzRange; z++) {
-                        if (rnd.nextDouble() > changeProb) continue;
+                        if (GameManager.rand.nextDouble() > changeProb) continue;
 
                         BlockPos bPos = new BlockPos(px + x, py + y, pz + z);
 
@@ -46,7 +45,7 @@ public class PlayerServerEvent {
                             continue;
                         String bugBlockName = "";
 
-                        switch (rnd.nextInt(3)) {
+                        switch (GameManager.rand.nextInt(3)) {
                             case 0:
                                 bugBlockName = BlockManager.bugBlock1Name;
                                 break;

@@ -98,10 +98,9 @@ public class BugModHUD {
         int cnt = 0;
 
         // 雰囲気のためrandで覆う範囲を少し動かす
-        Random rnd = new Random();
         while (splitScaleHeight * cnt < scaleHeight) {
             int left_x = 0;
-            int right_x = (int)(singleHorizontalSize * GameManager.breakScreenLevel * 0.9 + singleHorizontalSize * rnd.nextDouble() * 0.3);
+            int right_x = (int)(singleHorizontalSize * GameManager.breakScreenLevel * 0.9 + singleHorizontalSize * GameManager.rand.nextDouble() * 0.3);
             int down_y = splitScaleHeight * cnt;
             int up_y = splitScaleHeight * (cnt+1);
             DrawableHelper.fill(matrices, left_x, down_y,

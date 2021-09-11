@@ -12,18 +12,21 @@ public class GameManager {
     public static final String breakScreenName = "breakscreen";
     public static final String breakBlockName = "breakblock";
     public static final String breakSkinName = "breakskin";
+    public static final String breakMobTextureName = "breakmobtexture";
 
     public static final int redScreenMaxLevel = 16;
     public static final int garbledCharMaxLevel = 15;
     public static final int breakScreenMaxLevel = 30;
     public static final int breakBlockMaxLevel = 5;
     public static final int breakSkinMaxLevel = 5;
+    public static final int breakMobTextureMaxLevel = 7;
 
     public static double redScreenUpdateLevelProbability;
     public static double garbledCharUpdateLevelProbability;
     public static double breakScreenUpdateLevelProbability;
     public static double breakBlockUpdateLevelProbability;
     public static double breakSkinUpdateLevelProbability;
+    public static double breakMobTextureUpdateLevelProbability;
 
     // 画面が赤くなる
     public static int redScreenLevel;
@@ -33,13 +36,17 @@ public class GameManager {
     public static int breakScreenLevel;
     // テクスチャがバグる(バグったブロックを発生させる)
     public static int breakBlockLevel;
-    // スキンがバグる
+    // プレイヤーのスキンがバグる
     public static int breakSkinLevel;
+    // モブのスキンがバグる
+    public static int breakMobTextureLevel;
 
     // Gameの実行・停止状態の管理用
     public static GameMode runningMode = GameMode.MODE_NEUTRAL;
     // 回復できるかどうか
     public static boolean canRecovery = true;
+    // レベル更新時のメッセージ出力をするかどうか
+    public static boolean showUpdateLevelMessage = true;
 
     public static Random rand = new Random();
 
@@ -49,8 +56,10 @@ public class GameManager {
         breakScreenLevel = 0;
         breakBlockLevel = 0;
         breakSkinLevel = 0;
+        breakMobTextureLevel = 0;
         runningMode = GameMode.MODE_NEUTRAL;
         canRecovery = true;
+        showUpdateLevelMessage = true;
     }
 
     public static void resetUpdateLevelProbability () {
@@ -58,12 +67,12 @@ public class GameManager {
         garbledCharUpdateLevelProbability = 1.0;
         breakScreenUpdateLevelProbability = 1.0;
         breakBlockUpdateLevelProbability = 0.01;
-        breakSkinUpdateLevelProbability = 0.5;
+        breakSkinUpdateLevelProbability = 0.7;
+        breakMobTextureUpdateLevelProbability = 0.5;
     }
 
     public static void controller(GameMode runningMode) {
         // モードを設定
-
         switch (runningMode) {
             case MODE_START:
             case MODE_NEUTRAL:
@@ -75,14 +84,14 @@ public class GameManager {
     public static String[] getAllBugName() {
         String[] name = {GameManager.redScreenName, GameManager.breakScreenName,
                 GameManager.breakSkinName, GameManager.breakBlockName,
-                GameManager.garbledCharName};
+                GameManager.garbledCharName, GameManager.breakMobTextureName};
         return name;
     }
 
     public static int[] getAllBugLevel() {
         int[] level = {GameManager.redScreenLevel, GameManager.breakScreenLevel,
                 GameManager.breakSkinLevel, GameManager.breakBlockLevel,
-                GameManager.garbledCharLevel};
+                GameManager.garbledCharLevel, GameManager.breakMobTextureLevel};
         return level;
     }
 
@@ -91,7 +100,8 @@ public class GameManager {
                 GameManager.breakScreenUpdateLevelProbability,
                 GameManager.breakSkinUpdateLevelProbability,
                 GameManager.breakBlockUpdateLevelProbability,
-                GameManager.garbledCharUpdateLevelProbability};
+                GameManager.garbledCharUpdateLevelProbability,
+                GameManager.breakMobTextureUpdateLevelProbability};
         return prob;
     }
 
@@ -153,6 +163,13 @@ public class GameManager {
                         ServerNetworking.sendLevel(GameManager.breakSkinName, level, playerName);
                     }
                 }
+            case breakMobTextureName:
+                if (GameManager.breakMobTextureUpdateLevelProbability > rand.nextDouble()) {
+                    if (shouldUpdateLevel(GameManager.breakMobTextureLevel, level, GameManager.breakMobTextureMaxLevel)) {
+                        GameManager.breakMobTextureLevel = level;
+                        ServerNetworking.sendLevel(GameManager.breakMobTextureName, level, playerName);
+                    }
+                }
                 break;
         }
     }
@@ -187,6 +204,11 @@ public class GameManager {
                 if (shouldDownLevel(level)) {
                     GameManager.breakSkinLevel = level - 1;
                     ServerNetworking.sendRecoveryLevel(GameManager.breakSkinName, GameManager.breakSkinLevel, playerName);
+                }
+            case breakMobTextureName:
+                if (shouldDownLevel(level)) {
+                    GameManager.breakMobTextureLevel = level - 1;
+                    ServerNetworking.sendRecoveryLevel(GameManager.breakMobTextureName, GameManager.breakMobTextureLevel, playerName);
                 }
                 break;
         }

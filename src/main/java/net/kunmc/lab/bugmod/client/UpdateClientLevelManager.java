@@ -20,6 +20,7 @@ public class UpdateClientLevelManager {
                 case GameManager.breakSkinName:
                 case GameManager.redScreenName:
                 case GameManager.breakScreenName:
+                case GameManager.breakMobTextureName:
                     if (ShaderManager.glitchTime <= 0)
                         ShaderManager.runGlitch(30);
                     break;
@@ -46,9 +47,13 @@ public class UpdateClientLevelManager {
             case GameManager.breakScreenName:
                 GameManager.breakScreenLevel = targetLevel;
                 break;
+            case GameManager.breakMobTextureName:
+                GameManager.breakMobTextureLevel = targetLevel;
+                break;
         }
         // メッセージ送信
-        sendUpdateLevelMessage(targetName, targetLevel, playerName, recovery);
+        if (GameManager.showUpdateLevelMessage)
+            sendUpdateLevelMessage(targetName, targetLevel, playerName, recovery);
     }
 
     public static void sendUpdateLevelMessage(String targetName, int targetLevel, String playerName, boolean recovery) {
@@ -86,6 +91,12 @@ public class UpdateClientLevelManager {
                     message = String.format("%sの行動で視界が%s削れた", playerName, sub);
                     MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
                     break;
+                case GameManager.breakMobTextureName:
+                    message = String.format("%sの行動で一部のMobがバグった", playerName, sub);
+                    if (targetLevel >= 2 && targetLevel <7) message = String.format("%sの行動でさらにMobがバグった", playerName, sub);
+                    if (targetLevel ==7) message = String.format("%sの行動でエンダードラゴンがバグった", playerName, sub);
+                    MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
+                    break;
             }
         } else {
             switch (targetName) {
@@ -116,6 +127,11 @@ public class UpdateClientLevelManager {
                     sub = subMessage(targetLevel, GameManager.breakScreenMaxLevel);
                     message = String.format("%sの行動で視界の削れが少し治った", playerName, sub);
                     if (targetLevel == 0) message = String.format("%sの行動で視界の削れが治った", playerName, sub);
+                    MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
+                    break;
+                case GameManager.breakMobTextureName:
+                    sub = subMessage(targetLevel, GameManager.breakScreenMaxLevel);
+                    message = String.format("%sの行動で一部Mobのバグが治った", playerName, sub);
                     MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
                     break;
             }

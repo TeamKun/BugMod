@@ -43,13 +43,12 @@ public class PlayerSkinTextureMixin {
                 break;
         }
 
-        Random rand = new Random();
         // 同じ色が続いたほうがバグっぽいのでカウントで調整
         int tmpCnt = 0;
         int preColor = 0x0;
         for(int x = 0; x<64; x++) {
             for(int y = 0; y<64; y++) {
-                if (rand.nextDouble() < prob || tmpCnt > 0) {
+                if (GameManager.rand.nextDouble() < prob || tmpCnt > 0) {
                     /**
                      * 三種類くらいの色 + 透明を用意する
                      *   色の設定はargb
@@ -58,7 +57,7 @@ public class PlayerSkinTextureMixin {
 
                     int c = 0x0;
                     if (tmpCnt == 0) {
-                        switch (rand.nextInt(4)) {
+                        switch (GameManager.rand.nextInt(4)) {
                             case 0:
                                 c = 0xFF0008ff;
                                 break;
