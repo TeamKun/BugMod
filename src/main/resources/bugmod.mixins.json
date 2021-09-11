@@ -15,10 +15,13 @@
     "ChickenEntityRendererMixin",
     "CowEntityRendererMixin",
     "CreeperEntityRendererMixin",
+    "EndermanEntityRendererMixin",
+    "EndermiteEntityRendererMixin",
     "GhastEntityRendererMixin",
     "PigEntityRendererMixin",
     "SkeletonEntityRendererMixin",
     "SheepEntityRendererMixin",
+    "SilverfishEntityRendererMixin",
     "SpiderEntityRendererMixin",
     "ZombieBaseEntityRendererMixin"
   ],

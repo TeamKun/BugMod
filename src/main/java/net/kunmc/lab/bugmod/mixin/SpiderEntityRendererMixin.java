@@ -8,14 +8,16 @@ import net.minecraft.client.render.entity.SpiderEntityRenderer;
 import net.minecraft.client.render.entity.model.SpiderEntityModel;
 import net.minecraft.entity.mob.SpiderEntity;
 import net.minecraft.util.Identifier;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
 
 import java.util.Random;
 
 @Mixin(SpiderEntityRenderer.class)
 public class SpiderEntityRendererMixin<T extends SpiderEntity> extends MobEntityRenderer<T, SpiderEntityModel<T>> {
-    private static final Identifier TEXTURE = new Identifier("textures/entity/spider/spider.png");
+    @Shadow @Final private static Identifier TEXTURE;
     private static final Identifier BUG_TEXTURE = new Identifier(BugMod.MODID,"textures/entity/spider/spider.png");
 
     public SpiderEntityRendererMixin(EntityRenderDispatcher entityRenderDispatcher, SpiderEntityModel<T> entityModel, float f) {
@@ -27,6 +29,6 @@ public class SpiderEntityRendererMixin<T extends SpiderEntity> extends MobEntity
         if (GameManager.breakMobTextureLevel >= 4){
             return BUG_TEXTURE;
         }
-        return TEXTURE;
+        return this.TEXTURE;
     }
 }

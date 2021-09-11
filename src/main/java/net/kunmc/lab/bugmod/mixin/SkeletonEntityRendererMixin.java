@@ -9,11 +9,13 @@ import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
 import net.minecraft.client.render.entity.model.SkeletonEntityModel;
 import net.minecraft.entity.mob.AbstractSkeletonEntity;
 import net.minecraft.util.Identifier;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(SkeletonEntityRenderer.class)
 public class SkeletonEntityRendererMixin extends BipedEntityRenderer<AbstractSkeletonEntity, SkeletonEntityModel<AbstractSkeletonEntity>> {
-    private static final Identifier TEXTURE = new Identifier("textures/entity/skeleton/skeleton.png");
+    @Shadow @Final private static Identifier TEXTURE;
     private static final Identifier BUG_TEXTURE = new Identifier(BugMod.MODID, "textures/entity/skeleton/skeleton.png");
 
     public SkeletonEntityRendererMixin(EntityRenderDispatcher entityRenderDispatcher) {
@@ -25,6 +27,6 @@ public class SkeletonEntityRendererMixin extends BipedEntityRenderer<AbstractSke
         if (GameManager.breakMobTextureLevel >= 4){
             return BUG_TEXTURE;
         }
-        return TEXTURE;
+        return this.TEXTURE;
     }
 }

@@ -9,13 +9,15 @@ import net.minecraft.client.render.entity.model.GhastEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.mob.GhastEntity;
 import net.minecraft.util.Identifier;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(GhastEntityRenderer.class)
 public class GhastEntityRendererMixin extends MobEntityRenderer<GhastEntity, GhastEntityModel<GhastEntity>> {
-    private static final Identifier TEXTURE = new Identifier("textures/entity/ghast/ghast.png");
-    private static final Identifier ANGRY_TEXTURE = new Identifier("textures/entity/ghast/ghast_shooting.png");
 
+    @Shadow @Final private static Identifier TEXTURE;
+    @Shadow @Final private static Identifier ANGRY_TEXTURE;
     private static final Identifier BUG_TEXTURE = new Identifier(BugMod.MODID, "textures/entity/ghast/ghast.png");
     private static final Identifier BUG_ANGRY_TEXTURE = new Identifier(BugMod.MODID,"textures/entity/ghast/ghast_shooting.png");
 
@@ -27,7 +29,7 @@ public class GhastEntityRendererMixin extends MobEntityRenderer<GhastEntity, Gha
         if (GameManager.breakMobTextureLevel >= 5){
             return ghastEntity.isShooting() ? BUG_ANGRY_TEXTURE : BUG_TEXTURE;
         }
-        return ghastEntity.isShooting() ? ANGRY_TEXTURE : TEXTURE;
+        return ghastEntity.isShooting() ? this.ANGRY_TEXTURE : this.TEXTURE;
     }
 }
 

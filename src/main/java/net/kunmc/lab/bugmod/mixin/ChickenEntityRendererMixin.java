@@ -10,11 +10,13 @@ import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import org.lwjgl.system.CallbackI;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(ChickenEntityRenderer.class)
 public class ChickenEntityRendererMixin extends MobEntityRenderer<ChickenEntity, ChickenEntityModel<ChickenEntity>> {
-    private static final Identifier TEXTURE = new Identifier("textures/entity/chicken.png");
+    @Shadow @Final private static Identifier TEXTURE;
     private static final Identifier BUG_TEXTURE = new Identifier(BugMod.MODID, "textures/entity/chicken.png");
 
     public ChickenEntityRendererMixin(EntityRenderDispatcher entityRenderDispatcher) {
@@ -26,6 +28,6 @@ public class ChickenEntityRendererMixin extends MobEntityRenderer<ChickenEntity,
         if (GameManager.breakMobTextureLevel >= 2){
             return BUG_TEXTURE;
         }
-        return TEXTURE;
+        return this.TEXTURE;
     }
 }

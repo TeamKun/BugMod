@@ -19,7 +19,7 @@ public class GameManager {
     public static final int breakScreenMaxLevel = 30;
     public static final int breakBlockMaxLevel = 5;
     public static final int breakSkinMaxLevel = 5;
-    public static final int breakMobTextureMaxLevel = 7;
+    public static final int breakMobTextureMaxLevel = 6;
 
     public static double redScreenUpdateLevelProbability;
     public static double garbledCharUpdateLevelProbability;

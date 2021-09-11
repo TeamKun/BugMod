@@ -9,12 +9,14 @@ import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
 import net.minecraft.client.render.entity.model.ZombieEntityModel;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.util.Identifier;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(ZombieBaseEntityRenderer.class)
 public class ZombieBaseEntityRendererMixin <T extends ZombieEntity, M extends ZombieEntityModel<T>> extends BipedEntityRenderer<T, M> {
 
-    private static final Identifier TEXTURE = new Identifier("textures/entity/zombie/zombie.png");
+    @Shadow @Final private static Identifier TEXTURE;
     private static final Identifier BUG_TEXTURE = new Identifier(BugMod.MODID, "textures/entity/zombie/zombie.png");
 
     protected ZombieBaseEntityRendererMixin(EntityRenderDispatcher dispatcher, M zombieEntityModel, M zombieEntityModel2, M zombieEntityModel3) {
@@ -27,6 +29,6 @@ public class ZombieBaseEntityRendererMixin <T extends ZombieEntity, M extends Zo
         if (GameManager.breakMobTextureLevel >= 3){
             return BUG_TEXTURE;
         }
-        return TEXTURE;
+        return this.TEXTURE;
     }
 }

@@ -8,11 +8,13 @@ import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.render.entity.model.CowEntityModel;
 import net.minecraft.entity.passive.CowEntity;
 import net.minecraft.util.Identifier;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(CowEntityRenderer.class)
 public class CowEntityRendererMixin extends MobEntityRenderer<CowEntity, CowEntityModel<CowEntity>> {
-    private static final Identifier TEXTURE = new Identifier("textures/entity/cow/cow.png");
+    @Shadow @Final private static Identifier TEXTURE;
     private static final Identifier BUG_TEXTURE = new Identifier(BugMod.MODID, "textures/entity/cow/cow.png");
 
     public CowEntityRendererMixin(EntityRenderDispatcher entityRenderDispatcher) {
@@ -24,7 +26,7 @@ public class CowEntityRendererMixin extends MobEntityRenderer<CowEntity, CowEnti
         if (GameManager.breakMobTextureLevel >= 1){
             return BUG_TEXTURE;
         }
-        return TEXTURE;
+        return this.TEXTURE;
     }
 }
 

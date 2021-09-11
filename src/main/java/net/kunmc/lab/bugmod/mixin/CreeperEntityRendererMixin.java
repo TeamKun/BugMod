@@ -11,11 +11,13 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(CreeperEntityRenderer.class)
 public class CreeperEntityRendererMixin extends MobEntityRenderer<CreeperEntity, CreeperEntityModel<CreeperEntity>> {
-    private static final Identifier TEXTURE = new Identifier("textures/entity/creeper/creeper.png");
+    @Shadow @Final private static Identifier TEXTURE;
     private static final Identifier BUG_TEXTURE = new Identifier(BugMod.MODID, "textures/entity/creeper/creeper.png");
 
     public CreeperEntityRendererMixin(EntityRenderDispatcher entityRenderDispatcher) {
@@ -28,7 +30,7 @@ public class CreeperEntityRendererMixin extends MobEntityRenderer<CreeperEntity,
         if (GameManager.breakMobTextureLevel >= 3){
             return BUG_TEXTURE;
         }
-        return TEXTURE;
+        return this.TEXTURE;
     }
 }
 
