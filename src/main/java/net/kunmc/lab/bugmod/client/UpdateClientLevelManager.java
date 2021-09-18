@@ -37,8 +37,6 @@ public class UpdateClientLevelManager {
             case GameManager.breakSkinName:
                 if (targetLevel != GameManager.breakSkinLevel) {
                     GameManager.breakSkinLevel = targetLevel;
-                    MinecraftClient.getInstance().getSkinProvider().loadSkin(MinecraftClient.getInstance().player.getGameProfile(), (type, id, texture) -> {
-                    }, true);
                 }
                 break;
             case GameManager.redScreenName:

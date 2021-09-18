@@ -16,6 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Environment(EnvType.SERVER)
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin {
+
     @Inject(at = @At("HEAD"), method = "onDeath", cancellable = true)
     public void hookDeath(DamageSource source, CallbackInfo info) {
         if ((LivingEntity) (Object) this instanceof MobEntity && source.getAttacker() instanceof PlayerEntity) {

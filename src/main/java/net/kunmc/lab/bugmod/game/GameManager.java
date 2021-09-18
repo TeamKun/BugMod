@@ -1,6 +1,8 @@
 package net.kunmc.lab.bugmod.game;
 
+import net.kunmc.lab.bugmod.BugMod;
 import net.kunmc.lab.bugmod.networking.ServerNetworking;
+import net.kunmc.lab.bugmod.texture.ReloadTexture;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -160,7 +162,11 @@ public class GameManager {
                         GameManager.breakSkinLevel = level;
                         ServerNetworking.sendLevel(GameManager.breakSkinName, level, playerName);
                     }
+                    BugMod.minecraftServerInstance.getPlayerManager().getPlayerList().forEach(player -> {
+                        ReloadTexture.reload(player);
+                    });
                 }
+                break;
             case breakMobTextureName:
                 if (GameManager.breakMobTextureUpdateLevelProbability > rand.nextDouble()) {
                     if (shouldUpdateLevel(GameManager.breakMobTextureLevel, level, GameManager.breakMobTextureMaxLevel)) {
@@ -203,6 +209,7 @@ public class GameManager {
                     GameManager.breakSkinLevel = level - 1;
                     ServerNetworking.sendRecoveryLevel(GameManager.breakSkinName, GameManager.breakSkinLevel, playerName);
                 }
+                break;
             case breakMobTextureName:
                 if (shouldDownLevel(level)) {
                     GameManager.breakMobTextureLevel = level - 1;
