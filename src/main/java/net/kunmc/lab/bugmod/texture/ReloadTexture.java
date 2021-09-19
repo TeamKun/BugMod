@@ -15,6 +15,15 @@ import net.minecraft.world.chunk.ChunkManager;
 import java.util.Objects;
 
 public class ReloadTexture {
+    /**
+     * <p>
+     * This method has been adapted from the Impersonate mod's <a href="https://github.com/Ladysnake/Impersonate/blob/1.16/src/main/java/io/github/ladysnake/impersonate/impl/ServerPlayerSkins.java">source code</a>
+     * under GNU Lesser General Public License.
+     *
+     * Reloads player's skin for all the players (including the one that has changed the skin)
+     *
+     * @author Pyrofab
+     */
     public static void reload(ServerPlayerEntity player) {
         for (ServerPlayerEntity other : Objects.requireNonNull(player.getServer()).getPlayerManager().getPlayerList()) {
             other.networkHandler.sendPacket(new PlayerListS2CPacket(PlayerListS2CPacket.Action.REMOVE_PLAYER, player));
