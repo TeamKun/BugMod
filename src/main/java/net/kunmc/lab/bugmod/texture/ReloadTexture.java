@@ -16,14 +16,14 @@ import java.util.Objects;
 
 public class ReloadTexture {
     public static void reload(ServerPlayerEntity player) {
-        for(ServerPlayerEntity other : Objects.requireNonNull(player.getServer()).getPlayerManager().getPlayerList()) {
+        for (ServerPlayerEntity other : Objects.requireNonNull(player.getServer()).getPlayerManager().getPlayerList()) {
             other.networkHandler.sendPacket(new PlayerListS2CPacket(PlayerListS2CPacket.Action.REMOVE_PLAYER, player));
             other.networkHandler.sendPacket(new PlayerListS2CPacket(PlayerListS2CPacket.Action.ADD_PLAYER, player));
         }
 
         ChunkManager manager = player.world.getChunkManager();
         assert manager instanceof ServerChunkManager;
-        ThreadedAnvilChunkStorage storage = ((ServerChunkManager)manager).threadedAnvilChunkStorage;
+        ThreadedAnvilChunkStorage storage = ((ServerChunkManager) manager).threadedAnvilChunkStorage;
         EntityTrackerAccessor trackerEntry = (EntityTrackerAccessor) ((ThreadedAnvilChunkStorageAccessor) storage).getEntityTrackers().get(player.getEntityId());
 
 

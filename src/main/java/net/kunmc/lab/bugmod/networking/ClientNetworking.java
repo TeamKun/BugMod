@@ -57,6 +57,7 @@ public class ClientNetworking {
         buf.writeString(GameManager.breakScreenName + " " + (GameManager.breakScreenLevel + 1));
         ClientPlayNetworking.send(BugModNetworking.identifierFactory(BugModNetworking.level), buf);
     }
+
     public static void sendUpdateSkin() {
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
         ClientPlayNetworking.send(BugModNetworking.identifierFactory(BugModNetworking.updateSkin), buf);
