@@ -1,10 +1,16 @@
 package net.kunmc.lab.bugmod.texture;
 
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.kunmc.lab.bugmod.mixin.EntityTrackerAccessor;
+import net.kunmc.lab.bugmod.mixin.ThreadedAnvilChunkStorageAccessor;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.network.packet.s2c.play.*;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerChunkManager;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.server.world.ThreadedAnvilChunkStorage;
 import net.minecraft.world.biome.source.BiomeAccess;
+import net.minecraft.world.chunk.ChunkManager;
 
 import java.util.Objects;
 
@@ -13,6 +19,16 @@ public class ReloadTexture {
         for(ServerPlayerEntity other : Objects.requireNonNull(player.getServer()).getPlayerManager().getPlayerList()) {
             other.networkHandler.sendPacket(new PlayerListS2CPacket(PlayerListS2CPacket.Action.REMOVE_PLAYER, player));
             other.networkHandler.sendPacket(new PlayerListS2CPacket(PlayerListS2CPacket.Action.ADD_PLAYER, player));
+        }
+
+        ChunkManager manager = player.world.getChunkManager();
+        assert manager instanceof ServerChunkManager;
+        ThreadedAnvilChunkStorage storage = ((ServerChunkManager)manager).threadedAnvilChunkStorage;
+        EntityTrackerAccessor trackerEntry = (EntityTrackerAccessor) ((ThreadedAnvilChunkStorageAccessor) storage).getEntityTrackers().get(player.getEntityId());
+
+
+        for (ServerPlayerEntity tracking : PlayerLookup.tracking(player)) {
+            trackerEntry.getEntry().startTracking(tracking);
         }
 
         ServerWorld targetWorld = (ServerWorld) player.world;

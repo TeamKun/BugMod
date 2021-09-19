@@ -4,6 +4,8 @@
   "package": "net.kunmc.lab.bugmod.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "EntityTrackerAccessor",
+    "ThreadedAnvilChunkStorageAccessor"
   ],
   "client": [
     "InGameHudMixin",
