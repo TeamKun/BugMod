@@ -8,6 +8,8 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.network.MessageType;
 import net.minecraft.text.Text;
 
+import static net.kunmc.lab.bugmod.networking.ClientNetworking.sendUpdateSkin;
+
 @Environment(EnvType.CLIENT)
 public class UpdateClientLevelManager {
     public static void updateLevel(String targetName, int targetLevel, String playerName, boolean useEffect, boolean recovery) {
@@ -37,6 +39,7 @@ public class UpdateClientLevelManager {
             case GameManager.breakSkinName:
                 if (targetLevel != GameManager.breakSkinLevel) {
                     GameManager.breakSkinLevel = targetLevel;
+                    sendUpdateSkin();
                 }
                 break;
             case GameManager.redScreenName:

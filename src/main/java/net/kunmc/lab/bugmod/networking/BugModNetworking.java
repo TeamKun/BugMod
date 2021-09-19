@@ -14,6 +14,8 @@ public class BugModNetworking {
     public static final String forceLevel = "forcelevel";
     // レベル回復（減少）時に使用
     public static final String recoverLevel = "recoverlevel";
+    // スキン更新時に使用
+    public static final String updateSkin = "updateskin";
 
     public static Identifier identifierFactory(String name) {
         switch (name) {
@@ -27,6 +29,8 @@ public class BugModNetworking {
                 return new Identifier(BugMod.MODID, forceLevel);
             case recoverLevel:
                 return new Identifier(BugMod.MODID, recoverLevel);
+            case updateSkin:
+                return new Identifier(BugMod.MODID, updateSkin);
         }
         return null;
     }

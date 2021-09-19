@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.kunmc.lab.bugmod.BugMod;
 import net.kunmc.lab.bugmod.game.GameManager;
+import net.kunmc.lab.bugmod.texture.ReloadTexture;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketByteBuf;
 import org.apache.commons.lang3.BooleanUtils;
@@ -51,6 +52,13 @@ public class ServerNetworking {
             }
         });
     }
+
+    public static void receiveSkinUpdate() {
+        ServerPlayNetworking.registerGlobalReceiver(BugModNetworking.identifierFactory(BugModNetworking.updateSkin), (server, player, handler, buf, response) -> {
+            ReloadTexture.reload(player);
+        });
+    }
+
 
     public static void syncServerAndClientEveryTick() {
         ServerTickEvents.START_SERVER_TICK.register(m -> {
