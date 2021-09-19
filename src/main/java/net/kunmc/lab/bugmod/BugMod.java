@@ -20,6 +20,7 @@ public class BugMod implements ModInitializer {
         ServerStartCallback.EVENT.register(server -> minecraftServerInstance = server);
         ServerNetworking.receiveLevel();
         ServerNetworking.syncServerAndClientEveryTick();
+        ServerNetworking.receiveSkinUpdate();
         PlayerServerEvent.register();
         BlockManager.register();
         BugCommand.register();

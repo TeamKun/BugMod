@@ -7,6 +7,7 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.kunmc.lab.bugmod.BugMod;
 import net.kunmc.lab.bugmod.game.GameManager;
+import net.kunmc.lab.bugmod.networking.ServerNetworking;
 import net.kunmc.lab.bugmod.texture.ReloadTexture;
 import net.kunmc.lab.bugmod.util.DecolationConst;
 import net.minecraft.network.MessageType;
@@ -60,9 +61,6 @@ public class BugCommand {
 
                                 GameManager.resetGame();
                                 GameManager.controller(GameManager.GameMode.MODE_NEUTRAL);
-                                BugMod.minecraftServerInstance.getPlayerManager().getPlayerList().forEach(player -> {
-                                    ReloadTexture.reload(player);
-                                });
                                 context.getSource().getMinecraftServer().getPlayerManager()
                                         .broadcastChatMessage(new LiteralText(DecolationConst.GREEN + "世界のバグが止まった"), MessageType.CHAT, context.getSource().getPlayer().getUuid());
 
