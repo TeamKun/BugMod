@@ -87,7 +87,6 @@ public class ServerNetworking {
                     int[] send = Arrays.copyOf(GameManager.getAllBugLevel(player.getEntityName()), GameManager.getAllBugLevel(player.getEntityName()).length + 1);
                     send[send.length - 1] = BooleanUtils.toInteger(GameManager.showUpdateLevelMessage);
                     buf.writeIntArray(send);
-                    System.out.println(player.getEntityName() + " " + Arrays.toString(GameManager.getAllBugLevel(player.getEntityName())));
                     ServerPlayNetworking.send(player, BugModNetworking.identifierFactory("all"), buf);
                 });
                 // ゲームモード送信

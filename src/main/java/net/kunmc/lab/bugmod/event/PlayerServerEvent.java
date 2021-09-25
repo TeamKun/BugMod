@@ -17,7 +17,7 @@ public class PlayerServerEvent {
             int yRange = 2;
             double changeProb = 0.0;
             String playerName = player.getEntityName();
-            int bugLevel = PlayerGameManager.playersBugLevel.get(playerName).get(GameManager.breakBlockName);
+            int bugLevel = PlayerGameManager.playersBugLevel.get(GameManager.commonPlayerName).get(GameManager.breakBlockName);
             if (bugLevel == 1) {
                 xzRange = 2;
                 changeProb = 0.1;

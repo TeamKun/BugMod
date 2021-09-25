@@ -69,12 +69,12 @@ public class GameManager {
     }
 
     public static void resetUpdateLevelProbability() {
-        redScreenUpdateLevelProbability = 0.3;
+        redScreenUpdateLevelProbability = 1.0;
         garbledCharUpdateLevelProbability = 1.0;
         breakScreenUpdateLevelProbability = 1.0;
         breakBlockUpdateLevelProbability = 0.01;
-        breakSkinUpdateLevelProbability = 0.7;
-        breakMobTextureUpdateLevelProbability = 0.5;
+        breakSkinUpdateLevelProbability = 1.0;
+        breakMobTextureUpdateLevelProbability = 1.0;
     }
 
     public static void controller(GameMode runningMode) {
@@ -98,7 +98,7 @@ public class GameManager {
         int[] level = {getPlayerBugLevel(playerName, GameManager.redScreenName),
                 getPlayerBugLevel(playerName, GameManager.breakScreenName),
                 getPlayerBugLevel(playerName, GameManager.breakSkinName),
-                getPlayerBugLevel(playerName, GameManager.breakBlockName),
+                getPlayerBugLevel(GameManager.commonPlayerName, GameManager.breakBlockName),
                 getPlayerBugLevel(playerName, GameManager.garbledCharName),
                 getPlayerBugLevel(playerName, GameManager.breakMobTextureName)};
         return level;
@@ -152,7 +152,11 @@ public class GameManager {
 
     public static void recoverLevel(String bugName, int level, String playerName) {
         if (shouldDownLevel(level)) {
-            updateLevel(playerName, bugName, level-1);
+            if (isCommonLevelBug(bugName)) {
+                updateAllPlayerLevel(bugName, level-1);
+            } else {
+                updateLevel(playerName, bugName, level-1);
+            }
             ServerNetworking.sendRecoveryLevel(bugName, level-1, playerName);
         }
     }

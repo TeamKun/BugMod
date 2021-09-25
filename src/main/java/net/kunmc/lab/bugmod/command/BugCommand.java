@@ -3,10 +3,17 @@ package net.kunmc.lab.bugmod.command;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
+import net.kunmc.lab.bugmod.BugMod;
 import net.kunmc.lab.bugmod.game.GameManager;
+import net.kunmc.lab.bugmod.game.PlayerGameManager;
 import net.kunmc.lab.bugmod.util.DecolationConst;
+import net.minecraft.command.argument.EntityArgumentType;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.MessageType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -66,7 +73,6 @@ public class BugCommand {
                     .then(CommandManager.literal("showParam")
                             .executes(context -> {
                                 String[] name = GameManager.getAllBugName();
-                                //int[] level = GameManager.getAllBugLevel();
                                 double[] prob = GameManager.getAllBugProbability();
 
                                 List<String> message = new ArrayList();
@@ -81,62 +87,75 @@ public class BugCommand {
                                 message.add(String.format("  showUpdateLevelMessage: %b", GameManager.showUpdateLevelMessage));
                                 context.getSource().sendFeedback(new LiteralText(String.join(br, message)), false);
                                 return 1;
-                            }))
+                            })
+                            .then(CommandManager.argument("player", EntityArgumentType.player())
+                                    .executes(context -> {
+                                        List<String> message = new ArrayList();
+                                        String[] name = GameManager.getAllBugName();
+                                        PlayerEntity p = EntityArgumentType.getPlayer(context, "player");
+                                        message.add("Parameters:");
+                                        for (int i = 0; i < name.length; i++) {
+                                            String playerName = GameManager.isCommonLevelBug(name[i]) ? GameManager.commonPlayerName : p.getEntityName();
+                                            message.add(String.format("  %sLevel: %d", name[i], GameManager.getPlayerBugLevel(playerName, name[i])));
+                                        }
+                                        context.getSource().sendFeedback(new LiteralText(String.join(br, message)), false);
+                                        return 1;
+                                    }
+                            )))
                     .then(CommandManager.literal("setParam")
                             .then(CommandManager.literal(GameManager.redScreenName + "Level")
-                                    .then(CommandManager.argument("num", IntegerArgumentType.integer(0, GameManager.redScreenMaxLevel))
+                                    .then(CommandManager.argument("players", EntityArgumentType.players())
+                                            .then(CommandManager.argument("num", IntegerArgumentType.integer(0, GameManager.redScreenMaxLevel))
                                             .executes(context -> {
-                                                String name = GameManager.redScreenName + "Level";
-                                                int value = IntegerArgumentType.getInteger(context, "num");
-                                                GameManager.redScreenLevel = value;
-                                                context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "%sを%dに設定しました", name, value)), true);
+                                                EntityArgumentType.getPlayers(context, "players").forEach((player) -> {
+                                                    setLevel(context, player.getEntityName(), GameManager.redScreenName);
+                                                });
                                                 return 1;
-                                            })))
+                                            }))))
                             .then(CommandManager.literal(GameManager.breakBlockName + "Level")
-                                    .then(CommandManager.argument("num", IntegerArgumentType.integer(0, GameManager.breakBlockMaxLevel))
-                                            .executes(context -> {
-                                                String name = GameManager.breakBlockName + "Level";
-                                                int value = IntegerArgumentType.getInteger(context, "num");
-                                                GameManager.breakBlockLevel = value;
-                                                context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "%sを%dに設定しました", name, value)), true);
-                                                return 1;
+                                            .then(CommandManager.argument("num", IntegerArgumentType.integer(0, GameManager.breakBlockMaxLevel))
+                                                    .executes(context -> {
+                                                        BugMod.minecraftServerInstance.getPlayerManager().getPlayerList().forEach((player) -> {
+                                                            setLevel(context, player.getEntityName(), GameManager.breakBlockName);
+                                                        });
+                                                        return 1;
                                             })))
                             .then(CommandManager.literal(GameManager.breakScreenName + "Level")
+                                    .then(CommandManager.argument("players", EntityArgumentType.players())
                                     .then(CommandManager.argument("num", IntegerArgumentType.integer(0, GameManager.breakScreenMaxLevel))
                                             .executes(context -> {
-                                                String name = GameManager.breakScreenName + "Level";
-                                                int value = IntegerArgumentType.getInteger(context, "num");
-                                                GameManager.breakScreenLevel = value;
-                                                context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "%sを%dに設定しました", name, value)), true);
+                                                EntityArgumentType.getPlayers(context, "players").forEach((player) -> {
+                                                    setLevel(context, player.getEntityName(), GameManager.breakScreenName);
+                                                });
                                                 return 1;
-                                            })))
+                                            }))))
                             .then(CommandManager.literal(GameManager.breakSkinName + "Level")
+                                    .then(CommandManager.argument("players", EntityArgumentType.players())
                                     .then(CommandManager.argument("num", IntegerArgumentType.integer(0, GameManager.breakSkinMaxLevel))
                                             .executes(context -> {
-                                                String name = GameManager.breakSkinName + "Level";
-                                                int value = IntegerArgumentType.getInteger(context, "num");
-                                                GameManager.breakSkinLevel = value;
-                                                context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "%sを%dに設定しました", name, value)), true);
+                                                EntityArgumentType.getPlayers(context, "players").forEach((player) -> {
+                                                    setLevel(context, player.getEntityName(), GameManager.breakScreenName);
+                                                });
                                                 return 1;
-                                            })))
+                                            }))))
                             .then(CommandManager.literal(GameManager.garbledCharName + "Level")
+                                    .then(CommandManager.argument("players", EntityArgumentType.players())
                                     .then(CommandManager.argument("num", IntegerArgumentType.integer(0, GameManager.garbledCharMaxLevel))
                                             .executes(context -> {
-                                                String name = GameManager.garbledCharName + "Level";
-                                                int value = IntegerArgumentType.getInteger(context, "num");
-                                                GameManager.garbledCharLevel = value;
-                                                context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "%sを%dに設定しました", name, value)), true);
+                                                EntityArgumentType.getPlayers(context, "players").forEach((player) -> {
+                                                    setLevel(context, player.getEntityName(), GameManager.breakScreenName);
+                                                });
                                                 return 1;
-                                            })))
+                                            }))))
                             .then(CommandManager.literal(GameManager.breakMobTextureName + "Level")
+                                    .then(CommandManager.argument("players", EntityArgumentType.players())
                                     .then(CommandManager.argument("num", IntegerArgumentType.integer(0, GameManager.breakMobTextureMaxLevel))
                                             .executes(context -> {
-                                                String name = GameManager.breakMobTextureName + "Level";
-                                                int value = IntegerArgumentType.getInteger(context, "num");
-                                                GameManager.breakMobTextureLevel = value;
-                                                context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "%sを%dに設定しました", name, value)), true);
+                                                EntityArgumentType.getPlayers(context, "players").forEach((player) -> {
+                                                    setLevel(context, player.getEntityName(), GameManager.breakScreenName);
+                                                });
                                                 return 1;
-                                            })))
+                                            }))))
                             .then(CommandManager.literal("recoveryMode")
                                     .then(CommandManager.argument("boolean", BoolArgumentType.bool())
                                             .executes(context -> {
@@ -225,5 +244,14 @@ public class BugCommand {
                     ).build();
             dispatcher.getRoot().addChild(rootNode);
         });
+    }
+    private static void setLevel(CommandContext<ServerCommandSource> context, String playerName, String bugName) {
+        String targetBugName = bugName + "Level";
+        int value = IntegerArgumentType.getInteger(context, "num");
+        PlayerGameManager.playersBugLevel.get(playerName).put(bugName, value);
+        if (GameManager.isCommonLevelBug(bugName)) {
+            PlayerGameManager.playersBugLevel.get(GameManager.commonPlayerName).put(bugName, value);
+        }
+        context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "%sの%sを%dに設定しました", playerName, targetBugName, value)), true);
     }
 }

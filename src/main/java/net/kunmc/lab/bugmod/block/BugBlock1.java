@@ -24,7 +24,7 @@ public class BugBlock1 extends Block {
 
     @Override
     public void onBroken(WorldAccess world, BlockPos pos, BlockState state) {
-        if (PlayerGameManager.playersBugLevel.get(GameManager.commonPlayerName).get(GameManager.breakBlockName) == 3) {
+        if (GameManager.getPlayerBugLevel(GameManager.commonPlayerName, GameManager.breakBlockName) == 3) {
             world.playSound(
                     null, // Player - if non-null, will play sound for every nearby player *except* the specified player
                     pos, // The position of where the sound will come from
@@ -44,7 +44,7 @@ public class BugBlock1 extends Block {
     }
 
     public void onStacksDropped(BlockState state, ServerWorld world, BlockPos pos, ItemStack stack) {
-        if (PlayerGameManager.playersBugLevel.get(GameManager.commonPlayerName).get(GameManager.breakBlockName) >= 4) {
+        if (GameManager.getPlayerBugLevel(GameManager.commonPlayerName, GameManager.breakBlockName) >= 4) {
             if (world.getGameRules().getBoolean(GameRules.DO_TILE_DROPS) && EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, stack) == 0) {
                 spawnSilverfish(world, pos);
             }
