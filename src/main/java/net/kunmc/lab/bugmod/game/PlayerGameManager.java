@@ -1,10 +1,7 @@
 package net.kunmc.lab.bugmod.game;
 
-import it.unimi.dsi.fastutil.Hash;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 // サーバ側で各プレイヤーのレベルを持つ変数
 public class PlayerGameManager {

@@ -1,7 +1,6 @@
 package net.kunmc.lab.bugmod.mixin;
 
 import net.kunmc.lab.bugmod.game.GameManager;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.MilkBucketItem;

@@ -26,12 +26,12 @@ public class ServerNetworking {
         // 全員で共通のレベルのバグ
         if (GameManager.isCommonLevelBug(bugName)) {
             BugMod.minecraftServerInstance.getPlayerManager().getPlayerList().forEach(player -> {
-               ServerPlayNetworking.send(player, BugModNetworking.identifierFactory(BugModNetworking.level), buf);
+                ServerPlayNetworking.send(player, BugModNetworking.identifierFactory(BugModNetworking.level), buf);
             });
         } else {
             ServerPlayNetworking.send((ServerPlayerEntity) p, BugModNetworking.identifierFactory(BugModNetworking.level), buf);
         }
-   }
+    }
 
     public static void sendRecoveryLevel(String bugName, int level, String playerName) {
         PlayerEntity p = BugMod.minecraftServerInstance.getPlayerManager().getPlayer(playerName);

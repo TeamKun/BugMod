@@ -1,7 +1,6 @@
 package net.kunmc.lab.bugmod;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.event.server.ServerStartCallback;
 import net.kunmc.lab.bugmod.block.BlockManager;
 import net.kunmc.lab.bugmod.command.BugCommand;

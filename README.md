@@ -57,7 +57,7 @@
 
 ### レベル
 
-* /bug setParam <パラメータ> <値> で設定可能
+* /bug setParam <パラメータ> <プレイヤー名> <値> で設定可能
 * 数値が大きいほど効果が強くなる（0は効果がない状態）
   * 初期値は全て0
 * /bug stopをすることで全て初期値に戻る
@@ -78,19 +78,19 @@
 
 | パラメータ                            | デフォルト値 |
 | ------------------------------------- | ------------ |
-| redscreenProbability                  | 0.3          |
+| redscreenProbability                  | 1.0          |
 | breakscreenProbability                | 1.0          |
 | breakblockProbability                 | 0.01         |
-| breakskinProbability                  | 0.7          |
+| breakskinProbability                  | 1.0          |
 | garbledcharProbability                | 1.0          |
-| breakMobTextureUpdateLevelProbability | 0.5          |
+| breakMobTextureUpdateLevelProbability | 1.0          |
 
 ### on/off系の設定
 
 * /bug setParam <パラメータ> <値> で設定可能
 * ゲーム中のon/offを切り替えるような設定
   * trueがonの扱いになる
-* /bug stopを
+* /bug stopを実行してもリセットされない
 
 | パラメータ             | 内容                                                         | 設定可能な値      | デフォルト値 |
 | ---------------------- | ------------------------------------------------------------ | ----------------- | ------------ |

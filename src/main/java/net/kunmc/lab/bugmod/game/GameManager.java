@@ -1,15 +1,12 @@
 package net.kunmc.lab.bugmod.game;
 
-import io.netty.buffer.Unpooled;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.kunmc.lab.bugmod.BugMod;
-import net.kunmc.lab.bugmod.networking.BugModNetworking;
 import net.kunmc.lab.bugmod.networking.ServerNetworking;
-import net.kunmc.lab.bugmod.texture.ReloadTexture;
-import net.minecraft.network.PacketByteBuf;
-import org.lwjgl.system.CallbackI;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 
 public class GameManager {
     public static final String redScreenName = "redscreen";
@@ -148,19 +145,19 @@ public class GameManager {
     public static void recoverLevel(String bugName, int level, String playerName) {
         if (shouldDownLevel(level)) {
             if (isCommonLevelBug(bugName)) {
-                updateAllPlayerLevel(bugName, level-1);
+                updateAllPlayerLevel(bugName, level - 1);
             } else {
-                updateLevel(playerName, bugName, level-1);
+                updateLevel(playerName, bugName, level - 1);
             }
-            ServerNetworking.sendRecoveryLevel(bugName, level-1, playerName);
+            ServerNetworking.sendRecoveryLevel(bugName, level - 1, playerName);
         }
     }
 
-    public static boolean isCommonLevelBug(String bugName){
+    public static boolean isCommonLevelBug(String bugName) {
         return bugName.equals(GameManager.breakBlockName) ? true : false;
     }
 
-    public static int getPlayerBugLevel(String playerName, String bugName){
+    public static int getPlayerBugLevel(String playerName, String bugName) {
         if (PlayerGameManager.playersBugLevel.get(playerName) == null) {
             PlayerGameManager.playersBugLevel.put(playerName, new HashMap<>());
         }
@@ -170,7 +167,7 @@ public class GameManager {
         return PlayerGameManager.playersBugLevel.get(playerName).get(bugName);
     }
 
-    private static int getBugMaxLevel (String bugName) {
+    private static int getBugMaxLevel(String bugName) {
         switch (bugName) {
             case redScreenName:
                 return GameManager.redScreenMaxLevel;
@@ -189,7 +186,7 @@ public class GameManager {
         return 0;
     }
 
-    private static double getUpdateLevelProbability (String bugName) {
+    private static double getUpdateLevelProbability(String bugName) {
         switch (bugName) {
             case redScreenName:
                 return GameManager.redScreenUpdateLevelProbability;
@@ -209,14 +206,14 @@ public class GameManager {
     }
 
 
-    public static void updateLevel(String playerName, String bugName, int bugLevel){
-        if (PlayerGameManager.playersBugLevel.get(playerName) == null){
+    public static void updateLevel(String playerName, String bugName, int bugLevel) {
+        if (PlayerGameManager.playersBugLevel.get(playerName) == null) {
             PlayerGameManager.playersBugLevel.put(playerName, new HashMap());
         }
         PlayerGameManager.playersBugLevel.get(playerName).put(bugName, bugLevel);
     }
 
-    public static void updateAllPlayerLevel(String bugName, int bugLevel){
+    public static void updateAllPlayerLevel(String bugName, int bugLevel) {
         // 適当なkeyで取得できると便利などで設定しておく
         updateLevel(commonPlayerName, bugName, bugLevel);
 

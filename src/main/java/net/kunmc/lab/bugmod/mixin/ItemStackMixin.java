@@ -5,7 +5,6 @@ import net.kunmc.lab.bugmod.game.PlayerGameManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;

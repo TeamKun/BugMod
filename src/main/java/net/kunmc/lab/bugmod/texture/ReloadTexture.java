@@ -18,8 +18,8 @@ public class ReloadTexture {
     /**
      * <p>
      * This method has been adapted from the Impersonate mod's <a href="https://github.com/Ladysnake/Impersonate/blob/1.16/src/main/java/io/github/ladysnake/impersonate/impl/ServerPlayerSkins.java">source code</a>
-     * under GNU Lesser General Public License.
-     *
+     * under GNU Lesser General Public License v3.0.
+     * <p>
      * Reloads player's skin for all the players (including the one that has changed the skin)
      *
      * @author Pyrofab
