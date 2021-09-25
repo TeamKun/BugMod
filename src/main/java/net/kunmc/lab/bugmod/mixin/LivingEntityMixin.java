@@ -4,6 +4,7 @@ package net.kunmc.lab.bugmod.mixin;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.kunmc.lab.bugmod.game.GameManager;
+import net.kunmc.lab.bugmod.game.PlayerGameManager;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
@@ -21,7 +22,7 @@ public class LivingEntityMixin {
     public void hookDeath(DamageSource source, CallbackInfo info) {
         if ((LivingEntity) (Object) this instanceof MobEntity && source.getAttacker() instanceof PlayerEntity) {
             PlayerEntity p = (PlayerEntity) source.getAttacker();
-            GameManager.updateLevelDispatcher(GameManager.breakMobTextureName, GameManager.breakMobTextureLevel + 1, p.getGameProfile().getName());
+            GameManager.updateLevelDispatcher(GameManager.breakMobTextureName, PlayerGameManager.playersBugLevel.get(p.getEntityName()).get(GameManager.breakMobTextureName) + 1, p.getGameProfile().getName());
         }
     }
 }

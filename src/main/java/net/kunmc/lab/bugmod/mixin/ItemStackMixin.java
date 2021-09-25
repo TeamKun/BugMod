@@ -1,6 +1,7 @@
 package net.kunmc.lab.bugmod.mixin;
 
 import net.kunmc.lab.bugmod.game.GameManager;
+import net.kunmc.lab.bugmod.game.PlayerGameManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -21,7 +22,7 @@ public abstract class ItemStackMixin {
     @Inject(at = @At("TAIL"), method = "onCraft", cancellable = true)
     public void craft(World world, PlayerEntity player, int amount, CallbackInfo info) {
         if (getItem() instanceof PickaxeItem) {
-            GameManager.updateLevelDispatcher(GameManager.breakSkinName, GameManager.breakSkinLevel + 1, player.getGameProfile().getName());
+            GameManager.updateLevelDispatcher(GameManager.breakSkinName, PlayerGameManager.playersBugLevel.get(player.getEntityName()).get(GameManager.breakSkinName) + 1, player.getGameProfile().getName());
         }
     }
 }

@@ -1,6 +1,7 @@
 package net.kunmc.lab.bugmod.mixin;
 
 import net.kunmc.lab.bugmod.game.GameManager;
+import net.kunmc.lab.bugmod.game.PlayerGameManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -19,6 +20,6 @@ public abstract class ServerPlayerEntityMixin extends Entity {
 
     @Inject(at = @At("TAIL"), method = "onDeath", cancellable = true)
     public void hookDeath(CallbackInfo info) {
-        GameManager.updateLevelDispatcher(GameManager.garbledCharName, GameManager.garbledCharLevel + 1, this.getEntityName());
+        GameManager.updateLevelDispatcher(GameManager.garbledCharName, PlayerGameManager.playersBugLevel.get(this.getEntityName()).get(GameManager.garbledCharName) + 1, this.getEntityName());
     }
 }

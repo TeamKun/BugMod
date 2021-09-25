@@ -59,12 +59,7 @@ public class GameManager {
     public static Random rand = new Random();
 
     public static void resetGame() {
-        redScreenLevel = 0;
-        garbledCharLevel = 0;
-        breakScreenLevel = 0;
-        breakBlockLevel = 0;
-        breakSkinLevel = 0;
-        breakMobTextureLevel = 0;
+        PlayerGameManager.playersBugLevel.clear();
         runningMode = GameMode.MODE_NEUTRAL;
     }
 

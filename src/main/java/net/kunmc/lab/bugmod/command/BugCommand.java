@@ -134,7 +134,7 @@ public class BugCommand {
                                     .then(CommandManager.argument("num", IntegerArgumentType.integer(0, GameManager.breakSkinMaxLevel))
                                             .executes(context -> {
                                                 EntityArgumentType.getPlayers(context, "players").forEach((player) -> {
-                                                    setLevel(context, player.getEntityName(), GameManager.breakScreenName);
+                                                    setLevel(context, player.getEntityName(), GameManager.breakSkinName);
                                                 });
                                                 return 1;
                                             }))))
@@ -143,7 +143,7 @@ public class BugCommand {
                                     .then(CommandManager.argument("num", IntegerArgumentType.integer(0, GameManager.garbledCharMaxLevel))
                                             .executes(context -> {
                                                 EntityArgumentType.getPlayers(context, "players").forEach((player) -> {
-                                                    setLevel(context, player.getEntityName(), GameManager.breakScreenName);
+                                                    setLevel(context, player.getEntityName(), GameManager.garbledCharName);
                                                 });
                                                 return 1;
                                             }))))
@@ -152,7 +152,7 @@ public class BugCommand {
                                     .then(CommandManager.argument("num", IntegerArgumentType.integer(0, GameManager.breakMobTextureMaxLevel))
                                             .executes(context -> {
                                                 EntityArgumentType.getPlayers(context, "players").forEach((player) -> {
-                                                    setLevel(context, player.getEntityName(), GameManager.breakScreenName);
+                                                    setLevel(context, player.getEntityName(), GameManager.breakMobTextureName);
                                                 });
                                                 return 1;
                                             }))))

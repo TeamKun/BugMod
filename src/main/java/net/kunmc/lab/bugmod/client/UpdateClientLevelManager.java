@@ -74,27 +74,27 @@ public class UpdateClientLevelManager {
                     break;
                 case GameManager.garbledCharName:
                     sub = subMessage(targetLevel, GameManager.garbledCharMaxLevel);
-                    message = String.format("%sの行動で%sチャットがバグるようになった", playerName, sub);
+                    message = String.format("今の行動で%sチャットがバグるようになった", sub);
                     MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
                     break;
                 case GameManager.breakSkinName:
                     sub = subMessage(targetLevel, GameManager.breakSkinMaxLevel);
-                    message = String.format("%sの行動で%sスキンがバグった", playerName, sub);
+                    message = String.format("今の行動で%sスキンがバグった", sub);
                     MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
                     break;
                 case GameManager.redScreenName:
                     sub = subMessage(targetLevel, GameManager.redScreenMaxLevel);
-                    message = String.format("%sの行動で視界が%s赤く染まった", playerName, sub);
+                    message = String.format("今の行動で視界が%s赤く染まった", sub);
                     MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
                     break;
                 case GameManager.breakScreenName:
                     sub = subMessage(targetLevel, GameManager.breakScreenMaxLevel);
-                    message = String.format("%sの行動で視界が%s削れた", playerName, sub);
+                    message = String.format("今の行動で視界が%s削れた", sub);
                     MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
                     break;
                 case GameManager.breakMobTextureName:
-                    message = String.format("%sの行動で一部のMobがバグった", playerName, sub);
-                    if (targetLevel >= 2) message = String.format("%sの行動でさらにMobがバグった", playerName, sub);
+                    message = String.format("今の行動で一部のMobがバグった", playerName, sub);
+                    if (targetLevel >= 2) message = String.format("今の行動でさらにMobがバグった", playerName, sub);
                     MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
                     if (targetLevel == 6) {
                         MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of("これ以上Mobはバグらないようだ"), MinecraftClient.getInstance().player.getUuid());
@@ -111,30 +111,30 @@ public class UpdateClientLevelManager {
                     MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
                     break;
                 case GameManager.garbledCharName:
-                    message = String.format("%sの行動でチャットがバグりにくくなった", playerName, sub);
-                    if (targetLevel == 0) message = String.format("%sの行動でチャットがバグらなくなった", playerName, sub);
+                    message = String.format("今の行動でチャットがバグりにくくなった", sub);
+                    if (targetLevel == 0) message = String.format("今の行動でチャットがバグらなくなった", sub);
                     MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
                     break;
                 case GameManager.breakSkinName:
-                    message = String.format("%sの行動でスキンのバグが少し治った", playerName, sub);
-                    if (targetLevel == 0) message = String.format("%sの行動でスキンのバグが治った", playerName, sub);
+                    message = String.format("今の行動でスキンのバグが少し治った", sub);
+                    if (targetLevel == 0) message = String.format("今の行動でスキンのバグが治った", sub);
                     MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
                     break;
                 case GameManager.redScreenName:
                     sub = subMessage(targetLevel, GameManager.redScreenMaxLevel);
-                    message = String.format("%sの行動で視界の赤が薄まった", playerName, sub);
-                    if (targetLevel == 0) message = String.format("%sの行動で視界が赤くなくなった", playerName, sub);
+                    message = String.format("今の行動で視界の赤が薄まった", sub);
+                    if (targetLevel == 0) message = String.format("今の行動で視界が赤くなくなった", sub);
                     MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
                     break;
                 case GameManager.breakScreenName:
                     sub = subMessage(targetLevel, GameManager.breakScreenMaxLevel);
-                    message = String.format("%sの行動で視界の削れが少し治った", playerName, sub);
-                    if (targetLevel == 0) message = String.format("%sの行動で視界の削れが治った", playerName, sub);
+                    message = String.format("今の行動で視界の削れが少し治った", sub);
+                    if (targetLevel == 0) message = String.format("今の行動で視界の削れが治った", sub);
                     MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
                     break;
                 case GameManager.breakMobTextureName:
                     sub = subMessage(targetLevel, GameManager.breakScreenMaxLevel);
-                    message = String.format("%sの行動で一部Mobのバグが治った", playerName, sub);
+                    message = String.format("今の行動で一部Mobのバグが治った", playerName, sub);
                     MinecraftClient.getInstance().inGameHud.addChatMessage(MessageType.SYSTEM, Text.of(message), MinecraftClient.getInstance().player.getUuid());
                     break;
             }
