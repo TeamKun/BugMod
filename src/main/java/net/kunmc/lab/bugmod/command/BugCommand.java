@@ -66,14 +66,14 @@ public class BugCommand {
                     .then(CommandManager.literal("showParam")
                             .executes(context -> {
                                 String[] name = GameManager.getAllBugName();
-                                int[] level = GameManager.getAllBugLevel();
+                                //int[] level = GameManager.getAllBugLevel();
                                 double[] prob = GameManager.getAllBugProbability();
 
                                 List<String> message = new ArrayList();
                                 message.add("Parameters:");
-                                for (int i = 0; i < name.length; i++) {
-                                    message.add(String.format("  %sLevel: %d", name[i], level[i]));
-                                }
+                                //for (int i = 0; i < name.length; i++) {
+                                //    message.add(String.format("  %sLevel: %d", name[i], level[i]));
+                                //}
                                 for (int i = 0; i < name.length; i++) {
                                     message.add(String.format("  %sLevelProbability: %.2f", name[i], prob[i]));
                                 }

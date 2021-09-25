@@ -1,12 +1,15 @@
 package net.kunmc.lab.bugmod.game;
 
+import io.netty.buffer.Unpooled;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.kunmc.lab.bugmod.BugMod;
+import net.kunmc.lab.bugmod.networking.BugModNetworking;
 import net.kunmc.lab.bugmod.networking.ServerNetworking;
 import net.kunmc.lab.bugmod.texture.ReloadTexture;
+import net.minecraft.network.PacketByteBuf;
+import org.lwjgl.system.CallbackI;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class GameManager {
     public static final String redScreenName = "redscreen";
@@ -15,6 +18,9 @@ public class GameManager {
     public static final String breakBlockName = "breakblock";
     public static final String breakSkinName = "breakskin";
     public static final String breakMobTextureName = "breakmobtexture";
+
+    // 共通設定取得を便利にするための変数
+    public static final String commonPlayerName = "bugModCommonPlayerSetting";
 
     public static final int redScreenMaxLevel = 16;
     public static final int garbledCharMaxLevel = 15;
@@ -88,10 +94,13 @@ public class GameManager {
         return name;
     }
 
-    public static int[] getAllBugLevel() {
-        int[] level = {GameManager.redScreenLevel, GameManager.breakScreenLevel,
-                GameManager.breakSkinLevel, GameManager.breakBlockLevel,
-                GameManager.garbledCharLevel, GameManager.breakMobTextureLevel};
+    public static int[] getAllBugLevel(String playerName) {
+        int[] level = {getPlayerBugLevel(playerName, GameManager.redScreenName),
+                getPlayerBugLevel(playerName, GameManager.breakScreenName),
+                getPlayerBugLevel(playerName, GameManager.breakSkinName),
+                getPlayerBugLevel(playerName, GameManager.breakBlockName),
+                getPlayerBugLevel(playerName, GameManager.garbledCharName),
+                getPlayerBugLevel(playerName, GameManager.breakMobTextureName)};
         return level;
     }
 
@@ -105,11 +114,11 @@ public class GameManager {
         return prob;
     }
 
-    public static String getBugRandom() {
+    public static String getBugRandom(String playerName) {
         String[] bugName = getAllBugName();
-        int[] bugLevel = getAllBugLevel();
-        List<String> name = new ArrayList<String>();
-        for (int i = 0; i < getAllBugLevel().length; i++) {
+        int[] bugLevel = getAllBugLevel(playerName);
+        List<String> name = new ArrayList();
+        for (int i = 0; i < getAllBugLevel(playerName).length; i++) {
             if (bugLevel[i] > 0) {
                 name.add(bugName[i] + " " + bugLevel[i]);
             }
@@ -122,110 +131,102 @@ public class GameManager {
     }
 
     // サーバ側のレベル更新 & Clientへのレベル転送
-    public static void updateLevel(String name, int level, String playerName) {
-        switch (name) {
-            case redScreenName:
-                if (GameManager.redScreenUpdateLevelProbability > rand.nextDouble()) {
-                    if (shouldUpdateLevel(GameManager.redScreenLevel, level, GameManager.redScreenMaxLevel)) {
-                        GameManager.redScreenLevel = level;
-                        ServerNetworking.sendLevel(GameManager.redScreenName, level, playerName);
-                    }
-                }
-                break;
-            case garbledCharName:
-                if (GameManager.garbledCharUpdateLevelProbability > rand.nextDouble()) {
-                    if (shouldUpdateLevel(GameManager.garbledCharLevel, level, GameManager.garbledCharMaxLevel)) {
-                        GameManager.garbledCharLevel = level;
-                        ServerNetworking.sendLevel(GameManager.garbledCharName, level, playerName);
-                    }
-                }
-                break;
-            case breakScreenName:
-                if (GameManager.breakScreenUpdateLevelProbability > rand.nextDouble()) {
-                    if (shouldUpdateLevel(GameManager.breakScreenLevel, level, GameManager.breakScreenMaxLevel)) {
-                        GameManager.breakScreenLevel = level;
-                        ServerNetworking.sendLevel(GameManager.breakScreenName, level, playerName);
-                    }
-                }
-                break;
-            case breakBlockName:
-                if (GameManager.breakBlockUpdateLevelProbability > rand.nextDouble()) {
-                    if (shouldUpdateLevel(GameManager.breakBlockLevel, level, GameManager.breakBlockMaxLevel)) {
-                        GameManager.breakBlockLevel = level;
-                        ServerNetworking.sendLevel(GameManager.breakBlockName, level, playerName);
-                    }
-                }
-                break;
-            case breakSkinName:
-                if (GameManager.breakSkinUpdateLevelProbability > rand.nextDouble()) {
-                    if (shouldUpdateLevel(GameManager.breakSkinLevel, level, GameManager.breakSkinMaxLevel)) {
-                        GameManager.breakSkinLevel = level;
-                        ServerNetworking.sendLevel(GameManager.breakSkinName, level, playerName);
-                    }
-                    BugMod.minecraftServerInstance.getPlayerManager().getPlayerList().forEach(player -> {
-                        ReloadTexture.reload(player);
-                    });
-                }
-                break;
-            case breakMobTextureName:
-                if (GameManager.breakMobTextureUpdateLevelProbability > rand.nextDouble()) {
-                    if (shouldUpdateLevel(GameManager.breakMobTextureLevel, level, GameManager.breakMobTextureMaxLevel)) {
-                        GameManager.breakMobTextureLevel = level;
-                        ServerNetworking.sendLevel(GameManager.breakMobTextureName, level, playerName);
-                    }
-                }
-                break;
+    public static void updateLevelDispatcher(String bugName, int level, String playerName) {
+        int currentLevel = 0;
+        if (PlayerGameManager.playersBugLevel.get(playerName).get(bugName) != null) {
+            currentLevel = PlayerGameManager.playersBugLevel.get(playerName).get(bugName);
+        }
+
+        int maxLevel = getBugMaxLevel(bugName);
+        double updateLevelProbability = getUpdateLevelProbability(bugName);
+        if (updateLevelProbability > rand.nextDouble() && shouldUpdateLevel(currentLevel, level, maxLevel)) {
+            // 全員でレベルが共通のバグ
+            if (isCommonLevelBug(bugName)) {
+                updateAllPlayerLevel(bugName, level);
+            } else {
+                updateLevel(playerName, bugName, level);
+            }
+            ServerNetworking.sendLevel(bugName, level, playerName);
         }
     }
 
-    public static void recoverLevel(String name, int level, String playerName) {
-        switch (name) {
-            case redScreenName:
-                if (shouldDownLevel(level)) {
-                    GameManager.redScreenLevel = level - 1;
-                    ServerNetworking.sendRecoveryLevel(GameManager.redScreenName, GameManager.redScreenLevel, playerName);
-                }
-                break;
-            case garbledCharName:
-                if (shouldDownLevel(level)) {
-                    GameManager.garbledCharLevel = level - 1;
-                    ServerNetworking.sendRecoveryLevel(GameManager.garbledCharName, GameManager.garbledCharLevel, playerName);
-                }
-                break;
-            case breakScreenName:
-                if (shouldDownLevel(level)) {
-                    GameManager.breakScreenLevel = level - 1;
-                    ServerNetworking.sendRecoveryLevel(GameManager.breakScreenName, GameManager.breakScreenLevel, playerName);
-                }
-                break;
-            case breakBlockName:
-                if (shouldDownLevel(level)) {
-                    GameManager.breakBlockLevel = level - 1;
-                    ServerNetworking.sendRecoveryLevel(GameManager.breakBlockName, GameManager.breakBlockLevel, playerName);
-                }
-                break;
-            case breakSkinName:
-                if (shouldDownLevel(level)) {
-                    GameManager.breakSkinLevel = level - 1;
-                    ServerNetworking.sendRecoveryLevel(GameManager.breakSkinName, GameManager.breakSkinLevel, playerName);
-                }
-                break;
-            case breakMobTextureName:
-                if (shouldDownLevel(level)) {
-                    GameManager.breakMobTextureLevel = level - 1;
-                    ServerNetworking.sendRecoveryLevel(GameManager.breakMobTextureName, GameManager.breakMobTextureLevel, playerName);
-                }
-                break;
+    public static void recoverLevel(String bugName, int level, String playerName) {
+        if (shouldDownLevel(level)) {
+            updateLevel(playerName, bugName, level-1);
+            ServerNetworking.sendRecoveryLevel(bugName, level-1, playerName);
         }
     }
 
-    /**
-     * 意図しない値のレベルに更新されないようにチェック
-     *
-     * @param currentLevel
-     * @param level
-     * @return
-     */
+    public static boolean isCommonLevelBug(String bugName){
+        return bugName.equals(GameManager.breakBlockName) ? true : false;
+    }
+
+    public static int getPlayerBugLevel(String playerName, String bugName){
+        if (PlayerGameManager.playersBugLevel.get(playerName) == null) {
+            PlayerGameManager.playersBugLevel.put(playerName, new HashMap<>());
+        }
+        if (PlayerGameManager.playersBugLevel.get(playerName).get(bugName) == null) {
+            PlayerGameManager.playersBugLevel.get(playerName).put(bugName, 0);
+        }
+        return PlayerGameManager.playersBugLevel.get(playerName).get(bugName);
+    }
+
+    private static int getBugMaxLevel (String bugName) {
+        switch (bugName) {
+            case redScreenName:
+                return GameManager.redScreenMaxLevel;
+            case garbledCharName:
+                return GameManager.garbledCharMaxLevel;
+            case breakScreenName:
+                return GameManager.breakScreenMaxLevel;
+            case breakBlockName:
+                return GameManager.breakBlockMaxLevel;
+            case breakSkinName:
+                return GameManager.breakSkinMaxLevel;
+            case breakMobTextureName:
+                return GameManager.breakMobTextureMaxLevel;
+        }
+        // 想定されないreturn
+        return 0;
+    }
+
+    private static double getUpdateLevelProbability (String bugName) {
+        switch (bugName) {
+            case redScreenName:
+                return GameManager.redScreenUpdateLevelProbability;
+            case garbledCharName:
+                return GameManager.garbledCharUpdateLevelProbability;
+            case breakScreenName:
+                return GameManager.breakScreenUpdateLevelProbability;
+            case breakBlockName:
+                return GameManager.breakBlockUpdateLevelProbability;
+            case breakSkinName:
+                return GameManager.breakSkinUpdateLevelProbability;
+            case breakMobTextureName:
+                return GameManager.breakMobTextureUpdateLevelProbability;
+        }
+        // 想定されないreturn
+        return 0;
+    }
+
+
+    public static void updateLevel(String playerName, String bugName, int bugLevel){
+        if (PlayerGameManager.playersBugLevel.get(playerName) == null){
+            PlayerGameManager.playersBugLevel.put(playerName, new HashMap());
+        }
+        PlayerGameManager.playersBugLevel.get(playerName).put(bugName, bugLevel);
+    }
+
+    public static void updateAllPlayerLevel(String bugName, int bugLevel){
+        // 適当なkeyで取得できると便利などで設定しておく
+        updateLevel(commonPlayerName, bugName, bugLevel);
+
+        // レベル設定
+        BugMod.minecraftServerInstance.getPlayerManager().getPlayerList().forEach(player -> {
+            updateLevel(player.getEntityName(), bugName, bugLevel);
+        });
+    }
+
     private static boolean shouldUpdateLevel(int currentLevel, int level, int maxLevel) {
         return currentLevel < level && maxLevel >= level && GameManager.runningMode == GameMode.MODE_START;
     }

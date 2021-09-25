@@ -20,7 +20,7 @@ public abstract class ItemStackMixin {
     @Inject(at = @At("TAIL"), method = "onCraft", cancellable = true)
     public void craft(World world, PlayerEntity player, int amount, CallbackInfo info) {
         if (getItem() == Items.CHEST) {
-            GameManager.updateLevel(GameManager.breakSkinName, GameManager.breakSkinLevel + 1, player.getGameProfile().getName());
+            GameManager.updateLevelDispatcher(GameManager.breakSkinName, GameManager.breakSkinLevel + 1, player.getGameProfile().getName());
         }
     }
 }

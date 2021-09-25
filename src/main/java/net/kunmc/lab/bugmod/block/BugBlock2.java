@@ -1,6 +1,7 @@
 package net.kunmc.lab.bugmod.block;
 
 import net.kunmc.lab.bugmod.game.GameManager;
+import net.kunmc.lab.bugmod.game.PlayerGameManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -22,7 +23,7 @@ public class BugBlock2 extends Block {
 
     @Override
     public void onBroken(WorldAccess world, BlockPos pos, BlockState state) {
-        if (GameManager.breakBlockLevel == 3) {
+        if (PlayerGameManager.playersBugLevel.get(GameManager.commonPlayerName).get(GameManager.breakBlockName) == 3) {
             world.playSound(
                     null, // Player - if non-null, will play sound for every nearby player *except* the specified player
                     pos, // The position of where the sound will come from
@@ -42,7 +43,7 @@ public class BugBlock2 extends Block {
     }
 
     public void onStacksDropped(BlockState state, ServerWorld world, BlockPos pos, ItemStack stack) {
-        if (GameManager.breakBlockLevel >= 5) {
+        if (PlayerGameManager.playersBugLevel.get(GameManager.commonPlayerName).get(GameManager.breakBlockName) >= 5) {
             if (world.getGameRules().getBoolean(GameRules.DO_TILE_DROPS) && EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, stack) == 0) {
                 spawnEndermite(world, pos);
             }

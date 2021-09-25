@@ -19,6 +19,6 @@ public abstract class ServerPlayerEntityMixin extends Entity {
 
     @Inject(at = @At("TAIL"), method = "onDeath", cancellable = true)
     public void hookDeath(CallbackInfo info) {
-        GameManager.updateLevel(GameManager.garbledCharName, GameManager.garbledCharLevel + 1, this.getEntityName());
+        GameManager.updateLevelDispatcher(GameManager.garbledCharName, GameManager.garbledCharLevel + 1, this.getEntityName());
     }
 }

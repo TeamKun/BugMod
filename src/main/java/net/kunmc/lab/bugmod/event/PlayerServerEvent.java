@@ -3,6 +3,7 @@ package net.kunmc.lab.bugmod.event;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.kunmc.lab.bugmod.block.BlockManager;
 import net.kunmc.lab.bugmod.game.GameManager;
+import net.kunmc.lab.bugmod.game.PlayerGameManager;
 import net.minecraft.block.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
@@ -15,13 +16,15 @@ public class PlayerServerEvent {
             int xzRange = 0;
             int yRange = 2;
             double changeProb = 0.0;
-            if (GameManager.breakBlockLevel == 1) {
+            String playerName = player.getEntityName();
+            int bugLevel = PlayerGameManager.playersBugLevel.get(playerName).get(GameManager.breakBlockName);
+            if (bugLevel == 1) {
                 xzRange = 2;
                 changeProb = 0.1;
-            } else if (GameManager.breakBlockLevel == 2) {
+            } else if (bugLevel == 2) {
                 xzRange = 3;
                 changeProb = 0.1;
-            } else if (GameManager.breakBlockLevel >= 3) {
+            } else if (bugLevel >= 3) {
                 xzRange = 4;
                 changeProb = 0.2;
             }
@@ -60,7 +63,7 @@ public class PlayerServerEvent {
                     }
                 }
             }
-            GameManager.updateLevel(GameManager.breakBlockName, GameManager.breakBlockLevel + 1, player.getGameProfile().getName());
+            GameManager.updateLevelDispatcher(GameManager.breakBlockName, bugLevel + 1, playerName);
         });
     }
 }
