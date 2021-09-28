@@ -31,7 +31,8 @@
     "ServerPlayerEntityMixin",
     "ItemStackMixin",
     "MilkBucketItemMixin",
-    "LivingEntityMixin"
+    "LivingEntityMixin",
+    "PlayerManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -55,7 +55,7 @@ public class BugCommand {
 
                                 GameManager.controller(GameManager.GameMode.MODE_START);
                                 context.getSource().getMinecraftServer().getPlayerManager()
-                                        .broadcastChatMessage(new LiteralText(DecolationConst.GREEN + "世界がバグるようになった"), MessageType.CHAT, context.getSource().getPlayer().getUuid());
+                                        .broadcastChatMessage(new LiteralText(DecolationConst.GREEN + "世界がバグるようになった"), MessageType.SYSTEM, context.getSource().getPlayer().getUuid());
                                 return 1;
                             }))
                     .then(CommandManager.literal("stop")
@@ -68,7 +68,7 @@ public class BugCommand {
                                 GameManager.resetGame();
                                 GameManager.controller(GameManager.GameMode.MODE_NEUTRAL);
                                 context.getSource().getMinecraftServer().getPlayerManager()
-                                        .broadcastChatMessage(new LiteralText(DecolationConst.GREEN + "世界のバグが止まった"), MessageType.CHAT, context.getSource().getPlayer().getUuid());
+                                        .broadcastChatMessage(new LiteralText(DecolationConst.GREEN + "世界のバグが止まった"), MessageType.SYSTEM, context.getSource().getPlayer().getUuid());
 
                                 return 1;
                             }))
