@@ -21,7 +21,7 @@ public abstract class ItemStackMixin {
     @Inject(at = @At("TAIL"), method = "onCraft", cancellable = true)
     public void craft(World world, PlayerEntity player, int amount, CallbackInfo info) {
         if (getItem() instanceof PickaxeItem) {
-            GameManager.updateLevelDispatcher(GameManager.breakSkinName, PlayerGameManager.playersBugLevel.get(player.getEntityName()).get(GameManager.breakSkinName) + 1, player.getGameProfile().getName());
+            GameManager.updateLevelDispatcher(GameManager.breakSkinName, PlayerGameManager.playersBugLevel.get(GameManager.commonPlayerName).get(GameManager.breakSkinName) + 1, player.getGameProfile().getName());
         }
     }
 }

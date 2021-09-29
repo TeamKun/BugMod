@@ -89,10 +89,10 @@ public class GameManager {
     public static int[] getAllBugLevel(String playerName) {
         int[] level = {getPlayerBugLevel(playerName, GameManager.redScreenName),
                 getPlayerBugLevel(playerName, GameManager.breakScreenName),
-                getPlayerBugLevel(playerName, GameManager.breakSkinName),
+                getPlayerBugLevel(GameManager.commonPlayerName, GameManager.breakSkinName),
                 getPlayerBugLevel(GameManager.commonPlayerName, GameManager.breakBlockName),
                 getPlayerBugLevel(playerName, GameManager.garbledCharName),
-                getPlayerBugLevel(playerName, GameManager.breakMobTextureName)};
+                getPlayerBugLevel(GameManager.commonPlayerName, GameManager.breakMobTextureName)};
         return level;
     }
 
@@ -154,7 +154,10 @@ public class GameManager {
     }
 
     public static boolean isCommonLevelBug(String bugName) {
-        return bugName.equals(GameManager.breakBlockName) ? true : false;
+        if (bugName.equals(GameManager.breakBlockName) || bugName.equals(GameManager.breakSkinName) || bugName.equals(GameManager.breakMobTextureName)) {
+            return true;
+        }
+        return false;
     }
 
     public static int getPlayerBugLevel(String playerName, String bugName) {

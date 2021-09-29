@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.kunmc.lab.bugmod.BugMod;
 import net.kunmc.lab.bugmod.game.GameManager;
 import net.kunmc.lab.bugmod.game.PlayerGameManager;
+import net.kunmc.lab.bugmod.texture.ReloadTexture;
 import net.kunmc.lab.bugmod.util.DecolationConst;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -129,14 +130,13 @@ public class BugCommand {
                                                         return 1;
                                                     }))))
                             .then(CommandManager.literal(GameManager.breakSkinName + "Level")
-                                    .then(CommandManager.argument("players", EntityArgumentType.players())
                                             .then(CommandManager.argument("num", IntegerArgumentType.integer(0, GameManager.breakSkinMaxLevel))
                                                     .executes(context -> {
-                                                        EntityArgumentType.getPlayers(context, "players").forEach((player) -> {
+                                                        BugMod.minecraftServerInstance.getPlayerManager().getPlayerList().forEach((player) -> {
                                                             setLevel(context, player.getEntityName(), GameManager.breakSkinName);
                                                         });
                                                         return 1;
-                                                    }))))
+                                                    })))
                             .then(CommandManager.literal(GameManager.garbledCharName + "Level")
                                     .then(CommandManager.argument("players", EntityArgumentType.players())
                                             .then(CommandManager.argument("num", IntegerArgumentType.integer(0, GameManager.garbledCharMaxLevel))
