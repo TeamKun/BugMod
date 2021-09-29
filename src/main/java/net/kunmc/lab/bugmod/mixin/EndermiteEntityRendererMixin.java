@@ -30,7 +30,7 @@ public class EndermiteEntityRendererMixin extends MobEntityRenderer<EndermiteEnt
      */
     @Overwrite
     public Identifier getTexture(EndermiteEntity endermiteEntity) {
-        if (GameManager.breakMobTextureLevel >= 6) {
+        if (GameManager.breakMobTextureLevel >= 6 && GameManager.runningMode == GameManager.GameMode.MODE_START) {
             return BUG_TEXTURE;
         }
         return this.TEXTURE;

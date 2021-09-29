@@ -30,7 +30,7 @@ public class ChickenEntityRendererMixin extends MobEntityRenderer<ChickenEntity,
      */
     @Overwrite
     public Identifier getTexture(ChickenEntity chickenEntity) {
-        if (GameManager.breakMobTextureLevel >= 2) {
+        if (GameManager.breakMobTextureLevel >= 2 && GameManager.runningMode == GameManager.GameMode.MODE_START) {
             return BUG_TEXTURE;
         }
         return this.TEXTURE;

@@ -30,7 +30,7 @@ public class CowEntityRendererMixin extends MobEntityRenderer<CowEntity, CowEnti
      */
     @Overwrite
     public Identifier getTexture(CowEntity cowEntity) {
-        if (GameManager.breakMobTextureLevel >= 1) {
+        if (GameManager.breakMobTextureLevel >= 1 && GameManager.runningMode == GameManager.GameMode.MODE_START) {
             return BUG_TEXTURE;
         }
         return this.TEXTURE;

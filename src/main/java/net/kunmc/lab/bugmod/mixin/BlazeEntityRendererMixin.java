@@ -27,7 +27,7 @@ public class BlazeEntityRendererMixin extends MobEntityRenderer<BlazeEntity, Bla
      */
     @Overwrite
     public Identifier getTexture(BlazeEntity blazeEntity) {
-        if (GameManager.breakMobTextureLevel >= 5) {
+        if (GameManager.breakMobTextureLevel >= 5 && GameManager.runningMode == GameManager.GameMode.MODE_START) {
             return BUG_TEXTURE;
         }
         return TEXTURE;

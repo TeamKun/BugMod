@@ -22,7 +22,7 @@ public class LivingEntityMixin {
     public void hookDeath(DamageSource source, CallbackInfo info) {
         if ((LivingEntity) (Object) this instanceof MobEntity && source.getAttacker() instanceof PlayerEntity) {
             PlayerEntity p = (PlayerEntity) source.getAttacker();
-            GameManager.updateLevelDispatcher(GameManager.breakMobTextureName, PlayerGameManager.playersBugLevel.get(p.getEntityName()).get(GameManager.breakMobTextureName) + 1, p.getGameProfile().getName());
+            GameManager.updateLevelDispatcher(GameManager.breakMobTextureName, PlayerGameManager.playersBugLevel.get(GameManager.commonPlayerName).get(GameManager.breakMobTextureName) + 1, p.getGameProfile().getName());
         }
     }
 }

@@ -147,14 +147,13 @@ public class BugCommand {
                                                         return 1;
                                                     }))))
                             .then(CommandManager.literal(GameManager.breakMobTextureName + "Level")
-                                    .then(CommandManager.argument("players", EntityArgumentType.players())
                                             .then(CommandManager.argument("num", IntegerArgumentType.integer(0, GameManager.breakMobTextureMaxLevel))
                                                     .executes(context -> {
-                                                        EntityArgumentType.getPlayers(context, "players").forEach((player) -> {
+                                                        BugMod.minecraftServerInstance.getPlayerManager().getPlayerList().forEach((player) -> {
                                                             setLevel(context, player.getEntityName(), GameManager.breakMobTextureName);
                                                         });
                                                         return 1;
-                                                    }))))
+                                                    })))
                             .then(CommandManager.literal("recoveryMode")
                                     .then(CommandManager.argument("boolean", BoolArgumentType.bool())
                                             .executes(context -> {

@@ -65,7 +65,7 @@ public class GameManager {
         garbledCharUpdateLevelProbability = 1.0;
         breakScreenUpdateLevelProbability = 1.0;
         breakBlockUpdateLevelProbability = 0.01;
-        breakSkinUpdateLevelProbability = 1.0;
+        breakSkinUpdateLevelProbability = 0.5;
         breakMobTextureUpdateLevelProbability = 1.0;
     }
 

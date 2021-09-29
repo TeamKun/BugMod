@@ -32,7 +32,7 @@ public class PigEntityRendererMixin extends MobEntityRenderer<PigEntity, PigEnti
      */
     @Overwrite
     public Identifier getTexture(PigEntity pigEntity) {
-        if (GameManager.breakMobTextureLevel >= 1) {
+        if (GameManager.breakMobTextureLevel >= 1 && GameManager.runningMode == GameManager.GameMode.MODE_START) {
             return BUG_TEXTURE;
         }
         return this.TEXTURE;

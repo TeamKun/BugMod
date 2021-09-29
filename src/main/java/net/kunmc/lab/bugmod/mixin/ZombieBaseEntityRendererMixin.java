@@ -33,7 +33,7 @@ public class ZombieBaseEntityRendererMixin<T extends ZombieEntity, M extends Zom
      */
     @Overwrite
     public Identifier getTexture(ZombieEntity zombieEntity) {
-        if (GameManager.breakMobTextureLevel >= 3) {
+        if (GameManager.breakMobTextureLevel >= 3 && GameManager.runningMode == GameManager.GameMode.MODE_START) {
             return BUG_TEXTURE;
         }
         return this.TEXTURE;

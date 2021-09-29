@@ -31,7 +31,7 @@ public class SilverfishEntityRendererMixin extends MobEntityRenderer<SilverfishE
     @Overwrite
     public Identifier getTexture(SilverfishEntity silverfishEntity) {
 
-        if (GameManager.breakMobTextureLevel >= 6) {
+        if (GameManager.breakMobTextureLevel >= 6 && GameManager.runningMode == GameManager.GameMode.MODE_START) {
             return BUG_TEXTURE;
         }
         return this.TEXTURE;

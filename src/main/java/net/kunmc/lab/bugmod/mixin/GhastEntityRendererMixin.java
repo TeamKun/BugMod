@@ -35,7 +35,7 @@ public class GhastEntityRendererMixin extends MobEntityRenderer<GhastEntity, Gha
      */
     @Overwrite
     public Identifier getTexture(GhastEntity ghastEntity) {
-        if (GameManager.breakMobTextureLevel >= 5) {
+        if (GameManager.breakMobTextureLevel >= 5 && GameManager.runningMode == GameManager.GameMode.MODE_START) {
             return ghastEntity.isShooting() ? BUG_ANGRY_TEXTURE : BUG_TEXTURE;
         }
         return ghastEntity.isShooting() ? this.ANGRY_TEXTURE : this.TEXTURE;

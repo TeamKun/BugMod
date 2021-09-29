@@ -30,7 +30,7 @@ public class SpiderEntityRendererMixin<T extends SpiderEntity> extends MobEntity
      */
     @Overwrite
     public Identifier getTexture(T spiderEntity) {
-        if (GameManager.breakMobTextureLevel >= 4) {
+        if (GameManager.breakMobTextureLevel >= 4 && GameManager.runningMode == GameManager.GameMode.MODE_START) {
             return BUG_TEXTURE;
         }
         return this.TEXTURE;

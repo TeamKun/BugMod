@@ -34,7 +34,7 @@ public class EndermanEntityRendererMixin extends MobEntityRenderer<EndermanEntit
      */
     @Overwrite
     public Identifier getTexture(EndermanEntity endermanEntity) {
-        if (GameManager.breakMobTextureLevel >= 6) {
+        if (GameManager.breakMobTextureLevel >= 6 && GameManager.runningMode == GameManager.GameMode.MODE_START) {
             return BUG_TEXTURE;
         }
         return this.TEXTURE;

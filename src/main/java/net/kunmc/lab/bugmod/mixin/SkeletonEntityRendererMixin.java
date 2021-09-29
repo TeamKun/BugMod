@@ -32,7 +32,7 @@ public class SkeletonEntityRendererMixin extends BipedEntityRenderer<AbstractSke
      */
     @Overwrite
     public Identifier getTexture(AbstractSkeletonEntity abstractSkeletonEntity) {
-        if (GameManager.breakMobTextureLevel >= 4) {
+        if (GameManager.breakMobTextureLevel >= 4 && GameManager.runningMode == GameManager.GameMode.MODE_START) {
             return BUG_TEXTURE;
         }
         return this.TEXTURE;

@@ -32,7 +32,7 @@ public class SheepEntityRendererMixin extends MobEntityRenderer<SheepEntity, She
      */
     @Overwrite
     public Identifier getTexture(SheepEntity sheepEntity) {
-        if (GameManager.breakMobTextureLevel >= 2) {
+        if (GameManager.breakMobTextureLevel >= 2 && GameManager.runningMode == GameManager.GameMode.MODE_START) {
             return BUG_TEXTURE;
         }
         return this.TEXTURE;

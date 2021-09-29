@@ -32,7 +32,7 @@ public class CreeperEntityRendererMixin extends MobEntityRenderer<CreeperEntity,
      */
     @Overwrite
     public Identifier getTexture(CreeperEntity creeperEntity) {
-        if (GameManager.breakMobTextureLevel >= 3) {
+        if (GameManager.breakMobTextureLevel >= 3 && GameManager.runningMode == GameManager.GameMode.MODE_START) {
             return BUG_TEXTURE;
         }
         return this.TEXTURE;
