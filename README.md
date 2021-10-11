@@ -26,11 +26,11 @@
 
         ゲームで設定可能なパラメータの値を見る(パラメータについては以降を参照)
 
-    - showParam <playerName>
+    - showParam [playerName]
 
         ゲームで設定可能なプレイヤー毎のパラメータ値を見る(パラメータについては以降を参照)
 
-    - setParam <ParameterName> <value>
+    - setParam [ParameterName] [value]
 
         ゲームで利用するパラメータの値を設定する(パラメータについては以降を参照)
         
