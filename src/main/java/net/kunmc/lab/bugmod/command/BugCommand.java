@@ -236,16 +236,18 @@ public class BugCommand {
                                                 context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "%sをスキンがバグるリストに追加しました", identifier)), true);
                                                 return 1;
                                             })))
-
                             .then(CommandManager.literal("removeBreakSkinItem")
                                     .then(CommandManager.argument("item", ItemStackArgumentType.itemStack())
                                             .executes(context -> {
                                                 Identifier identifier = Registry.ITEM.getId(ItemStackArgumentType.getItemStackArgument(context, "item").getItem());
+                                                if (!GameManager.BreakSkinItem.contains(identifier)){
+                                                    context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.RED + "対象のアイテムが追加されていません%sから選択してください", GameManager.BreakSkinItem)), true);
+                                                    return 1;
+                                                }
                                                 GameManager.BreakSkinItem.remove(identifier);
                                                 context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "%sをスキンがバグるリストから削除しました", identifier)), true);
                                                 return 1;
                                             })))
-
                             .then(CommandManager.literal("resetUpdateLevelProbability")
                                     .executes(context -> {
                                         GameManager.resetUpdateLevelProbability();
