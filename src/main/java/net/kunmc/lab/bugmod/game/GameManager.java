@@ -2,11 +2,9 @@ package net.kunmc.lab.bugmod.game;
 
 import net.kunmc.lab.bugmod.BugMod;
 import net.kunmc.lab.bugmod.networking.ServerNetworking;
+import net.minecraft.util.Identifier;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class GameManager {
     public static final String redScreenName = "redscreen";
@@ -52,6 +50,9 @@ public class GameManager {
     public static boolean canRecovery = true;
     // レベル更新時のメッセージ出力をするかどうか
     public static boolean showUpdateLevelMessage = true;
+
+    // 作成するとバグる道具の配列
+    public static Set<Identifier> BreakSkinItem = new HashSet(Arrays.asList(new Identifier("minecraft:iron_pickaxe")));
 
     public static Random rand = new Random();
 

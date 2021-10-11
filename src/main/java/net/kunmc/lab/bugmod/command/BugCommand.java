@@ -9,14 +9,16 @@ import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.kunmc.lab.bugmod.BugMod;
 import net.kunmc.lab.bugmod.game.GameManager;
 import net.kunmc.lab.bugmod.game.PlayerGameManager;
-import net.kunmc.lab.bugmod.texture.ReloadTexture;
 import net.kunmc.lab.bugmod.util.DecolationConst;
 import net.minecraft.command.argument.EntityArgumentType;
+import net.minecraft.command.argument.ItemStackArgumentType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.MessageType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.LiteralText;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,6 +87,7 @@ public class BugCommand {
                                 }
                                 message.add(String.format("  recoveryMode: %b", GameManager.canRecovery));
                                 message.add(String.format("  showUpdateLevelMessage: %b", GameManager.showUpdateLevelMessage));
+                                message.add(String.format("  BreakSkinItem: %s", GameManager.BreakSkinItem));
                                 context.getSource().sendFeedback(new LiteralText(String.join(br, message)), false);
                                 return 1;
                             })
@@ -130,13 +133,13 @@ public class BugCommand {
                                                         return 1;
                                                     }))))
                             .then(CommandManager.literal(GameManager.breakSkinName + "Level")
-                                            .then(CommandManager.argument("num", IntegerArgumentType.integer(0, GameManager.breakSkinMaxLevel))
-                                                    .executes(context -> {
-                                                        BugMod.minecraftServerInstance.getPlayerManager().getPlayerList().forEach((player) -> {
-                                                            setLevel(context, player.getEntityName(), GameManager.breakSkinName);
-                                                        });
-                                                        return 1;
-                                                    })))
+                                    .then(CommandManager.argument("num", IntegerArgumentType.integer(0, GameManager.breakSkinMaxLevel))
+                                            .executes(context -> {
+                                                BugMod.minecraftServerInstance.getPlayerManager().getPlayerList().forEach((player) -> {
+                                                    setLevel(context, player.getEntityName(), GameManager.breakSkinName);
+                                                });
+                                                return 1;
+                                            })))
                             .then(CommandManager.literal(GameManager.garbledCharName + "Level")
                                     .then(CommandManager.argument("players", EntityArgumentType.players())
                                             .then(CommandManager.argument("num", IntegerArgumentType.integer(0, GameManager.garbledCharMaxLevel))
@@ -147,13 +150,13 @@ public class BugCommand {
                                                         return 1;
                                                     }))))
                             .then(CommandManager.literal(GameManager.breakMobTextureName + "Level")
-                                            .then(CommandManager.argument("num", IntegerArgumentType.integer(0, GameManager.breakMobTextureMaxLevel))
-                                                    .executes(context -> {
-                                                        BugMod.minecraftServerInstance.getPlayerManager().getPlayerList().forEach((player) -> {
-                                                            setLevel(context, player.getEntityName(), GameManager.breakMobTextureName);
-                                                        });
-                                                        return 1;
-                                                    })))
+                                    .then(CommandManager.argument("num", IntegerArgumentType.integer(0, GameManager.breakMobTextureMaxLevel))
+                                            .executes(context -> {
+                                                BugMod.minecraftServerInstance.getPlayerManager().getPlayerList().forEach((player) -> {
+                                                    setLevel(context, player.getEntityName(), GameManager.breakMobTextureName);
+                                                });
+                                                return 1;
+                                            })))
                             .then(CommandManager.literal("recoveryMode")
                                     .then(CommandManager.argument("boolean", BoolArgumentType.bool())
                                             .executes(context -> {
@@ -224,6 +227,25 @@ public class BugCommand {
                                                 context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "%sを%.2fに設定しました", name, value)), true);
                                                 return 1;
                                             })))
+
+                            .then(CommandManager.literal("addBreakSkinItem")
+                                    .then(CommandManager.argument("item", ItemStackArgumentType.itemStack())
+                                            .executes(context -> {
+                                                Identifier identifier = Registry.ITEM.getId(ItemStackArgumentType.getItemStackArgument(context, "item").getItem());
+                                                GameManager.BreakSkinItem.add(identifier);
+                                                context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "%sをスキンがバグるリストに追加しました", identifier)), true);
+                                                return 1;
+                                            })))
+
+                            .then(CommandManager.literal("removeBreakSkinItem")
+                                    .then(CommandManager.argument("item", ItemStackArgumentType.itemStack())
+                                            .executes(context -> {
+                                                Identifier identifier = Registry.ITEM.getId(ItemStackArgumentType.getItemStackArgument(context, "item").getItem());
+                                                GameManager.BreakSkinItem.remove(identifier);
+                                                context.getSource().sendFeedback(new LiteralText(String.format(DecolationConst.GREEN + "%sをスキンがバグるリストから削除しました", identifier)), true);
+                                                return 1;
+                                            })))
+
                             .then(CommandManager.literal("resetUpdateLevelProbability")
                                     .executes(context -> {
                                         GameManager.resetUpdateLevelProbability();
